@@ -26,15 +26,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, name = "fullname")
     private String name;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(length = 150)
+    @Column(length = 150, name = "descr")
     private String description;
 
-    @Column(nullable = false, name = "category")
+    @Column(nullable = false, name = "category_id")
     private Long categoryId;
 }
