@@ -14,6 +14,15 @@ import cl.gestion.ventas.auth.model.User;
 import cl.gestion.ventas.auth.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Authservice maneja el proceso login y autenticación, utiliza los beans
+ * de SecurityConfig authenticationManager para autenticar el usuario
+ * y passwordEncoder para comparar la contraseña entrante con la guardada
+ * en la BD, además utiliza UserRepository para extraer el usuario y generar
+ * el token con el método generateToken de JwtService, retornando un 
+ * AuthResponse hacia el controlador.
+ */
+
 @Service
 @Slf4j
 public class AuthService {
