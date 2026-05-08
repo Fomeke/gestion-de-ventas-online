@@ -32,6 +32,7 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request){
+        log.info("Iniciando sesión con usuario: {}",request.getUsername());
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }

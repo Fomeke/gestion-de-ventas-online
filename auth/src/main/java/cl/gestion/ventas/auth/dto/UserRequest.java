@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserRequest {
     @NotBlank(message= "Nombre de usuario es obligatorio")
-    @Size(max=20,min=5,message="El nombre de usuario debe contener entre 5 y 20 carácteres")
+    @Size(max=20,min=3,message="El nombre de usuario debe contener entre 5 y 20 carácteres")
     private String username;
 
     @NotBlank(message="Nombre completo es obligatorio")
