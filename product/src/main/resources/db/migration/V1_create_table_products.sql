@@ -5,6 +5,6 @@ CREATE TABLE products(
     descr   VARCHAR(150),
     category_id BIGINT NOT NULL,
 
-    CONSTRAINT pk_products  PRIMARY KEY (id),
+    CONSTRAINT pk_products  PRIMARY KEY (id)
 
 );
