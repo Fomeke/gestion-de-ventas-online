@@ -29,5 +29,13 @@ services:
     category:
         baseUrl: http://localhost:8086/api/v1/category
 
+logging:
+  level:
+    "[org.springframework]": INFO
+    "[com.product]": DEBUG
+
+  file:
+    name: logs/product-service.log
+
 jwt:
     secret: 46238dr3r67246y423784rt687342rys832q47rt
