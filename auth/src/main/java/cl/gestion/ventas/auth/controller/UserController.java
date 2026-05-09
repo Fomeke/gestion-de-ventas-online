@@ -42,21 +42,27 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
-        log.info("GET /users/{}",id);
+        log.info("GET /usuarios/{}",id);
 
         return ResponseEntity.ok(userService.obtenerUsuarioPorId(id));
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<UserResponse> getUserByName(@PathVariable String username){
+        log.info("GET /usuarios/{}",username);
+        return ResponseEntity.ok(userService.obtenerUsurarioPorNombre(username));
+    }
+
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request){
-        log.info("POST /users");
+        log.info("POST /usuarios");
         UserResponse createdUser = userService.crear(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-        log.info("DELETE /users/{}",id);
+        log.info("DELETE /usuarios/{}",id);
         userService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
