@@ -1,6 +1,6 @@
 CREATE TABLE carts (
     id                  BIGINT          AUTO_INCREMENT PRIMARY KEY,
-    userId              BIGINT          NOT NULL UNIQUE
+    user_id              BIGINT          NOT NULL UNIQUE
 );
 
 CREATE TABLE cart_items(
@@ -8,5 +8,5 @@ CREATE TABLE cart_items(
     product_id          BIGINT          NOT NULL,
     quantity            INTEGER         NOT NULL,
     cart_id             BIGINT,
-    CONSTRAINT fk_cart_items_cart FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE
+    CONSTRAINT fk_cart_items_cart FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE CASCADE
 );
