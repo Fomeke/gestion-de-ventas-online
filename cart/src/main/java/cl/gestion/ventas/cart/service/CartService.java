@@ -33,7 +33,6 @@ public class CartService {
     @Autowired
     private ProductClient productClient;
 
-    
     private CartResponse obtenerTotal(Cart cart){
         BigDecimal total = BigDecimal.ZERO;
         List<CartItemDTO> items = new ArrayList<>();
@@ -56,6 +55,7 @@ public class CartService {
         return response;
     }
     
+    @Transactional
     public CartResponse obtenerCarritoPorId(Long userId){
         log.info("Obteniendo carrido con ID de usuario: {}",userId);
         Cart cart = cartRepository.findByUserId(userId)
