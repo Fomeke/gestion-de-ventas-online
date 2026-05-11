@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ApiErrorResponse> handleNoSuchElementException(NoSuchElementException ex,
             HttpServletRequest request) {
-        log.error("Envío no encontrado: {}", ex.getMessage());
+        log.error("Carrito no encontrado: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())

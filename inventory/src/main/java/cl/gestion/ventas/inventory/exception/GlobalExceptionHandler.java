@@ -1,4 +1,4 @@
-package cl.gestion.ventas.cart.exception;
+package cl.gestion.ventas.inventory.exception;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import cl.gestion.ventas.cart.dto.ApiErrorResponse;
+import cl.gestion.ventas.inventory.dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ApiErrorResponse> handleNoSuchElementException(NoSuchElementException ex,
             HttpServletRequest request) {
-        log.error("Envío no encontrado: {}", ex.getMessage());
+        log.error("Inventorio no encontrado: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())

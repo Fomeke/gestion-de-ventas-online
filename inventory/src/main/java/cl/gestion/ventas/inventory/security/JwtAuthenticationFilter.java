@@ -1,4 +1,4 @@
-package cl.gestion.ventas.shipping.security;
+package cl.gestion.ventas.inventory.security;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import cl.gestion.ventas.shipping.service.JwtService;
+import cl.gestion.ventas.inventory.service.JwtService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

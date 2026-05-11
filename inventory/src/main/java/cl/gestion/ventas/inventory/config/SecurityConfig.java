@@ -1,4 +1,4 @@
-package cl.gestion.ventas.shipping.config;
+package cl.gestion.ventas.inventory.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import cl.gestion.ventas.shipping.security.JwtAuthenticationFilter;
+import cl.gestion.ventas.inventory.security.JwtAuthenticationFilter;
 
 
 

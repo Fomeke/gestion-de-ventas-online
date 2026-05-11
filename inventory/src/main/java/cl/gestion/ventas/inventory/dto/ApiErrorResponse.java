@@ -1,4 +1,4 @@
-package cl.gestion.ventas.cart.dto;
+package cl.gestion.ventas.inventory.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

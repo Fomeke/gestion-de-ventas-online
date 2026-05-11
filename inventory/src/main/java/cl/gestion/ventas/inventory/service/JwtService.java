@@ -1,4 +1,4 @@
-package cl.gestion.ventas.shipping.service;
+package cl.gestion.ventas.inventory.service;
 
 import java.nio.charset.StandardCharsets;
 
