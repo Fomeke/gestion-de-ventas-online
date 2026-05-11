@@ -25,10 +25,6 @@ server:
     servlet:
         context-path: /api
 
-services:
-    product:
-        baseUrl: http://localhost:8085/api/v1/product
-
 logging:
   level:
     "[org.springframework]": INFO
