@@ -28,8 +28,6 @@ server:
 services:
     product:
         baseUrl: http://localhost:8085/api/v1/product
-    order:
-        baseUrl: http://localhost:8088/api/v1/order
 
 logging:
   level:
