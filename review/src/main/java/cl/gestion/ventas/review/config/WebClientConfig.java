@@ -12,8 +12,7 @@ public class WebClientConfig {
     @Value("${services.product.baseUrl}")
     private String productbaseUrl;
 
-    @Value("${services.order.baseUrl}")
-    private String orderBaseUrl;
+
 
 
     @Bean
@@ -23,9 +22,5 @@ public class WebClientConfig {
                 .build();
     }
 
-    public WebClient orderWebClient(){
-        return WebClient.builder()
-                .baseUrl(orderBaseUrl)
-                .build();
-    }
+  
 }
