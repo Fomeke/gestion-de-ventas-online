@@ -29,7 +29,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(service.buscarCategorias());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/porid/{id}")
     public ResponseEntity<CategoryResponseDTO> getCategoriaPorId(@PathVariable Long id){
         log.info("GET api/category/categoriaPorId/{}", id);
         return ResponseEntity.ok().body(service.buscarCategoriaPorId(id));
