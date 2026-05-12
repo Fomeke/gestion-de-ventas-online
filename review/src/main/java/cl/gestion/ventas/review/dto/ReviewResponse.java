@@ -11,7 +11,6 @@ public class ReviewResponse {
 
     private Long id;
     private Long idProduct;
-    private String userName;
     private String comment;
     private Integer Rating;
     private LocalDateTime createdAt;

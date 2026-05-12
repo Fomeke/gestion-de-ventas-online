@@ -14,8 +14,6 @@ public class ReviewMapper {
                 .comment(request.getComment())
                 .rating(request.getRating())
                 .productId(request.getProductId())
-                .userId(idUser)
-                .userName(userName)
                 .build();
     }
 
@@ -25,7 +23,6 @@ public class ReviewMapper {
                 .idProduct(review.getProductId())
                 .comment(review.getComment())
                 .Rating(review.getRating())
-                .userName(review.getUserName())
                 .createdAt(review.getCreatedAt())
                 .build();
     }

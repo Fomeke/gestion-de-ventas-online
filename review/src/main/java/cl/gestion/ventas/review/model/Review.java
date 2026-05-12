@@ -37,10 +37,4 @@ public class Review {
 
     @Column(name = "product_id", nullable = false)
     private Long productId;
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
-    @Column(name = "user_name", nullable = false)
-    private String userName;
 }
