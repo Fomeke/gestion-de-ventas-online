@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,17 +43,19 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> postProducto(@Valid @RequestBody ProductRequestDTO request){
+    public ResponseEntity<ProductResponseDTO> postProducto(@Valid @RequestBody ProductRequestDTO request, @RequestHeader("Authorization") String token){
         log.info("POST api/product/crearProducto");
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.crearProducto(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.crearProducto(request, token));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> putProducto(@PathVariable Long id,@Valid @RequestBody ProductRequestDTO request){
+    public ResponseEntity<ProductResponseDTO> putProducto(@PathVariable Long id,@Valid @RequestBody ProductRequestDTO request,
+                @RequestHeader("Authorization") String token
+    ){
         log.info("PUT api/product/modificarProducto/{}",id);
 
-        return ResponseEntity.ok().body(service.modificarProducto(id, request));
+        return ResponseEntity.ok().body(service.modificarProducto(id, request, token));
     }
 
     @DeleteMapping("/{id}")

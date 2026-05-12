@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.gestion.ventas.product.client.CategoryClient;
 import cl.gestion.ventas.product.dto.ProductRequestDTO;
 import cl.gestion.ventas.product.dto.ProductResponseDTO;
 import cl.gestion.ventas.product.mapper.ProductMapper;
@@ -25,6 +26,9 @@ public class ProductService {
     @Autowired
     private ProductRepository repo;
 
+    @Autowired
+    private CategoryClient client;
+
     public List<Product> buscarProductos() {
         log.info("Buscando productos..");
         return repo.findAll();
@@ -36,16 +40,17 @@ public class ProductService {
         return mapper.toResponse(product);
     }
 
-    public ProductResponseDTO crearProducto(ProductRequestDTO request) {
+    public ProductResponseDTO crearProducto(ProductRequestDTO request,String token) {
         log.info("Creando producto con nombre: {}", request.getName());
         if (repo.existsByName(request.getName())) {
             throw new IllegalArgumentException("El nombre de ese producto ya existe.");
         }
+        client.obtenerProductoPorCategoriaId(request.getCategoryId(), token);
         Product product = repo.save(mapper.fromRequest(request));
         return mapper.toResponse(product);
     }
 
-    public ProductResponseDTO modificarProducto(Long id, ProductRequestDTO request) {
+    public ProductResponseDTO modificarProducto(Long id, ProductRequestDTO request,String token) {
         log.info("Modificando producto con id: {}", id);
 
         Product product = repo.findById(id)
@@ -64,6 +69,7 @@ public class ProductService {
             product.setCategoryId(request.getCategoryId());
         }
 
+        client.obtenerProductoPorCategoriaId(request.getCategoryId(), token);
         product = repo.save(product);
         return mapper.toResponse(product);
     }
