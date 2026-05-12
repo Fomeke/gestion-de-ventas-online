@@ -66,10 +66,12 @@ public class ProductService {
             product.setDescription(request.getDescription());
         }
         if(request.getCategoryId() != null){
+            client.obtenerProductoPorCategoriaId(request.getCategoryId(), token);
             product.setCategoryId(request.getCategoryId());
         }
 
-        client.obtenerProductoPorCategoriaId(request.getCategoryId(), token);
+        
+
         product = repo.save(product);
         return mapper.toResponse(product);
     }
