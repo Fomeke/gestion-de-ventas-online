@@ -18,7 +18,7 @@ public class ProductClient {
     @Autowired
     private WebClient webClient;
 
-    public ProductResponse obtenerReviewPorProducto(Long productId, String token){
+    public ProductResponse obtenerProductoPorId(Long productId, String token){
         log.info("Obteniendo reviews del producto: {}", productId);
         try{
             return webClient.get()

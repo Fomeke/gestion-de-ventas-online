@@ -9,7 +9,7 @@ import cl.gestion.ventas.review.model.Review;
 @Component
 public class ReviewMapper {
 
-    public Review toEntity(ReviewRequestDTO request, Long idUser, String userName) {
+    public Review toEntity(ReviewRequestDTO request) {
         return Review.builder()
                 .comment(request.getComment())
                 .rating(request.getRating())
