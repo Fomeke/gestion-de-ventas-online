@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,7 +31,9 @@ import lombok.extern.slf4j.Slf4j;
  * NoSuchElementException: Si no se encuentra el registro en la tabla.
  * 
  * MethodArgumentNotValidException: Devuelve uno o más errores de validacion,
- *      aplicados en el DTO como @NotBlank o @NotNull
+ *      aplicados en el DTO como @NotBlank o @NotNull.
+ * 
+ * AccessDeniedException: Ocurre si el usuario no tiene permisos para realizar una acción.
  * 
  * RuntimeException: Excepcion "paraguas" que maneja el resto de excepciones
  *      no especificadas anteriormente.
@@ -115,5 +118,20 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(AccessDeniedException ex,
+            HttpServletRequest request) {
+        log.error("Usuario sin permisos para realizar acción");
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.FORBIDDEN.value())
+                .error(HttpStatus.FORBIDDEN.name())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+    
     
 }

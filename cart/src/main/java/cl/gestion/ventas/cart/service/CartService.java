@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.cart.client.ProductClient;
@@ -65,7 +66,13 @@ public class CartService {
     }
     
     @Transactional
-    public CartResponse agregarProductosACarrito(CartRequest request){
+    public CartResponse agregarProductosACarrito(Long tokenUserId, CartRequest request){
+        if(!request.getUserId().equals(tokenUserId)){
+            log.warn("Acceso no autorizado: Usuario {} intentó modificar carrito de {}",
+                tokenUserId, request.getUserId());
+            throw new AccessDeniedException("No tiene permiso para modificar este carrito");
+        }
+
         log.info("Agregando productos a carrito de usuario: {}",request.getUserId());
         
         Cart cart = cartRepository.findByUserId(request.getUserId())
@@ -91,9 +98,15 @@ public class CartService {
     }
 
     @Transactional
-    public void eliminarProductoDeCarrito(Long userId, Long productId){
+    public void eliminarProductoDeCarrito(Long userId, Long productId, Long tokenUserId){
+        if(!userId.equals(tokenUserId)){
+            log.warn("Acceso no autorizado: Usuario {} intentó modificar carrito de {}",
+                tokenUserId, userId);
+            throw new AccessDeniedException("No tiene permiso para modificar este carrito");
+        }
+        
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new NoSuchElementException("Carrito no encontrado"));
-
+        log.info("Eliminando producto {} de carrito",productId);
         boolean removed = cart.getItems().removeIf(item -> item.getProductId().equals(productId));
 
         if(!removed){
@@ -103,7 +116,13 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public void eliminarCarrito(Long id){
+    @Transactional
+    public void eliminarCarrito(Long id, Long tokenUserId){
+        if(!id.equals(tokenUserId)){
+            log.warn("Acceso no autorizado: Usuario {} intentó modificar carrito de {}",
+                tokenUserId, id);
+            throw new AccessDeniedException("No tiene permiso para modificar este carrito");
+        }
         log.info("Eliminando carrito de usuario con ID: {}",id);
 
         if(!cartRepository.existsByUserId(id)){

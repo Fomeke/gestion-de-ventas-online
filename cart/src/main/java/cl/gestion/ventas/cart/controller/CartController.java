@@ -3,11 +3,13 @@ package cl.gestion.ventas.cart.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,24 +28,25 @@ public class CartController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<CartResponse> getCart(@PathVariable Long userId){
+    public ResponseEntity<CartResponse> getCart(@PathVariable Long userId,
+        @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(cartService.obtenerCarritoPorId(userId));
     }
 
     @PostMapping
-    public ResponseEntity<CartResponse> add(@Valid @RequestBody CartRequest request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.agregarProductosACarrito(request));
+    public ResponseEntity<CartResponse> add(@Valid @RequestBody CartRequest request, Authentication auth){
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.agregarProductosACarrito(Long.valueOf(auth.getName()), request));
     }
 
     @DeleteMapping("/{userId}/items/{productId}")
-    public ResponseEntity<Void> removeItem(@PathVariable Long userId, @PathVariable Long productId){
-        cartService.eliminarProductoDeCarrito(userId, productId);
+    public ResponseEntity<Void> removeItem(@PathVariable Long userId, @PathVariable Long productId, Authentication auth){
+        cartService.eliminarProductoDeCarrito(userId, productId,Long.valueOf(auth.getName()));
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> removeCart(@PathVariable Long userId){
-        cartService.eliminarCarrito(userId);
+    public ResponseEntity<Void> removeCart(@PathVariable Long userId, Authentication auth){
+        cartService.eliminarCarrito(userId,Long.valueOf(auth.getName()));
         return ResponseEntity.noContent().build();
     }
 }
