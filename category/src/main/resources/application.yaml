@@ -27,8 +27,8 @@ server:
 
 logging:
   level:
-    "[org.springframework]": INFO
-    "[com.product]": DEBUG
+    root: INFO
+    "[cl.gestion.ventas.category]": DEBUG
 
   file:
     name: logs/category-service.log

@@ -31,8 +31,8 @@ services:
 
 logging:
   level:
-    "[org.springframework]": INFO
-    "[com.product]": DEBUG
+    root: INFO
+    "[cl.gestion.ventas.review]": DEBUG
 
   file:
     name: logs/product-service.log
