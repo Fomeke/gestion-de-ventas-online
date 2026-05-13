@@ -1,4 +1,4 @@
-package cl.gestion.ventas.cart.model;
+package cl.gestion.ventas.order.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,23 +14,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="cart_items")
+@Table(name = "order_item")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CartItem {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
+    @Column(nullable=false)
+    private Long productId;
+    
     @Column(nullable = false)
     private Integer quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
 }

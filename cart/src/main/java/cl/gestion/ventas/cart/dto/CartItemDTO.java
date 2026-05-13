@@ -15,6 +15,7 @@ public class CartItemDTO {
     @NotNull(message="La ID de producto es obligatoria")
     private Long productId;
 
+    @NotNull(message = "La cantidad es obligatoria")
     @Min(value=1,message="La cantidad mínima es 1 producto")
     private Integer quantity;
 
