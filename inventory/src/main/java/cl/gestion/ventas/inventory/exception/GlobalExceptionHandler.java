@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cl.gestion.ventas.inventory.dto.ApiErrorResponse;
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,8 +33,12 @@ import lombok.extern.slf4j.Slf4j;
  * MethodArgumentNotValidException: Devuelve uno o más errores de validacion,
  *      aplicados en el DTO como @NotBlank o @NotNull
  * 
+ * FeignException.NotFound: Ocurre si el cliente de Feign no encuentra un registro
+ *      en el servicio externo.
+ * 
  * RuntimeException: Excepcion "paraguas" que maneja el resto de excepciones
  *      no especificadas anteriormente.
+ * 
  */
 
 @RestControllerAdvice
@@ -106,6 +111,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleNoSuchElementException(BadCredentialsException ex,
             HttpServletRequest request) {
         log.error("Usuario con credenciales inválidas");
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(HttpStatus.NOT_FOUND.name())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<ApiErrorResponse> handleFeignNotFoundException(FeignException.NotFound ex,
+            HttpServletRequest request) {
+        log.error("Producto no existe en servicio de Productos");
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
