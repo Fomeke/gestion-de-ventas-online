@@ -1,4 +1,4 @@
-package cl.gestion.ventas.inventory.client;
+package cl.gestion.ventas.inventory.config;
 
 
 import org.springframework.context.annotation.Bean;

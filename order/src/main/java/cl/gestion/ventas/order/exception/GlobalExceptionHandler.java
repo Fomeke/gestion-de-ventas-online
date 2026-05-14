@@ -32,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
  * MethodArgumentNotValidException: Devuelve uno o más errores de validacion,
  *      aplicados en el DTO como @NotBlank o @NotNull.
  * 
+ * IllegalStateException: cuando se intenta establecer un estado no permitido.
+ * 
  * RuntimeException: Excepcion "paraguas" que maneja el resto de excepciones
  *      no especificadas anteriormente.
  */
@@ -114,6 +116,20 @@ public class GlobalExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    } 
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalStateException ex,
+            HttpServletRequest request) {
+        log.error("Estado no permitido: {}",ex.getMessage());
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.name())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     } 
     
 }

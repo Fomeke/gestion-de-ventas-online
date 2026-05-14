@@ -44,18 +44,28 @@ public class InventoryController {
 
     @PostMapping
     public ResponseEntity<InventoryResponse> add(@Valid @RequestBody InventoryRequest request){
+        log.info("POST /inventories");
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryService.crear(request));
     }
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<Void> removeInventory(@PathVariable Long productId){
+        log.info("DELETE /inventories/{}",productId);
         inventoryService.eliminar(productId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<InventoryResponse> updateStock(@PathVariable Long productId, @RequestParam Integer quantity){
-        return ResponseEntity.ok(inventoryService.cambiarstock(productId, quantity));
+        log.info("PUT /inventories/{}?quantity={}",productId,quantity);
+        return ResponseEntity.ok(inventoryService.cambiarStock(productId, quantity));
 
+    }
+
+    @PutMapping("/bulk-update")
+    public ResponseEntity<Void> bulkUpdateStock(@Valid @RequestBody List<InventoryRequest> items){
+        log.info("PUT /inventories/bulk-update");
+        inventoryService.cambiarStockLista(items);
+        return ResponseEntity.ok().build();
     }
 }

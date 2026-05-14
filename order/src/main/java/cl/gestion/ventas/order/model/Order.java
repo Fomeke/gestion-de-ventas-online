@@ -46,4 +46,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable=false, name="payment_method")
+    private PaymentMethod paymentMethod;
 }

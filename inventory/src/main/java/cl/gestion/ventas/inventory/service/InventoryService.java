@@ -62,7 +62,7 @@ public class InventoryService {
     }
 
     @Transactional
-    public InventoryResponse cambiarstock(Long productId, Integer stock){
+    public InventoryResponse cambiarStock(Long productId, Integer stock){
         log.info("Cambiando stock de producto {}",productId);
 
         Inventory inv = inventoryRepository.findByProductId(productId).orElseThrow(() -> new NoSuchElementException("Inventario no encontrado"));
@@ -75,5 +75,12 @@ public class InventoryService {
 
         return inventoryMapper.toResponse(inv);
 
+    }
+
+    @Transactional
+    public void cambiarStockLista(List<InventoryRequest> items){
+        for (InventoryRequest item: items){
+            cambiarStock(item.getProductId(), item.getStock());
+        }
     }
 }
