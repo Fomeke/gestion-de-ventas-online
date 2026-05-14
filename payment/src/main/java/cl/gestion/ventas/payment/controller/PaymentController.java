@@ -1,0 +1,48 @@
+package cl.gestion.ventas.payment.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cl.gestion.ventas.payment.dto.PaymentRequest;
+import cl.gestion.ventas.payment.dto.PaymentResponse;
+import cl.gestion.ventas.payment.service.PaymentService;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@RequestMapping("/v1/payment")
+public class PaymentController {
+
+    @Autowired
+    private PaymentService service;
+
+    @GetMapping
+    public ResponseEntity<List<PaymentResponse>> getPagos() {
+        log.info("GET api/v1/payment/pagolista");
+        return ResponseEntity.ok(service.obtenerPagos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PaymentResponse> getPagoPorId(@PathVariable Long id) {
+        log.info("GET api/v1/payment/pagoporid/{}", id);
+        return ResponseEntity.ok(service.obtenerPagoPorId(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PaymentResponse> addPago(@Valid @RequestBody PaymentRequest request,
+            @RequestHeader("Authorization") String token) {
+        log.info("GET api/v1/payment/procesarpago");
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.procesarPago(request, token));
+    }
+}

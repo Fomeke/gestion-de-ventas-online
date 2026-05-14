@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class paymentRequest {
+public class PaymentRequest {
 
     @NotNull(message = "El id de la orden es obligatorio.")
     private Long orderId;

@@ -1,0 +1,19 @@
+package cl.gestion.ventas.payment.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class WebClientConfig {
+
+    @Value("${services.order.baseUrl}")
+    private String baseUrl;
+
+
+    public WebClient webClient(){
+        return WebClient.builder()
+                .baseUrl(baseUrl)
+                .build();
+    }
+}

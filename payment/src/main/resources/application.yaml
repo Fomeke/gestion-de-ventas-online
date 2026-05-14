@@ -21,13 +21,13 @@ spring:
         open-in-view: false
     
 server:
-    port: 8085
+    port: 8089
     servlet:
         context-path: /api
 
 services:
     order:
-        baseUrl: http://localhost:8086/api/v1/order
+        baseUrl: http://localhost:8084/api/v1/order
 
 logging:
   level:
