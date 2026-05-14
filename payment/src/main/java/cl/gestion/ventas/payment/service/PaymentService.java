@@ -55,7 +55,7 @@ public class PaymentService {
             throw new IllegalArgumentException("El monto a pagar no coincide con el total de la orden");
         }
         Payment payment = mapper.fromRequest(request);
-        return mapper.toResponse(payment);
+        return mapper.toResponse(repo.save(payment));
     }
 
     
