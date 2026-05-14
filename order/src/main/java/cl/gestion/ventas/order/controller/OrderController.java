@@ -34,6 +34,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.obtenerOrdenes());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id){
+        log.info("GET /id/{}",id);
+        return ResponseEntity.ok(orderService.obtenerOrdenPorId(id));
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@PathVariable Long userId){
         log.info("GET /orders/{}",userId);

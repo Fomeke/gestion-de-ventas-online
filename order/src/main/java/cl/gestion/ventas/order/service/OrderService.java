@@ -42,6 +42,12 @@ public class OrderService {
         return orders.stream().map(orderMapper::toResponse).toList();
     }
 
+    public OrderResponse obtenerOrdenPorId(Long id){
+        log.info("Obteniendo order por su id: {}",id);
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No se encontro la orden con esa id"));
+        return orderMapper.toResponse(order);
+    }
+
     public List<OrderResponse> obtenerOrdenesPorUserId(Long userId){
         log.info("Obteniendo ordenes de usuario: {}",userId);
         List<Order> orders = orderRepository.findByUserId(userId);
