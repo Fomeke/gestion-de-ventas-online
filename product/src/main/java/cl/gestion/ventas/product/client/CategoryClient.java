@@ -1,9 +1,6 @@
 package cl.gestion.ventas.product.client;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
