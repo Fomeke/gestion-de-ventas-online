@@ -36,13 +36,13 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id){
-        log.info("GET /id/{}",id);
+        log.info("GET /orders/{}",id);
         return ResponseEntity.ok(orderService.obtenerOrdenPorId(id));
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@PathVariable Long userId){
-        log.info("GET /orders/{}",userId);
+        log.info("GET /orders/user/{}",userId);
         return ResponseEntity.ok(orderService.obtenerOrdenesPorUserId(userId));
     }
 
