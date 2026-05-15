@@ -11,6 +11,7 @@ import cl.gestion.ventas.order.dto.InventoryRequest;
 import cl.gestion.ventas.order.dto.OrderItemDTO;
 import cl.gestion.ventas.order.dto.OrderRequest;
 import cl.gestion.ventas.order.dto.OrderResponse;
+import cl.gestion.ventas.order.dto.OrderResponseForShipping;
 import cl.gestion.ventas.order.model.Order;
 import cl.gestion.ventas.order.model.OrderItem;
 import cl.gestion.ventas.order.model.OrderStatus;
@@ -71,5 +72,13 @@ public class OrderMapper {
                                             .stock(item.getQuantity())
                                             .build())
                                  .collect(Collectors.toList());
+    }
+
+    public OrderResponseForShipping toResponseForShipping(Order order){
+        return OrderResponseForShipping.builder()
+                .id(order.getId())
+                .userId(order.getUserId())
+                .status(order.getStatus())
+                .build();
     }
 }

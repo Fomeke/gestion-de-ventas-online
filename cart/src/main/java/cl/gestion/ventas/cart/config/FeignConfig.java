@@ -1,4 +1,4 @@
-package cl.gestion.ventas.cart.client;
+package cl.gestion.ventas.cart.config;
 
 
 import org.springframework.context.annotation.Bean;

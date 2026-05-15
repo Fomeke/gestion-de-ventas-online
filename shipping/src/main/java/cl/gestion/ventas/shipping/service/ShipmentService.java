@@ -5,7 +5,11 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cl.gestion.ventas.shipping.client.OrderClient;
+import cl.gestion.ventas.shipping.dto.OrderResponseForShipping;
+import cl.gestion.ventas.shipping.dto.OrderStatusUpdate;
 import cl.gestion.ventas.shipping.dto.ShipmentRequest;
 import cl.gestion.ventas.shipping.dto.ShipmentResponse;
 import cl.gestion.ventas.shipping.mapper.ShipmentMapper;
@@ -22,33 +26,52 @@ public class ShipmentService {
     @Autowired
     private ShipmentMapper shipmentMapper;
 
+    @Autowired
+    private OrderClient orderClient;
+
+    @Transactional
     public List<ShipmentResponse> obtenerEnvios(){
         log.info("Obteniendo todos los envíos");
         List<Shipment> ships = shipmentRepository.findAll();
         return ships.stream().map(shipmentMapper::toResponse).toList();
     }
 
+    @Transactional
     public ShipmentResponse obtenerEnvioPorId(Long id){
         log.info("Obteniendo envío con id: {}",id);
         Shipment ship = shipmentRepository.findById(id).get();
         return shipmentMapper.toResponse(ship);
     }
 
+    @Transactional
     public ShipmentResponse obtenerEnvioPorNumero(String number){
         log.info("Obteniendo envio con numero de rastreo: {}",number);
         Shipment ship = shipmentRepository.findByTrackingNumber(number).get();
         return shipmentMapper.toResponse(ship);
     }
 
+    @Transactional
     public ShipmentResponse crear(ShipmentRequest shipmentRequest){
+        log.info("Verificando que envío exista y esté pagado");
+
+        OrderResponseForShipping order = orderClient.getOrderById(shipmentRequest.getOrderId());
+
+        if(!order.getStatus().equals("PAID")){
+            throw new IllegalStateException("La orden debe estar pagada (PAID) para el envío");
+        }
+        
         log.info("Creando nuevo envío");
         if(shipmentRepository.existsByTrackingNumber(shipmentRequest.getTrackingNumber())){
             throw new IllegalArgumentException("El envío ya existe");
         }
+
+        orderClient.updateState(shipmentRequest.getOrderId(), OrderStatusUpdate.builder().newStatus("SHIPPED").build());
+
         Shipment ship = shipmentRepository.save(shipmentMapper.fromRequest(shipmentRequest));
         return shipmentMapper.toResponse(ship);
     }
 
+    @Transactional
     public void eliminar(String number){
         log.info("Elimiando envío con número de rastreo: {}",number);
         if(!shipmentRepository.existsByTrackingNumber(number)){

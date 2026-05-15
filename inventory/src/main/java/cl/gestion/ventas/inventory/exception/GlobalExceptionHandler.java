@@ -160,7 +160,7 @@ public class GlobalExceptionHandler {
                 if(responseBody.contains("\"message\":\"")){
                         message = responseBody.split("\"message\":\"")[1].split("\"")[0];
                 }else if (responseBody.contains("\"errors\":[")){
-                        message = "Error de validación: "+ responseBody.split("\"errors\":\\[")[1].split("]")[0];
+                        message = "Error de validación: "+ responseBody.split("\"errors\":\\[")[1].split("\\]")[0];
                 }
         }else{
                 message = ex.getMessage();
