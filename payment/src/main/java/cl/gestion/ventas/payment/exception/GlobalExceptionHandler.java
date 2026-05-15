@@ -83,4 +83,19 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
+
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<ErrorApiResponse> handleIllegalArgumentException(
+                        IllegalArgumentException ex, HttpServletRequest request) {
+                log.error("Argumento inválido: {}", ex.getMessage());
+                ErrorApiResponse errorResponse = ErrorApiResponse.builder()
+                                .timestamp(LocalDateTime.now())
+                                .status(HttpStatus.BAD_REQUEST.value())
+                                .error(HttpStatus.BAD_REQUEST.name())
+                                .message(ex.getMessage())
+                                .path(request.getRequestURI())
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
 }

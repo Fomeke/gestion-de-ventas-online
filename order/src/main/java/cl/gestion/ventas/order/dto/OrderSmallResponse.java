@@ -8,10 +8,12 @@ import cl.gestion.ventas.order.model.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderSmallResponse {
     private Long id;
     private Long userId;

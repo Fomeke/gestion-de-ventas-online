@@ -27,7 +27,7 @@ server:
 
 services:
     order:
-        baseUrl: http://localhost:8084/api/v1/order
+        baseUrl: http://localhost:8084
 
 logging:
   level:

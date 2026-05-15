@@ -29,20 +29,20 @@ public class PaymentController {
 
     @GetMapping
     public ResponseEntity<List<PaymentResponse>> getPagos() {
-        log.info("GET api/v1/payment/pagolista");
+        log.info("GET api/v1/payment");
         return ResponseEntity.ok(service.obtenerPagos());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PaymentResponse> getPagoPorId(@PathVariable Long id) {
-        log.info("GET api/v1/payment/pagoporid/{}", id);
+        log.info("GET api/v1/payment/{}", id);
         return ResponseEntity.ok(service.obtenerPagoPorId(id));
     }
 
     @PostMapping
     public ResponseEntity<PaymentResponse> addPago(@Valid @RequestBody PaymentRequest request,
             @RequestHeader("Authorization") String token) {
-        log.info("GET api/v1/payment/procesarpago");
+        log.info("POST api/v1/payment");
         return ResponseEntity.status(HttpStatus.CREATED).body(service.procesarPago(request, token));
     }
 }
