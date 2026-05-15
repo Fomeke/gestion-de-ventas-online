@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.gestion.ventas.order.dto.OrderRequest;
 import cl.gestion.ventas.order.dto.OrderResponse;
 import cl.gestion.ventas.order.dto.OrderResponseForShipping;
+import cl.gestion.ventas.order.dto.OrderSmallResponse;
 import cl.gestion.ventas.order.dto.OrderStatusUpdate;
 import cl.gestion.ventas.order.service.OrderService;
 import jakarta.validation.Valid;
@@ -39,6 +40,12 @@ public class OrderController {
     public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id){
         log.info("GET /orders/{}",id);
         return ResponseEntity.ok(orderService.obtenerOrdenPorId(id));
+    }
+
+    @GetMapping("/noitems/{id}")
+    public ResponseEntity<OrderSmallResponse> getSmallOrderId(@PathVariable Long id){
+        log.info("GET /orders/noitems/{}",id);
+        return ResponseEntity.ok(orderService.obtenerOrdenResumidaPorId(id));
     }
 
     @GetMapping("/user/{userId}")

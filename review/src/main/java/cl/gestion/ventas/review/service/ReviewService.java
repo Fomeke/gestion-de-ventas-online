@@ -40,7 +40,7 @@ public class ReviewService {
     }
 
     public List<Review> obtenerReviewPorProducto(Long productId) {
-        log.info("Buscando review del producto con id: {}", productId);
+        log.info("Buscando reseñas del producto con id: {}", productId);
         return repo.findByProductId(productId);
     }
 

@@ -12,6 +12,7 @@ import cl.gestion.ventas.order.dto.OrderItemDTO;
 import cl.gestion.ventas.order.dto.OrderRequest;
 import cl.gestion.ventas.order.dto.OrderResponse;
 import cl.gestion.ventas.order.dto.OrderResponseForShipping;
+import cl.gestion.ventas.order.dto.OrderSmallResponse;
 import cl.gestion.ventas.order.model.Order;
 import cl.gestion.ventas.order.model.OrderItem;
 import cl.gestion.ventas.order.model.OrderStatus;
@@ -79,6 +80,17 @@ public class OrderMapper {
                 .id(order.getId())
                 .userId(order.getUserId())
                 .status(order.getStatus())
+                .build();
+    }
+
+    public OrderSmallResponse toSmallResponse(Order order){
+        return OrderSmallResponse.builder()
+                .id(order.getId())
+                .userId(order.getUserId())
+                .status(order.getStatus())
+                .orderDate(order.getOrderDate())
+                .paymentMethod(order.getPaymentMethod())
+                .total(order.getTotal())
                 .build();
     }
 }

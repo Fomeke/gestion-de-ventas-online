@@ -47,7 +47,7 @@ public class UserController {
         return ResponseEntity.ok(userService.obtenerUsuarioPorId(id));
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<UserResponse> getUserByName(@PathVariable String username){
         log.info("GET /usuarios/{}",username);
         return ResponseEntity.ok(userService.obtenerUsurarioPorNombre(username));

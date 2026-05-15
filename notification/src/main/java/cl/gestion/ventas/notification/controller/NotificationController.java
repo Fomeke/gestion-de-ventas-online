@@ -28,14 +28,14 @@ public class NotificationController {
 
     @GetMapping
     public ResponseEntity<List<NotificationResponse>> getNotifications() {
-        log.info("GET api/v1/notification/listnotification");
+        log.info("GET api/v1/notification");
         return ResponseEntity.ok(service.listNotificacion());
     }
 
     @PostMapping
     public ResponseEntity<NotificationResponse> postNotification(@Valid @RequestBody NotificationRequest request,
             @RequestHeader("Authorization") String token) {
-        log.info("POST api/v1/notification/addnotification");
+        log.info("POST api/v1/notification");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.crearNotificacion(request,token));
     }

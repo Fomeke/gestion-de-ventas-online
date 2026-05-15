@@ -3,6 +3,7 @@ package cl.gestion.ventas.notification.client;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -15,12 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class UserClient {
 
     @Autowired
+    @Qualifier("webClientAuth")
     private WebClient webClient;
 
     public UserResponse obtenerUsuarioPorId(Long userId, String token){
         try{
             return webClient.get()
-                    .uri("/v1/usuarios/{id}",userId)
+                    .uri("/api/v1/usuarios/{id}",userId)
                     .header("Authorization",token)
                     .retrieve()
                     .bodyToMono(UserResponse.class)

@@ -13,6 +13,7 @@ import cl.gestion.ventas.order.dto.InventoryRequest;
 import cl.gestion.ventas.order.dto.OrderRequest;
 import cl.gestion.ventas.order.dto.OrderResponse;
 import cl.gestion.ventas.order.dto.OrderResponseForShipping;
+import cl.gestion.ventas.order.dto.OrderSmallResponse;
 import cl.gestion.ventas.order.dto.OrderStatusUpdate;
 import cl.gestion.ventas.order.mapper.OrderMapper;
 import cl.gestion.ventas.order.model.Order;
@@ -55,6 +56,13 @@ public class OrderService {
         log.info("Obteniendo orden para envío con ID: {}",id);
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No se encontro la orden con esa id"));
         return orderMapper.toResponseForShipping(order);
+    }
+
+    @Transactional
+    public OrderSmallResponse obtenerOrdenResumidaPorId(Long id){
+        log.info("Obteniendo orden por su ID: {}",id);
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No se encontro la orden con esa id"));
+        return orderMapper.toSmallResponse(order);
     }
 
     @Transactional
