@@ -65,4 +65,25 @@ public class UserService {
         userRepository.deleteById(id);
     }
     
+    public UserResponse modificarProducto(Long id, UserRequest request){
+        log.info("Modificando usuario con la ID: {}", id);
+
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("No se encontro el usuario con esa id."));
+        
+
+        if(request.getUsername() != null){
+            user.setUsername(request.getUsername());
+        }
+        if(request.getEmail() != null){
+            user.setCorreo(request.getEmail());
+        }
+        if(request.getPhone() != null){
+            user.setPhone(request.getPhone());
+        }
+
+        user = userRepository.save(user);
+
+        return userMapper.toResponse(user);
+    }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class ReviewController {
     public ResponseEntity<ReviewResponse> postReview(
         @Valid @RequestBody ReviewRequestDTO request,
         @RequestHeader("Authorization") String auth){
-        
+            log.info("POST api/v1/review/crearReview");
             return ResponseEntity.status(HttpStatus.CREATED).body(service.crearReview(request, auth));
     }
 
@@ -57,7 +58,14 @@ public class ReviewController {
         @PathVariable Long id,
         @Valid @RequestBody ReviewRequestDTO request,
         @RequestHeader("Authorization") String auth){
-        
+            log.info("PUT api/v1/review/modificarReview");
             return ResponseEntity.status(HttpStatus.CREATED).body(service.modificarReview(id, request, auth));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id){
+        log.info("DELETE api/v1/review/deleteReview");
+        service.eliminarReview(id);
+        return ResponseEntity.noContent().build();
     }
 }

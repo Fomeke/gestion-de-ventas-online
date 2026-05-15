@@ -43,4 +43,33 @@ public class CategoryService {
         }
         repo.deleteById(id);
     }
+
+    public CategoryResponseDTO crearCategoria(Category category){
+        log.info("Creando categoria..");
+
+        if(repo.findByName(category.getName())){
+            throw new IllegalArgumentException("Ya exista esa categoria");
+        }
+
+        return mapper.toResponse(repo.save(category));
+    }
+
+    public CategoryResponseDTO modificarCategoria(Long id, Category category){
+    log.info("Modificando categoria con la ID: {}", id);
+
+    if (!repo.existsById(id)) {
+        throw new NoSuchElementException("No se encontro la categoria con esa id.");
+    }
+
+    if (repo.findByName(category.getName())) {
+        throw new IllegalArgumentException("Ya existe esa categoria");
+    }
+
+    Category existing = repo.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("No se encontro la categoria con esa id."));
+
+    existing.setName(category.getName());
+    Category updated = repo.save(existing);
+    return mapper.toResponse(updated);
+}
 }

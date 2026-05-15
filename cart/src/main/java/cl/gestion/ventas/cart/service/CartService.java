@@ -138,4 +138,28 @@ public class CartService {
 
         cartRepository.deleteByUserId(id);
     }
+
+    @Transactional
+    public CartResponse actulizarCarrito(Long userId,CartRequest request,Long tokenUserId){
+        if(!userId.equals(tokenUserId)){
+            log.warn("Acceso no autorizado: Usuario {} intento actualizar carrito de {}", tokenUserId, userId);
+            throw new AccessDeniedException("No tiene permiso para modificar este carrito.");
+        }
+        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new NoSuchElementException("Carrito no encontrado"));
+        
+        cart.getItems().clear();
+
+        for(CartItemDTO obj : request.getItems()){
+            productClient.getProductById(obj.getProductId());
+
+            CartItem newItem = CartItem.builder()
+                    .productId(obj.getProductId())
+                    .quantity(obj.getQuantity())
+                    .cart(cart)
+                    .build();
+            cart.getItems().add(newItem);
+        }
+        Cart actulizado = cartRepository.save(cart);
+        return obtenerTotal(actulizado);
+    }
 }

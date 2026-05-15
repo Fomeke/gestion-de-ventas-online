@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,45 +32,52 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<OrderResponse>> getOrders(){
+    public ResponseEntity<List<OrderResponse>> getOrders() {
         log.info("GET /orders");
         return ResponseEntity.ok(orderService.obtenerOrdenes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id){
-        log.info("GET /orders/{}",id);
+    public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id) {
+        log.info("GET /orders/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenPorId(id));
     }
 
     @GetMapping("/noitems/{id}")
-    public ResponseEntity<OrderSmallResponse> getSmallOrderId(@PathVariable Long id){
-        log.info("GET /orders/noitems/{}",id);
+    public ResponseEntity<OrderSmallResponse> getSmallOrderId(@PathVariable Long id) {
+        log.info("GET /orders/noitems/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenResumidaPorId(id));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@PathVariable Long userId){
-        log.info("GET /orders/user/{}",userId);
+    public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@PathVariable Long userId) {
+        log.info("GET /orders/user/{}", userId);
         return ResponseEntity.ok(orderService.obtenerOrdenesPorUserId(userId));
     }
 
     @GetMapping("/ship/{id}")
-    public ResponseEntity<OrderResponseForShipping> getOrderForShipping(@PathVariable Long id){
-        log.info("GET /orders/{}",id);
+    public ResponseEntity<OrderResponseForShipping> getOrderForShipping(@PathVariable Long id) {
+        log.info("GET /orders/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenParaEnvio(id));
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponse> add(@Valid @RequestBody OrderRequest request){
+    public ResponseEntity<OrderResponse> add(@Valid @RequestBody OrderRequest request) {
         log.info("POST /orders");
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.crear(request));
     }
 
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderResponse> updateState(@PathVariable Long orderId, @Valid @RequestBody OrderStatusUpdate request){
-        log.info("PUT /orders/{}",orderId);
+    public ResponseEntity<OrderResponse> updateState(@PathVariable Long orderId,
+            @Valid @RequestBody OrderStatusUpdate request) {
+        log.info("PUT /orders/{}", orderId);
         return ResponseEntity.ok(orderService.editarEstado(orderId, request));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        log.info("DELETE /v1/orders/{}", id);
+        orderService.eliminarOrden(id);
+        return ResponseEntity.noContent().build();
+    }
 }

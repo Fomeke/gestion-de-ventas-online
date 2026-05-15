@@ -30,38 +30,38 @@ public class ShipmentService {
     private OrderClient orderClient;
 
     @Transactional
-    public List<ShipmentResponse> obtenerEnvios(){
+    public List<ShipmentResponse> obtenerEnvios() {
         log.info("Obteniendo todos los envíos");
         List<Shipment> ships = shipmentRepository.findAll();
         return ships.stream().map(shipmentMapper::toResponse).toList();
     }
 
     @Transactional
-    public ShipmentResponse obtenerEnvioPorId(Long id){
-        log.info("Obteniendo envío con id: {}",id);
+    public ShipmentResponse obtenerEnvioPorId(Long id) {
+        log.info("Obteniendo envío con id: {}", id);
         Shipment ship = shipmentRepository.findById(id).get();
         return shipmentMapper.toResponse(ship);
     }
 
     @Transactional
-    public ShipmentResponse obtenerEnvioPorNumero(String number){
-        log.info("Obteniendo envio con numero de rastreo: {}",number);
+    public ShipmentResponse obtenerEnvioPorNumero(String number) {
+        log.info("Obteniendo envio con numero de rastreo: {}", number);
         Shipment ship = shipmentRepository.findByTrackingNumber(number).get();
         return shipmentMapper.toResponse(ship);
     }
 
     @Transactional
-    public ShipmentResponse crear(ShipmentRequest shipmentRequest){
+    public ShipmentResponse crear(ShipmentRequest shipmentRequest) {
         log.info("Verificando que envío exista y esté pagado");
 
         OrderResponseForShipping order = orderClient.getOrderById(shipmentRequest.getOrderId());
 
-        if(!order.getStatus().equals("PAID")){
+        if (!order.getStatus().equals("PAID")) {
             throw new IllegalStateException("La orden debe estar pagada (PAID) para el envío");
         }
-        
+
         log.info("Creando nuevo envío");
-        if(shipmentRepository.existsByTrackingNumber(shipmentRequest.getTrackingNumber())){
+        if (shipmentRepository.existsByTrackingNumber(shipmentRequest.getTrackingNumber())) {
             throw new IllegalArgumentException("El envío ya existe");
         }
 
@@ -72,11 +72,37 @@ public class ShipmentService {
     }
 
     @Transactional
-    public void eliminar(String number){
-        log.info("Elimiando envío con número de rastreo: {}",number);
-        if(!shipmentRepository.existsByTrackingNumber(number)){
+    public void eliminar(String number) {
+        log.info("Elimiando envío con número de rastreo: {}", number);
+        if (!shipmentRepository.existsByTrackingNumber(number)) {
             throw new NoSuchElementException("Envío no encontrado");
         }
         shipmentRepository.deleteByTrackingNumber(number);
+    }
+
+    @Transactional
+    public ShipmentResponse actualizar(String trackingNumber, ShipmentRequest request) {
+        Shipment existe = shipmentRepository.findByTrackingNumber(trackingNumber)
+                .orElseThrow(() -> new NoSuchElementException("Envío no encontrado"));
+
+        if (!request.getTrackingNumber().equalsIgnoreCase(existe.getTrackingNumber())
+                && shipmentRepository.existsByTrackingNumber(request.getTrackingNumber())) {
+            throw new IllegalArgumentException("El número de rastreo ya existe");
+        }
+
+        if (!request.getOrderId().equals(existe.getOrderId())) {
+            OrderResponseForShipping order = orderClient.getOrderById(request.getOrderId());
+            if (!"PAID".equals(order.getStatus())) {
+                throw new IllegalStateException("La orden debe estar pagada (PAID) para asociarla al envío");
+            }
+        }
+
+        existe.setOrderId(request.getOrderId());
+        existe.setTrackingNumber(request.getTrackingNumber());
+        existe.setCarrier(request.getCarrier());
+        existe.setShippingAddress(request.getShippingAddress());
+
+        Shipment saved = shipmentRepository.save(existe);
+        return shipmentMapper.toResponse(saved);
     }
 }
