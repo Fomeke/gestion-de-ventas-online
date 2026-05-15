@@ -131,5 +131,48 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     } 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
+            HttpServletRequest request) {
+        log.error("Solicitud inválida: {}",ex.getMessage());
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.name())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    } 
+
+    @ExceptionHandler(feign.FeignException.class)
+    public ResponseEntity<ApiErrorResponse> handleFeignException(feign.FeignException ex,
+            HttpServletRequest request) {
+        log.error("Error desde servicio externo: {}",ex.getMessage());
+
+        String message = "Error en microservicio externo";
+
+        String responseBody = ex.contentUTF8();
+
+        if(responseBody != null && !responseBody.isEmpty()){
+                if(responseBody.contains("\"message\":\"")){
+                        message = responseBody.split("\"message\":\"")[1].split("\"")[0];
+                }else if (responseBody.contains("\"errors\":[")){
+                        message = "Error de validación: "+ responseBody.split("\"errors\":\\[")[1].split("]")[0];
+                }
+        }else{
+                message = ex.getMessage();
+        }
+
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(ex.status() > 0 ? ex.status() : 500)
+                .error("EXTERNAL_SERVICE_ERROR")
+                .message(message)
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(ex.status() > 0 ? ex.status() : 500).body(errorResponse);
+    } 
     
 }

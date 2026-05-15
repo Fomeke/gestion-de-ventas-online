@@ -8,6 +8,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import feign.RequestInterceptor;
 
+
 @Configuration
 public class FeignConfig {
     @Bean
@@ -22,4 +23,5 @@ public class FeignConfig {
             }
         };
     }
+
 }

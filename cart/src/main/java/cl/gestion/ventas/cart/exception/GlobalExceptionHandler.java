@@ -132,6 +132,35 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
+
+        @ExceptionHandler(feign.FeignException.class)
+    public ResponseEntity<ApiErrorResponse> handleFeignException(feign.FeignException ex,
+            HttpServletRequest request) {
+        log.error("Error desde servicio externo: {}",ex.getMessage());
+
+        String message = "Error en microservicio externo";
+
+        String responseBody = ex.contentUTF8();
+
+        if(responseBody != null && !responseBody.isEmpty()){
+                if(responseBody.contains("\"message\":\"")){
+                        message = responseBody.split("\"message\":\"")[1].split("\"")[0];
+                }else if (responseBody.contains("\"errors\":[")){
+                        message = "Error de validación: "+ responseBody.split("\"errors\":\\[")[1].split("]")[0];
+                }
+        }else{
+                message = ex.getMessage();
+        }
+
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(ex.status() > 0 ? ex.status() : 500)
+                .error("EXTERNAL_SERVICE_ERROR")
+                .message(message)
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(ex.status() > 0 ? ex.status() : 500).body(errorResponse);
+    } 
     
     
 }

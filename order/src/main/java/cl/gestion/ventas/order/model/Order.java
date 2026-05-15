@@ -37,7 +37,7 @@ public class Order {
     @Column(name = "order_date",nullable = false)
     private LocalDateTime orderDate = LocalDateTime.now();
 
-    @Column(nullable = false)
+    @Column(nullable = false,precision=10,scale=2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL, orphanRemoval = true)

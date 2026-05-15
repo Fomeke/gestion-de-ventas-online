@@ -1,5 +1,7 @@
 package cl.gestion.ventas.cart.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,10 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @GetMapping
+    public ResponseEntity<List<CartResponse>> getAllCarts(){
+        return ResponseEntity.ok(cartService.obtenerCarritos());
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<CartResponse> getCart(@PathVariable Long userId) {

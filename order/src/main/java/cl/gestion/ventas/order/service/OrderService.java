@@ -35,19 +35,21 @@ public class OrderService {
     @Autowired
     private InventoryClient inventoryClient;
 
-
+    @Transactional
     public List<OrderResponse> obtenerOrdenes(){
         log.info("Obteniendo todas las ordenes");
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(orderMapper::toResponse).toList();
     }
 
+    @Transactional
     public OrderResponse obtenerOrdenPorId(Long id){
         log.info("Obteniendo order por su id: {}",id);
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No se encontro la orden con esa id"));
         return orderMapper.toResponse(order);
     }
 
+    @Transactional
     public List<OrderResponse> obtenerOrdenesPorUserId(Long userId){
         log.info("Obteniendo ordenes de usuario: {}",userId);
         List<Order> orders = orderRepository.findByUserId(userId);
@@ -83,8 +85,12 @@ public class OrderService {
     public OrderResponse editarEstado(Long orderId, OrderStatusUpdate update){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException("Orden no encontrada"));
 
-        if(order.getStatus() == OrderStatus.CANCELED || order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.SHIPPED){
+        if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED){
             throw new IllegalStateException("No se puede modificar la orden "+order.getId()+" porque su estado es: "+order.getStatus());
+        }
+
+        if(order.getStatus() == OrderStatus.SHIPPED && update.getNewStatus() != OrderStatus.DELIVERED){
+            throw new IllegalStateException("No se puede modificar la orden a un estado previo o cancelarse una vez enviada");
         }
 
         log.info("Cambiando estado de orden {} de {} a {}", orderId,order.getStatus(),update.getNewStatus());

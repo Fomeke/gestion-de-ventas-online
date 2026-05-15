@@ -57,6 +57,13 @@ public class CartService {
     }
     
     @Transactional
+    public List<CartResponse> obtenerCarritos(){
+        log.info("Obteniendo todos los carritos");
+        List<Cart> carts = cartRepository.findAll();
+        return carts.stream().map(cartMapper::toResponse).toList();
+    }
+
+    @Transactional
     public CartResponse obtenerCarritoPorId(Long userId){
         log.info("Obteniendo carrido con ID de usuario: {}",userId);
         Cart cart = cartRepository.findByUserId(userId)

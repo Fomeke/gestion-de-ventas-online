@@ -11,9 +11,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import cl.gestion.ventas.inventory.dto.ApiErrorResponse;
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,8 +33,6 @@ import lombok.extern.slf4j.Slf4j;
  * MethodArgumentNotValidException: Devuelve uno o más errores de validacion,
  *      aplicados en el DTO como @NotBlank o @NotNull
  * 
- * FeignException.NotFound: Ocurre si el cliente de Feign no encuentra un registro
- *      en el servicio externo.
  * 
  * RuntimeException: Excepcion "paraguas" que maneja el resto de excepciones
  *      no especificadas anteriormente.
@@ -120,24 +118,11 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
-    @ExceptionHandler(FeignException.NotFound.class)
-    public ResponseEntity<ApiErrorResponse> handleFeignNotFoundException(FeignException.NotFound ex,
-            HttpServletRequest request) {
-        log.error("Producto no existe en servicio de Productos");
-        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_FOUND.name())
-                .message("No se encontró el Producto en el servicio de Productos")
-                .path(request.getRequestURI())
-                .build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
             HttpServletRequest request) {
-        log.error("Stock insuficiente para la solicitud");
+        log.error("Error de validación: ",ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -147,5 +132,48 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
+    
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ApiErrorResponse> handleResponseStatusException(ResponseStatusException ex,
+            HttpServletRequest request) {
+        log.error("Error de validación: ",ex.getMessage());
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.name())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(feign.FeignException.class)
+    public ResponseEntity<ApiErrorResponse> handleFeignException(feign.FeignException ex,
+            HttpServletRequest request) {
+        log.error("Error desde servicio externo: {}",ex.getMessage());
+
+        String message = "Error en microservicio externo";
+
+        String responseBody = ex.contentUTF8();
+
+        if(responseBody != null && !responseBody.isEmpty()){
+                if(responseBody.contains("\"message\":\"")){
+                        message = responseBody.split("\"message\":\"")[1].split("\"")[0];
+                }else if (responseBody.contains("\"errors\":[")){
+                        message = "Error de validación: "+ responseBody.split("\"errors\":\\[")[1].split("]")[0];
+                }
+        }else{
+                message = ex.getMessage();
+        }
+
+        ApiErrorResponse errorResponse = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(ex.status() > 0 ? ex.status() : 500)
+                .error("EXTERNAL_SERVICE_ERROR")
+                .message(message)
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(ex.status() > 0 ? ex.status() : 500).body(errorResponse);
+    } 
     
 }
