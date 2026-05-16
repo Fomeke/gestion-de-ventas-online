@@ -30,56 +30,62 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<UserResponse> obtenerUsuarios(){
+    public List<UserResponse> obtenerUsuarios() {
         log.info("Obteniendo todos los usuarios");
         List<User> users = userRepository.findAll();
         return users.stream().map(userMapper::toResponse).toList();
     }
 
-    public UserResponse obtenerUsuarioPorId(Long id){
-        log.info("Obteniendo usuario con id: {}",id);
+    public UserResponse obtenerUsuarioPorId(Long id) {
+        log.info("Obteniendo usuario con id: {}", id);
         User user = userRepository.findById(id).get();
         return userMapper.toResponse(user);
     }
 
-    public UserResponse obtenerUsurarioPorNombre(String username){
-        log.info("Obtentiendo usuario con nombre de usuario: {}",username);
+    public UserResponse obtenerUsurarioPorNombre(String username) {
+        log.info("Obtentiendo usuario con nombre de usuario: {}", username);
         User user = userRepository.findByUsername(username).get();
         return userMapper.toResponse(user);
     }
 
-    public UserResponse crear(UserRequest userRequest){
+    public UserResponse crear(UserRequest userRequest) {
         log.info("Creando nuevo usuario");
-        if(userRepository.existsByUsername(userRequest.getUsername()) || userRepository.existsByFullName(userRequest.getFullName())){
+        if (userRepository.existsByUsername(userRequest.getUsername())
+                || userRepository.existsByFullName(userRequest.getFullName())) {
             throw new IllegalArgumentException("Usuario ya existe");
         }
         User user = userRepository.save(userMapper.fromRequest(userRequest));
         return userMapper.toResponse(user);
     }
 
-    public void eliminar(Long id){
-        log.info("Eliminando usuario con ID: {}",id);
-        if(!userRepository.existsById(id)){
-            throw new NoSuchElementException("Usuario no encontrado con id: "+id);
+    public void eliminar(Long id) {
+        log.info("Eliminando usuario con ID: {}", id);
+        if (!userRepository.existsById(id)) {
+            throw new NoSuchElementException("Usuario no encontrado con id: " + id);
         }
         userRepository.deleteById(id);
     }
-    
-    public UserResponse modificarProducto(Long id, UserRequest request){
+
+    public UserResponse modificarProducto(Long id, UserRequest request) {
         log.info("Modificando usuario con la ID: {}", id);
 
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new NoSuchElementException("No se encontro el usuario con esa id."));
-        
+                .orElseThrow(() -> new NoSuchElementException("No se encontro el usuario con esa id."));
 
-        if(request.getUsername() != null){
+        if (request.getUsername() != null) {
             user.setUsername(request.getUsername());
         }
-        if(request.getEmail() != null){
+        if (request.getEmail() != null) {
             user.setCorreo(request.getEmail());
         }
-        if(request.getPhone() != null){
+        if (request.getPhone() != null) {
             user.setPhone(request.getPhone());
+        }
+        if (request.getFullName() != null) {
+            user.setFullName(request.getFullName());
+        }
+        if (request.getPassword() != null) {
+            user.setPassword(request.getPassword());
         }
 
         user = userRepository.save(user);
