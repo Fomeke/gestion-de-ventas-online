@@ -1,0 +1,94 @@
+2026-05-16T15:27:22.447-04:00  INFO 10868 --- [notification] [main] c.g.v.n.NotificationApplication          : Starting NotificationApplication using Java 21.0.10 with PID 10868 (C:\Users\ferdi\Documents\gestion-de-ventas-online\notification\target\classes started by ferdi in C:\Users\ferdi\Documents\gestion-de-ventas-online)
+2026-05-16T15:27:22.450-04:00  INFO 10868 --- [notification] [main] c.g.v.n.NotificationApplication          : No active profile set, falling back to 1 default profile: "default"
+2026-05-16T15:27:23.255-04:00  INFO 10868 --- [notification] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T15:27:23.375-04:00  INFO 10868 --- [notification] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 108 ms. Found 1 JPA repository interface.
+2026-05-16T15:27:23.862-04:00  INFO 10868 --- [notification] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8088 (http)
+2026-05-16T15:27:23.876-04:00  INFO 10868 --- [notification] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T15:27:23.878-04:00  INFO 10868 --- [notification] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-16T15:27:23.953-04:00  INFO 10868 --- [notification] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1462 ms
+2026-05-16T15:27:24.327-04:00  INFO 10868 --- [notification] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T15:27:24.619-04:00  INFO 10868 --- [notification] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6dcbbb49
+2026-05-16T15:27:24.621-04:00  INFO 10868 --- [notification] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T15:27:24.660-04:00  INFO 10868 --- [notification] [main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/notification_db (MySQL 8.4)
+2026-05-16T15:27:24.670-04:00  WARN 10868 --- [notification] [main] o.f.c.internal.database.base.Database    : Using MySQL 8.4 which is newer than the version Flyway has been verified with. The latest verified version of MySQL is 8.1.
+2026-05-16T15:27:24.704-04:00  INFO 10868 --- [notification] [main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `notification_db`.`flyway_schema_history` does not exist yet
+2026-05-16T15:27:24.707-04:00  INFO 10868 --- [notification] [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.025s)
+2026-05-16T15:27:24.726-04:00  INFO 10868 --- [notification] [main] org.flywaydb.core.Flyway                 : All configured schemas are empty; baseline operation skipped. A baseline or migration script with a lower version than the baseline version may execute if available. Check the Schemas parameter if this is not intended.
+2026-05-16T15:27:24.732-04:00  INFO 10868 --- [notification] [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `notification_db`.`flyway_schema_history` ...
+2026-05-16T15:27:24.849-04:00  INFO 10868 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Current version of schema `notification_db`: << Empty Schema >>
+2026-05-16T15:27:24.858-04:00  INFO 10868 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Migrating schema `notification_db` to version "1 - create table notification"
+2026-05-16T15:27:24.968-04:00  INFO 10868 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Migrating schema `notification_db` to version "2 - initial data"
+2026-05-16T15:27:24.993-04:00  INFO 10868 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Successfully applied 2 migrations to schema `notification_db`, now at version v2 (execution time 00:00.087s)
+2026-05-16T15:27:25.078-04:00  INFO 10868 --- [notification] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-16T15:27:25.128-04:00  INFO 10868 --- [notification] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-16T15:27:25.473-04:00  INFO 10868 --- [notification] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T15:27:25.545-04:00  INFO 10868 --- [notification] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/notification_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.3
+	Default catalog/schema: notification_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T15:27:26.137-04:00  INFO 10868 --- [notification] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T15:27:26.172-04:00  INFO 10868 --- [notification] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T15:27:26.362-04:00  INFO 10868 --- [notification] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T15:27:26.934-04:00  INFO 10868 --- [notification] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8088 (http) with context path '/api'
+2026-05-16T15:27:26.939-04:00  INFO 10868 --- [notification] [main] c.g.v.n.NotificationApplication          : Started NotificationApplication in 4.917 seconds (process running for 5.32)
+2026-05-16T16:24:17.900-04:00  INFO 13816 --- [notification] [main] c.g.v.n.NotificationApplication          : Starting NotificationApplication using Java 21.0.10 with PID 13816 (C:\Users\ferdi\Documents\gestion-de-ventas-online\notification\target\classes started by ferdi in C:\Users\ferdi\Documents\gestion-de-ventas-online)
+2026-05-16T16:24:17.903-04:00  INFO 13816 --- [notification] [main] c.g.v.n.NotificationApplication          : No active profile set, falling back to 1 default profile: "default"
+2026-05-16T16:24:18.590-04:00  INFO 13816 --- [notification] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T16:24:18.730-04:00  INFO 13816 --- [notification] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 131 ms. Found 1 JPA repository interface.
+2026-05-16T16:24:19.225-04:00  INFO 13816 --- [notification] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8088 (http)
+2026-05-16T16:24:19.239-04:00  INFO 13816 --- [notification] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T16:24:19.239-04:00  INFO 13816 --- [notification] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-16T16:24:19.309-04:00  INFO 13816 --- [notification] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1360 ms
+2026-05-16T16:24:19.676-04:00  INFO 13816 --- [notification] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T16:24:19.967-04:00  INFO 13816 --- [notification] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ff2266c
+2026-05-16T16:24:19.969-04:00  INFO 13816 --- [notification] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T16:24:20.012-04:00  INFO 13816 --- [notification] [main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/notification_db (MySQL 8.4)
+2026-05-16T16:24:20.023-04:00  WARN 13816 --- [notification] [main] o.f.c.internal.database.base.Database    : Using MySQL 8.4 which is newer than the version Flyway has been verified with. The latest verified version of MySQL is 8.1.
+2026-05-16T16:24:20.065-04:00  INFO 13816 --- [notification] [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.029s)
+2026-05-16T16:24:20.079-04:00  INFO 13816 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Current version of schema `notification_db`: 2
+2026-05-16T16:24:20.084-04:00  INFO 13816 --- [notification] [main] o.f.core.internal.command.DbMigrate      : Schema `notification_db` is up to date. No migration necessary.
+2026-05-16T16:24:20.197-04:00  INFO 13816 --- [notification] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-16T16:24:20.246-04:00  INFO 13816 --- [notification] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-16T16:24:20.608-04:00  INFO 13816 --- [notification] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T16:24:20.683-04:00  INFO 13816 --- [notification] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/notification_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.3
+	Default catalog/schema: notification_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T16:24:21.259-04:00  INFO 13816 --- [notification] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T16:24:21.291-04:00  INFO 13816 --- [notification] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T16:24:21.479-04:00  INFO 13816 --- [notification] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T16:24:22.071-04:00  INFO 13816 --- [notification] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8088 (http) with context path '/api'
+2026-05-16T16:24:22.077-04:00  INFO 13816 --- [notification] [main] c.g.v.n.NotificationApplication          : Started NotificationApplication in 4.63 seconds (process running for 5.05)
+2026-05-16T16:48:48.183-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-16T16:48:48.183-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-16T16:48:48.185-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-16T16:48:48.279-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] c.g.v.n.s.JwtAuthenticationFilter        : Token valido para usuario: 1
+2026-05-16T16:48:48.299-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] c.g.v.n.c.NotificationController         : GET api/v1/notification
+2026-05-16T16:48:48.299-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-1] c.g.v.n.service.NotificationService      : Obteniendo lista de notificaciones..
+2026-05-16T16:51:42.977-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-2] c.g.v.n.s.JwtAuthenticationFilter        : Token valido para usuario: 1
+2026-05-16T16:51:43.050-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-2] c.g.v.n.c.NotificationController         : PUT api/v1/notification/5
+2026-05-16T16:51:43.062-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-2] c.g.v.notification.client.OrderClient    : Validando existencia de la orden ID: 1
+2026-05-16T16:51:50.968-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-3] c.g.v.n.s.JwtAuthenticationFilter        : Token valido para usuario: 1
+2026-05-16T16:51:50.969-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-3] c.g.v.n.c.NotificationController         : GET api/v1/notification
+2026-05-16T16:51:50.969-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-3] c.g.v.n.service.NotificationService      : Obteniendo lista de notificaciones..
+2026-05-16T16:52:42.259-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-4] c.g.v.n.s.JwtAuthenticationFilter        : Token valido para usuario: 1
+2026-05-16T16:52:42.260-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-4] c.g.v.n.c.NotificationController         : DELETE api/v1/notification/5
+2026-05-16T16:52:45.272-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-5] c.g.v.n.s.JwtAuthenticationFilter        : Token valido para usuario: 1
+2026-05-16T16:52:45.272-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-5] c.g.v.n.c.NotificationController         : GET api/v1/notification
+2026-05-16T16:52:45.272-04:00  INFO 13816 --- [notification] [http-nio-8088-exec-5] c.g.v.n.service.NotificationService      : Obteniendo lista de notificaciones..

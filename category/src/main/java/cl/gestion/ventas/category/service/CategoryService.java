@@ -47,10 +47,10 @@ public class CategoryService {
     public CategoryResponseDTO crearCategoria(Category category){
         log.info("Creando categoria..");
 
-        if(repo.findByName(category.getName())){
-            throw new IllegalArgumentException("Ya exista esa categoria");
+        if(repo.findByName(category.getName()).isPresent()){
+            throw new IllegalArgumentException("Esa categoria ya existe.");
         }
-
+        
         return mapper.toResponse(repo.save(category));
     }
 
@@ -61,7 +61,7 @@ public class CategoryService {
         throw new NoSuchElementException("No se encontro la categoria con esa id.");
     }
 
-    if (repo.findByName(category.getName())) {
+    if (repo.findByName(category.getName()).isPresent()) {
         throw new IllegalArgumentException("Ya existe esa categoria");
     }
 

@@ -1,0 +1,216 @@
+2026-05-16T15:26:56.292-04:00  INFO 20356 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Starting ShippingApplication using Java 21.0.10 with PID 20356 (C:\Users\ferdi\Documents\gestion-de-ventas-online\shipping\target\classes started by ferdi in C:\Users\ferdi\Documents\gestion-de-ventas-online)
+2026-05-16T15:26:56.295-04:00 DEBUG 20356 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-16T15:26:56.296-04:00  INFO 20356 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-05-16T15:26:57.208-04:00  INFO 20356 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T15:26:57.328-04:00  INFO 20356 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 112 ms. Found 1 JPA repository interface.
+2026-05-16T15:26:57.516-04:00  INFO 20356 --- [shipping] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=aef84018-a52b-3ce9-878e-256f23bd969b
+2026-05-16T15:26:57.907-04:00  INFO 20356 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-05-16T15:26:57.930-04:00  INFO 20356 --- [shipping] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T15:26:57.931-04:00  INFO 20356 --- [shipping] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-16T15:26:58.014-04:00  INFO 20356 --- [shipping] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1670 ms
+2026-05-16T15:26:58.074-04:00 DEBUG 20356 --- [shipping] [main] c.g.v.s.s.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2026-05-16T15:26:58.460-04:00  INFO 20356 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T15:26:58.815-04:00  INFO 20356 --- [shipping] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@71262020
+2026-05-16T15:26:58.817-04:00  INFO 20356 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T15:26:58.869-04:00  INFO 20356 --- [shipping] [main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/shipping_db (MySQL 8.4)
+2026-05-16T15:26:58.883-04:00  WARN 20356 --- [shipping] [main] o.f.c.internal.database.base.Database    : Using MySQL 8.4 which is newer than the version Flyway has been verified with. The latest verified version of MySQL is 8.1.
+2026-05-16T15:26:58.926-04:00  INFO 20356 --- [shipping] [main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `shipping_db`.`flyway_schema_history` does not exist yet
+2026-05-16T15:26:58.931-04:00  INFO 20356 --- [shipping] [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.031s)
+2026-05-16T15:26:58.947-04:00  INFO 20356 --- [shipping] [main] org.flywaydb.core.Flyway                 : All configured schemas are empty; baseline operation skipped. A baseline or migration script with a lower version than the baseline version may execute if available. Check the Schemas parameter if this is not intended.
+2026-05-16T15:26:58.953-04:00  INFO 20356 --- [shipping] [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `shipping_db`.`flyway_schema_history` ...
+2026-05-16T15:26:59.067-04:00  INFO 20356 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Current version of schema `shipping_db`: << Empty Schema >>
+2026-05-16T15:26:59.079-04:00  INFO 20356 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Migrating schema `shipping_db` to version "1 - create table shipment"
+2026-05-16T15:26:59.177-04:00  INFO 20356 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Migrating schema `shipping_db` to version "2 - initial data"
+2026-05-16T15:26:59.206-04:00  INFO 20356 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Successfully applied 2 migrations to schema `shipping_db`, now at version v2 (execution time 00:00.069s)
+2026-05-16T15:26:59.307-04:00  INFO 20356 --- [shipping] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-16T15:26:59.359-04:00  INFO 20356 --- [shipping] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-16T15:26:59.799-04:00  INFO 20356 --- [shipping] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T15:26:59.885-04:00  INFO 20356 --- [shipping] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/shipping_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.3
+	Default catalog/schema: shipping_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T15:27:00.537-04:00  INFO 20356 --- [shipping] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T15:27:00.577-04:00  INFO 20356 --- [shipping] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T15:27:00.653-04:00  INFO 20356 --- [shipping] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T15:27:01.053-04:00  WARN 20356 --- [shipping] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 823f876c-2d01-4dc9-916f-5fcc396a3040
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-16T15:27:01.060-04:00  INFO 20356 --- [shipping] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-16T15:27:02.513-04:00  INFO 20356 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T15:27:03.526-04:00  INFO 20356 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T15:27:03.575-04:00  INFO 20356 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/api'
+2026-05-16T15:27:04.581-04:00  INFO 20356 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T15:27:05.589-04:00  INFO 20356 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T15:27:05.595-04:00  INFO 20356 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Started ShippingApplication in 10.732 seconds (process running for 11.275)
+2026-05-16T16:24:04.581-04:00  INFO 23104 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Starting ShippingApplication using Java 21.0.10 with PID 23104 (C:\Users\ferdi\Documents\gestion-de-ventas-online\shipping\target\classes started by ferdi in C:\Users\ferdi\Documents\gestion-de-ventas-online)
+2026-05-16T16:24:04.584-04:00 DEBUG 23104 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-16T16:24:04.585-04:00  INFO 23104 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-05-16T16:24:05.287-04:00  INFO 23104 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T16:24:05.421-04:00  INFO 23104 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 123 ms. Found 1 JPA repository interface.
+2026-05-16T16:24:05.621-04:00  INFO 23104 --- [shipping] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=aef84018-a52b-3ce9-878e-256f23bd969b
+2026-05-16T16:24:05.974-04:00  INFO 23104 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-05-16T16:24:05.992-04:00  INFO 23104 --- [shipping] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T16:24:05.992-04:00  INFO 23104 --- [shipping] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-16T16:24:06.063-04:00  INFO 23104 --- [shipping] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1432 ms
+2026-05-16T16:24:06.112-04:00 DEBUG 23104 --- [shipping] [main] c.g.v.s.s.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2026-05-16T16:24:06.434-04:00  INFO 23104 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T16:24:06.721-04:00  INFO 23104 --- [shipping] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@32c0fecc
+2026-05-16T16:24:06.723-04:00  INFO 23104 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T16:24:06.768-04:00  INFO 23104 --- [shipping] [main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/shipping_db (MySQL 8.4)
+2026-05-16T16:24:06.781-04:00  WARN 23104 --- [shipping] [main] o.f.c.internal.database.base.Database    : Using MySQL 8.4 which is newer than the version Flyway has been verified with. The latest verified version of MySQL is 8.1.
+2026-05-16T16:24:06.830-04:00  INFO 23104 --- [shipping] [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.034s)
+2026-05-16T16:24:06.848-04:00  INFO 23104 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Current version of schema `shipping_db`: 2
+2026-05-16T16:24:06.851-04:00  INFO 23104 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Schema `shipping_db` is up to date. No migration necessary.
+2026-05-16T16:24:06.947-04:00  INFO 23104 --- [shipping] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-16T16:24:06.999-04:00  INFO 23104 --- [shipping] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-16T16:24:07.521-04:00  INFO 23104 --- [shipping] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T16:24:07.612-04:00  INFO 23104 --- [shipping] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/shipping_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.3
+	Default catalog/schema: shipping_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T16:24:08.296-04:00  INFO 23104 --- [shipping] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T16:24:08.333-04:00  INFO 23104 --- [shipping] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T16:24:08.406-04:00  INFO 23104 --- [shipping] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T16:24:08.958-04:00  WARN 23104 --- [shipping] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 188c1e72-618d-4144-85fd-62b6f4abb23b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-16T16:24:08.966-04:00  INFO 23104 --- [shipping] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-16T16:24:10.449-04:00  INFO 23104 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T16:24:11.464-04:00  INFO 23104 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T16:24:11.512-04:00  INFO 23104 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/api'
+2026-05-16T16:24:12.528-04:00  INFO 23104 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T16:24:13.537-04:00  INFO 23104 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T16:24:13.546-04:00  INFO 23104 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Started ShippingApplication in 10.371 seconds (process running for 10.911)
+2026-05-16T18:07:32.072-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-16T18:07:32.075-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-16T18:07:32.086-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2026-05-16T18:07:32.197-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:07:33.908-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:07:33.920-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.controller.ShippingController    : GET /shipments
+2026-05-16T18:07:33.931-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.shipping.service.ShipmentService   : Obteniendo todos los envíos
+2026-05-16T18:08:57.365-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:08:57.445-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:08:57.704-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:09:00.240-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:00.241-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:09:00.246-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:09:01.268-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:01.270-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:09:01.272-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:09:01.408-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:01.409-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:09:01.412-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:09:03.348-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-7] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:03.350-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-7] c.g.v.s.e.GlobalExceptionHandler         : Estado inválido para solicitud
+2026-05-16T18:09:05.183-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-8] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:05.183-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-8] c.g.v.s.controller.ShippingController    : GET /shipments
+2026-05-16T18:09:05.184-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-8] c.g.v.shipping.service.ShipmentService   : Obteniendo todos los envíos
+2026-05-16T18:09:17.814-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-9] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:17.815-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-9] c.g.v.s.e.GlobalExceptionHandler         : Estado inválido para solicitud
+2026-05-16T18:09:46.216-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-10] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:09:46.216-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-10] c.g.v.s.controller.ShippingController    : GET /shipments
+2026-05-16T18:09:46.217-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-10] c.g.v.shipping.service.ShipmentService   : Obteniendo todos los envíos
+2026-05-16T18:10:17.818-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:10:17.819-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.controller.ShippingController    : GET /shipments
+2026-05-16T18:10:17.819-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-1] c.g.v.shipping.service.ShipmentService   : Obteniendo todos los envíos
+2026-05-16T18:10:49.621-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:10:49.622-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.controller.ShippingController    : GET /shipments
+2026-05-16T18:10:49.623-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-2] c.g.v.shipping.service.ShipmentService   : Obteniendo todos los envíos
+2026-05-16T18:10:52.294-04:00  INFO 23104 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:10:52.295-04:00 ERROR 23104 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.e.GlobalExceptionHandler         : Estado inválido para solicitud
+2026-05-16T18:11:41.608-04:00  INFO 4484 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Starting ShippingApplication using Java 21.0.10 with PID 4484 (C:\Users\ferdi\Documents\gestion-de-ventas-online\shipping\target\classes started by ferdi in C:\Users\ferdi\Documents\gestion-de-ventas-online)
+2026-05-16T18:11:41.611-04:00 DEBUG 4484 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-16T18:11:41.612-04:00  INFO 4484 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-05-16T18:11:42.332-04:00  INFO 4484 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T18:11:42.457-04:00  INFO 4484 --- [shipping] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 114 ms. Found 1 JPA repository interface.
+2026-05-16T18:11:42.647-04:00  INFO 4484 --- [shipping] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=aef84018-a52b-3ce9-878e-256f23bd969b
+2026-05-16T18:11:43.019-04:00  INFO 4484 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-05-16T18:11:43.040-04:00  INFO 4484 --- [shipping] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T18:11:43.040-04:00  INFO 4484 --- [shipping] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-16T18:11:43.111-04:00  INFO 4484 --- [shipping] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1456 ms
+2026-05-16T18:11:43.159-04:00 DEBUG 4484 --- [shipping] [main] c.g.v.s.s.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2026-05-16T18:11:43.485-04:00  INFO 4484 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T18:11:43.778-04:00  INFO 4484 --- [shipping] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ca2be53
+2026-05-16T18:11:43.781-04:00  INFO 4484 --- [shipping] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T18:11:43.824-04:00  INFO 4484 --- [shipping] [main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/shipping_db (MySQL 8.4)
+2026-05-16T18:11:43.837-04:00  WARN 4484 --- [shipping] [main] o.f.c.internal.database.base.Database    : Using MySQL 8.4 which is newer than the version Flyway has been verified with. The latest verified version of MySQL is 8.1.
+2026-05-16T18:11:43.890-04:00  INFO 4484 --- [shipping] [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.038s)
+2026-05-16T18:11:43.915-04:00  INFO 4484 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Current version of schema `shipping_db`: 2
+2026-05-16T18:11:43.919-04:00  INFO 4484 --- [shipping] [main] o.f.core.internal.command.DbMigrate      : Schema `shipping_db` is up to date. No migration necessary.
+2026-05-16T18:11:44.015-04:00  INFO 4484 --- [shipping] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-16T18:11:44.081-04:00  INFO 4484 --- [shipping] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.12.Final
+2026-05-16T18:11:44.457-04:00  INFO 4484 --- [shipping] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T18:11:44.531-04:00  INFO 4484 --- [shipping] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/shipping_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.4.3
+	Default catalog/schema: shipping_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T18:11:45.108-04:00  INFO 4484 --- [shipping] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T18:11:45.138-04:00  INFO 4484 --- [shipping] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T18:11:45.202-04:00  INFO 4484 --- [shipping] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T18:11:45.533-04:00  WARN 4484 --- [shipping] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: f9d310cc-b875-4711-bb4f-1fbda410c560
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-16T18:11:45.541-04:00  INFO 4484 --- [shipping] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-16T18:11:46.890-04:00  INFO 4484 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T18:11:47.896-04:00  INFO 4484 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T18:11:47.930-04:00  INFO 4484 --- [shipping] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/api'
+2026-05-16T18:11:48.941-04:00  INFO 4484 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T18:11:49.944-04:00  INFO 4484 --- [shipping] [main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2026-05-16T18:11:49.949-04:00  INFO 4484 --- [shipping] [main] c.g.ventas.shipping.ShippingApplication  : Started ShippingApplication in 9.759 seconds (process running for 10.305)
+2026-05-16T18:11:53.612-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-16T18:11:53.613-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-16T18:11:53.614-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-05-16T18:11:53.697-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:11:53.721-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.controller.ShippingController    : GET /shipments/1
+2026-05-16T18:11:53.729-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-1] c.g.v.shipping.service.ShipmentService   : Obteniendo envio con numero de rastreo: 1
+2026-05-16T18:11:54.051-04:00 ERROR 4484 --- [shipping] [http-nio-8081-exec-1] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: No value present
+2026-05-16T18:12:04.573-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:12:04.574-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-2] c.g.v.s.controller.ShippingController    : GET /shipments/1
+2026-05-16T18:12:04.576-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-2] c.g.v.shipping.service.ShipmentService   : Obteniendo envío con id: 1
+2026-05-16T18:12:22.600-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:12:22.667-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:12:22.672-04:00 ERROR 4484 --- [shipping] [http-nio-8081-exec-3] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:12:33.022-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:12:33.023-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:12:33.026-04:00 ERROR 4484 --- [shipping] [http-nio-8081-exec-4] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:12:33.351-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:12:33.352-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:12:33.355-04:00 ERROR 4484 --- [shipping] [http-nio-8081-exec-5] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:12:33.588-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:12:33.590-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.controller.ShippingController    : PUT /shipments/1
+2026-05-16T18:12:33.593-04:00 ERROR 4484 --- [shipping] [http-nio-8081-exec-6] c.g.v.s.e.GlobalExceptionHandler         : Envío no encontrado: Envío no encontrado
+2026-05-16T18:13:20.727-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-7] c.g.v.s.s.JwtAuthenticationFilter        : Token válido para usuario: 1
+2026-05-16T18:13:20.728-04:00  INFO 4484 --- [shipping] [http-nio-8081-exec-7] c.g.v.s.controller.ShippingController    : PUT /shipments/ABC432875

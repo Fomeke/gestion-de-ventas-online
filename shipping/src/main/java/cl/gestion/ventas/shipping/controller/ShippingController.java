@@ -33,7 +33,7 @@ public class ShippingController {
         return ResponseEntity.ok(shipmentService.obtenerEnvios());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("shipmentById/{id}")
     public ResponseEntity<ShipmentResponse> getShipmentById(@PathVariable Long id) {
         log.info("GET /shipments/{}", id);
 

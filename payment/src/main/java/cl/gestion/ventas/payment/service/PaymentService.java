@@ -82,7 +82,7 @@ public class PaymentService {
 
         payment.setAmount(request.getAmount());
         payment.setPaymentMethod(request.getPaymentMethod());
-        // Opcional: re-intentar procesar -> marcar SUCCESS y notificar orden
+        
         client.actualizarEstado(order.getId(), "PAID", token);
         payment.setStatus(PaymentStatus.SUCCESS);
 
