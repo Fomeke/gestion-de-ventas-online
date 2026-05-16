@@ -7,8 +7,8 @@ Está compuesto por 10 microservicios integrados mediante comunicación remota (
 Cada microservicio esta estructurado bajo el patrón **CSR (Controller-Service-Repository)**.
 
 ## Integrantes
-* **[Sebastian Navarro]** - [Estudiante]
-* **[Jose Calderon]** - [Estudiante]
+* **Sebastian Navarro** - Estudiante
+* **José Calderón** - Estudiante
 
 ---
 
