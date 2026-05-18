@@ -209,3 +209,21 @@ Gestiona la logística, despachos y números de seguimiento de las compras.
 * `POST /v1/shipments`: Crea la logística de un nuevo envío.
 * `PUT /v1/shipments/{trackingNum}`: Actualiza el estado o información de un envío utilizando su número de seguimiento.
 * `DELETE /v1/shipments/{trackingNum}`: Elimina o cancela un envío utilizando su número de seguimiento.
+
+
+## Configuración de Bases de Datos
+
+Antes de ejecutar los microservicios, debes crear las bases de datos correspondientes en tu servidor SQL. Ejecuta el siguiente script para generar las 10 bases de datos requeridas:
+
+```sql
+
+CREATE DATABASE IF NOT EXISTS auth_db;
+CREATE DATABASE IF NOT EXISTS cart_db;
+CREATE DATABASE IF NOT EXISTS category_db;
+CREATE DATABASE IF NOT EXISTS inventory_db;
+CREATE DATABASE IF NOT EXISTS notification_db;
+CREATE DATABASE IF NOT EXISTS order_db;
+CREATE DATABASE IF NOT EXISTS payment_db;
+CREATE DATABASE IF NOT EXISTS product_db;
+CREATE DATABASE IF NOT EXISTS review_db;
+CREATE DATABASE IF NOT EXISTS shipping_db;
