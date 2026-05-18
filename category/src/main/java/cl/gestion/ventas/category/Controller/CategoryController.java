@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.gestion.ventas.category.dto.CategoryRequest;
 import cl.gestion.ventas.category.dto.CategoryResponseDTO;
 import cl.gestion.ventas.category.model.Category;
 import cl.gestion.ventas.category.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -49,13 +51,13 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> updateCategoria(
             @PathVariable Long id,
-            @RequestBody Category category) {
+            @Valid @RequestBody CategoryRequest category) {
         log.info("PUT api/category/{}/modificarCategoria", id);
         return ResponseEntity.ok(service.modificarCategoria(id, category));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> crearCategoria(@RequestBody Category category){
+    public ResponseEntity<CategoryResponseDTO> crearCategoria(@Valid @RequestBody CategoryRequest category){
         log.info("POST /api/category/creandoCategoria");
         return ResponseEntity.status(HttpStatus.CREATED).body(service.crearCategoria(category));
     }

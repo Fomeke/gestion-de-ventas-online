@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.gestion.ventas.category.dto.CategoryRequest;
 import cl.gestion.ventas.category.dto.CategoryResponseDTO;
 import cl.gestion.ventas.category.mapper.CategoryMapper;
 import cl.gestion.ventas.category.model.Category;
@@ -44,17 +45,18 @@ public class CategoryService {
         repo.deleteById(id);
     }
 
-    public CategoryResponseDTO crearCategoria(Category category){
+    public CategoryResponseDTO crearCategoria(CategoryRequest category){
         log.info("Creando categoria..");
 
         if(repo.findByName(category.getName()).isPresent()){
             throw new IllegalArgumentException("Esa categoria ya existe.");
         }
         
-        return mapper.toResponse(repo.save(category));
+        Category request = mapper.fromRequest(category);
+        return mapper.toResponse(repo.save(request));
     }
 
-    public CategoryResponseDTO modificarCategoria(Long id, Category category){
+    public CategoryResponseDTO modificarCategoria(Long id, CategoryRequest category){
     log.info("Modificando categoria con la ID: {}", id);
 
     if (!repo.existsById(id)) {
