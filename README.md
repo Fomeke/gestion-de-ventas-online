@@ -83,21 +83,21 @@ El sistema está compuesto por 10 microservicios independientes, comunicados ent
 
    #### Segundo:
 
-   - `category`
-   - `product`
-   - `inventory`
+   - `category` (Puerto: `8086`)
+   - `product` (Puerto: `8085`)
+   - `inventory` (Puerto: `8083`)
 
    #### Tercero:
 
-   - `cart`
-   - `order`
-   - `payment`
-   - `shipping`
+   - `cart` (Puerto: `8082`)
+   - `order` (Puerto: `8084`)
+   - `payment` (Puerto: `8089`)
+   - `shipping`(Puerto: `8081`)
 
    #### Cuarto:
 
-   - `review`
-   - `notification`
+   - `review` (Puerto: `8087`)
+   - `notification` (Puerto: `8088`)
 
 ## Endpoints de cada microservicio
 
@@ -106,68 +106,68 @@ Maneja la seguridad, generación de JWT y la gestión del ciclo de vida de los u
 **Rutas Base:** `/v1/auth` y `/v1/usuarios`
 
 * **Autenticación:**
-  * `POST /v1/auth`: Inicia sesión. Recibe credenciales (`LoginRequest`) y devuelve un token JWT válido si el usuario existe. Es la única ruta pública por defecto.
+  * `POST api/v1/auth`: Inicia sesión. Recibe credenciales (`LoginRequest`) y devuelve un token JWT válido si el usuario existe. Es la única ruta pública por defecto.
 * **Usuarios:**
-  * `GET /v1/usuarios`: Obtiene una lista con todos los usuarios registrados.
-  * `GET /v1/usuarios/{id}`: Obtiene el detalle de un usuario específico según su ID.
-  * `GET /v1/usuarios/username/{username}`: Busca y retorna un usuario específico mediante su nombre de usuario.
-  * `POST /v1/usuarios`: Registra un nuevo usuario en la base de datos.
-  * `PUT /v1/usuarios/{id}`: Actualiza los datos de un usuario existente.
-  * `DELETE /v1/usuarios/{id}`: Elimina un usuario por completo según su ID.
+  * `GET api/v1/usuarios`: Obtiene una lista con todos los usuarios registrados.
+  * `GET api/v1/usuarios/{id}`: Obtiene el detalle de un usuario específico según su ID.
+  * `GET api/v1/usuarios/username/{username}`: Busca y retorna un usuario específico mediante su nombre de usuario.
+  * `POST api/v1/usuarios`: Registra un nuevo usuario en la base de datos.
+  * `PUT api/v1/usuarios/{id}`: Actualiza los datos de un usuario existente.
+  * `DELETE api/v1/usuarios/{id}`: Elimina un usuario por completo según su ID.
 
 ### 2. Cart Service
 Gestiona los carritos de compra de los clientes.
-**Ruta Base:** `/v1/carts`
+**Ruta Base:** `api/v1/carts`
 
-* `GET /v1/carts`: Retorna la lista de todos los carritos activos en el sistema.
-* `GET /v1/carts/{userId}`: Obtiene el carrito específico de un usuario mediante su ID.
-* `POST /v1/carts`: Añade un producto al carrito. Requiere autenticación (extrae el ID de usuario del JWT).
-* `PUT /v1/carts/{userId}`: Actualiza el carrito completo de un usuario. Requiere autenticación para validar la propiedad.
-* `DELETE /v1/carts/{userId}/items/{productId}`: Elimina un producto específico del carrito. Requiere autenticación.
-* `DELETE /v1/carts/{userId}`: Vacía/elimina el carrito completo de un usuario. Requiere autenticación.
+* `GET api/v1/carts`: Retorna la lista de todos los carritos activos en el sistema.
+* `GET api/v1/carts/{userId}`: Obtiene el carrito específico de un usuario mediante su ID.
+* `POST api/v1/carts`: Añade un producto al carrito. Requiere autenticación (extrae el ID de usuario del JWT).
+* `PUT api/v1/carts/{userId}`: Actualiza el carrito completo de un usuario. Requiere autenticación para validar la propiedad.
+* `DELETE api/v1/carts/{userId}/items/{productId}`: Elimina un producto específico del carrito. Requiere autenticación.
+* `DELETE api/v1/carts/{userId}`: Vacía/elimina el carrito completo de un usuario. Requiere autenticación.
 
 ### 3. Category Service
 Administra las categorías a las que pertenecen los productos del sistema.
-**Ruta Base:** `/v1/category`
+**Ruta Base:** `api/v1/category`
 
-* `GET /v1/category`: Obtiene el catálogo completo de categorías.
-* `GET /v1/category/porid/{id}`: Obtiene los detalles de una categoría específica por su ID.
-* `POST /v1/category`: Crea una nueva categoría.
-* `PUT /v1/category/{id}`: Modifica los datos de una categoría existente.
-* `DELETE /v1/category/{id}`: Elimina una categoría del sistema.
+* `GET api/v1/category`: Obtiene el catálogo completo de categorías.
+* `GET api/v1/category/porid/{id}`: Obtiene los detalles de una categoría específica por su ID.
+* `POST api/v1/category`: Crea una nueva categoría.
+* `PUT api/v1/category/{id}`: Modifica los datos de una categoría existente.
+* `DELETE api/v1/category/{id}`: Elimina una categoría del sistema.
 
 ### 4. Inventory Service
 Controla el stock y existencias físicas de los productos.
-**Ruta Base:** `/v1/inventories`
+**Ruta Base:** `api/v1/inventories`
 
-* `GET /v1/inventories`: Obtiene un listado completo del stock de todos los productos.
-* `GET /v1/inventories/{productId}`: Consulta el inventario/stock disponible para un producto específico.
-* `POST /v1/inventories`: Crea un nuevo registro de inventario inicial para un producto.
-* `PUT /v1/inventories/{productId}?quantity={X}`: Actualiza el stock de un producto específico. El parámetro `quantity` define la cantidad a sumar o restar.
-* `PUT /v1/inventories/bulk-update`: Actualiza el inventario de múltiples productos a la vez de forma masiva (recibe una lista de items).
-* `DELETE /v1/inventories/{productId}`: Elimina el registro de inventario de un producto.
+* `GET api/v1/inventories`: Obtiene un listado completo del stock de todos los productos.
+* `GET api/v1/inventories/{productId}`: Consulta el inventario/stock disponible para un producto específico.
+* `POST api/v1/inventories`: Crea un nuevo registro de inventario inicial para un producto.
+* `PUT api/v1/inventories/{productId}?quantity={X}`: Actualiza el stock de un producto específico. El parámetro `quantity` define la cantidad a sumar o restar.
+* `PUT api/v1/inventories/bulk-update`: Actualiza el inventario de múltiples productos a la vez de forma masiva (recibe una lista de items).
+* `DELETE api/v1/inventories/{productId}`: Elimina el registro de inventario de un producto.
 
 ### 5. Notification Service
 Maneja las alertas y mensajes enviados al usuario (ej. confirmación de órdenes).
-**Ruta Base:** `/v1/notification`
+**Ruta Base:** `api/v1/notification`
 
-* `GET /v1/notification`: Lista todas las notificaciones emitidas por el sistema.
-* `POST /v1/notification`: Crea y emite una nueva notificación. Requiere pasar el JWT en el Header (`Authorization`).
-* `PUT /v1/notification/{id}`: Actualiza el estado o contenido de una notificación. Requiere pasar el JWT en el Header.
-* `DELETE /v1/notification/{id}`: Elimina una notificación por su ID.
+* `GET api/v1/notification`: Lista todas las notificaciones emitidas por el sistema.
+* `POST api/v1/notification`: Crea y emite una nueva notificación. Requiere pasar el JWT en el Header (`Authorization`).
+* `PUT api/v1/notification/{id}`: Actualiza el estado o contenido de una notificación. Requiere pasar el JWT en el Header.
+* `DELETE api/v1/notification/{id}`: Elimina una notificación por su ID.
 
 ### 6. Order Service
 Orquesta el proceso de compra, conectando carrito, inventario y posterior pago/envío.
-**Ruta Base:** `/v1/orders`
+**Ruta Base:** `api/v1/orders`
 
-* `GET /v1/orders`: Obtiene el historial completo de todas las órdenes del sistema.
-* `GET /v1/orders/{id}`: Obtiene el detalle completo de una orden específica, incluyendo sus items.
-* `GET /v1/orders/noitems/{id}`: Retorna una versión resumida de la orden (sin el detalle de los productos/items). Útil para vistas generales.
-* `GET /v1/orders/user/{userId}`: Obtiene el historial de órdenes de un usuario específico.
-* `GET /v1/orders/ship/{id}`: Retorna una versión de la orden formateada y adaptada específicamente para el servicio de envíos (Shipping).
-* `POST /v1/orders`: Genera una nueva orden de compra a partir de una solicitud (`OrderRequest`).
-* `PUT /v1/orders/{orderId}`: Actualiza el estado logístico/transaccional de una orden (ej. de PENDIENTE a PAGADO).
-* `DELETE /v1/orders/{id}`: Elimina o anula una orden por su ID.
+* `GET api/v1/orders`: Obtiene el historial completo de todas las órdenes del sistema.
+* `GET api/v1/orders/{id}`: Obtiene el detalle completo de una orden específica, incluyendo sus items.
+* `GET api/v1/orders/noitems/{id}`: Retorna una versión resumida de la orden (sin el detalle de los productos/items). Útil para vistas generales.
+* `GET api/v1/orders/user/{userId}`: Obtiene el historial de órdenes de un usuario específico.
+* `GET api/v1/orders/ship/{id}`: Retorna una versión de la orden formateada y adaptada específicamente para el servicio de envíos (Shipping).
+* `POST api/v1/orders`: Genera una nueva orden de compra a partir de una solicitud (`OrderRequest`).
+* `PUT api/v1/orders/{orderId}`: Actualiza el estado logístico/transaccional de una orden (ej. de PENDIENTE a PAGADO).
+* `DELETE api/v1/orders/{id}`: Elimina o anula una orden por su ID.
 
 ### 7. Payment Service (Pagos)
 Procesa y registra las transacciones económicas asociadas a las órdenes.
@@ -181,34 +181,34 @@ Procesa y registra las transacciones económicas asociadas a las órdenes.
 
 ### 8. Product Service
 Catálogo central de los artículos disponibles para la venta.
-**Ruta Base:** `/v1/product`
+**Ruta Base:** `api/v1/product`
 
-* `GET /v1/product`: Retorna el catálogo completo de productos.
-* `GET /v1/product/{id}`: Muestra el detalle de un producto específico.
-* `POST /v1/product`: Agrega un nuevo producto al catálogo. Requiere token en el Header (`Authorization`).
-* `PUT /v1/product/{id}`: Actualiza la información de un producto existente. Requiere token en el Header.
-* `DELETE /v1/product/{id}`: Elimina un producto del catálogo.
+* `GET api/v1/product`: Retorna el catálogo completo de productos.
+* `GET api/v1/product/{id}`: Muestra el detalle de un producto específico.
+* `POST api/v1/product`: Agrega un nuevo producto al catálogo. Requiere token en el Header (`Authorization`).
+* `PUT api/v1/product/{id}`: Actualiza la información de un producto existente. Requiere token en el Header.
+* `DELETE api/v1/product/{id}`: Elimina un producto del catálogo.
 
 ### 9. Review Service
 Permite a los usuarios calificar y dejar comentarios sobre los productos adquiridos.
-**Ruta Base:** `/v1/review`
+**Ruta Base:** `api/v1/review`
 
-* `GET /v1/review`: Lista todas las reseñas escritas en la plataforma.
-* `GET /v1/review/{id}`: Obtiene el detalle de una reseña puntual por su ID.
-* `POST /v1/review`: Crea una nueva reseña para un producto. Exige pasar el JWT en el Header (`Authorization`).
-* `PUT /v1/review/{id}`: Permite modificar el contenido o calificación de una reseña existente. Exige token en el Header.
-* `DELETE /v1/review/{id}`: Elimina una reseña del sistema por su ID.
+* `GET api/v1/review`: Lista todas las reseñas escritas en la plataforma.
+* `GET api/v1/review/{id}`: Obtiene el detalle de una reseña puntual por su ID.
+* `POST api/v1/review`: Crea una nueva reseña para un producto. Exige pasar el JWT en el Header (`Authorization`).
+* `PUT api/v1/review/{id}`: Permite modificar el contenido o calificación de una reseña existente. Exige token en el Header.
+* `DELETE api/v1/review/{id}`: Elimina una reseña del sistema por su ID.
 
 ### 10. Shipping Service
 Gestiona la logística, despachos y números de seguimiento de las compras.
 **Ruta Base:** `/v1/shipments`
 
-* `GET /v1/shipments`: Lista todos los envíos registrados.
-* `GET /v1/shipments/shipmentById/{id}`: Busca un envío utilizando su ID interno de base de datos.
-* `GET /v1/shipments/{trackingNum}`: Busca y hace seguimiento a un envío utilizando su código alfanumérico (`trackingNum`).
-* `POST /v1/shipments`: Crea la logística de un nuevo envío.
-* `PUT /v1/shipments/{trackingNum}`: Actualiza el estado o información de un envío utilizando su número de seguimiento.
-* `DELETE /v1/shipments/{trackingNum}`: Elimina o cancela un envío utilizando su número de seguimiento.
+* `GET api/v1/shipments`: Lista todos los envíos registrados.
+* `GET api/v1/shipments/shipmentById/{id}`: Busca un envío utilizando su ID interno de base de datos.
+* `GET api/v1/shipments/{trackingNum}`: Busca y hace seguimiento a un envío utilizando su código alfanumérico (`trackingNum`).
+* `POST api/v1/shipments`: Crea la logística de un nuevo envío.
+* `PUT api/v1/shipments/{trackingNum}`: Actualiza el estado o información de un envío utilizando su número de seguimiento.
+* `DELETE api/v1/shipments/{trackingNum}`: Elimina o cancela un envío utilizando su número de seguimiento.
 
 
 ## Configuración de Bases de Datos
@@ -227,3 +227,4 @@ CREATE DATABASE IF NOT EXISTS payment_db;
 CREATE DATABASE IF NOT EXISTS product_db;
 CREATE DATABASE IF NOT EXISTS review_db;
 CREATE DATABASE IF NOT EXISTS shipping_db;
+```
