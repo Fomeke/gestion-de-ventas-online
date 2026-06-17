@@ -66,7 +66,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserResponse modificarProducto(Long id, UserRequest request) {
+    public UserResponse modificarUsuario(Long id, UserRequest request) {
         log.info("Modificando usuario con la ID: {}", id);
 
         User user = userRepository.findById(id)

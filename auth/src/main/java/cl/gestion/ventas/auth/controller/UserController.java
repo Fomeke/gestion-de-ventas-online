@@ -64,7 +64,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequest request){
         log.info("PUT /usuarios/{}",id);
-        return ResponseEntity.ok(userService.modificarProducto(id, request));
+        return ResponseEntity.ok(userService.modificarUsuario(id, request));
     }
 
     @DeleteMapping("/{id}")
