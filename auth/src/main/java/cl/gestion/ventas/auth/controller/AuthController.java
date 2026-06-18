@@ -1,6 +1,6 @@
 package cl.gestion.ventas.auth.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +11,7 @@ import cl.gestion.ventas.auth.dto.AuthResponse;
 import cl.gestion.ventas.auth.dto.LoginRequest;
 import cl.gestion.ventas.auth.service.AuthService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,10 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1/auth")
 @Slf4j
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @PostMapping
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request){

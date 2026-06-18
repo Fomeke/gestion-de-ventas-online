@@ -3,7 +3,7 @@ package cl.gestion.ventas.payment.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,20 +15,19 @@ import cl.gestion.ventas.payment.dto.PaymentResponse;
 import cl.gestion.ventas.payment.mapper.PaymentMapper;
 import cl.gestion.ventas.payment.model.Payment;
 import cl.gestion.ventas.payment.model.PaymentStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PaymentService {
 
-    @Autowired
-    private PaymentMapper mapper;
+    private final PaymentMapper mapper;
 
-    @Autowired
-    private PaymentRepository repo;
+    private final PaymentRepository repo;
 
-    @Autowired
-    private OrderClient client;
+    private final OrderClient client;
 
     public List<PaymentResponse> obtenerPagos() {
         log.info("Obteniendo lista de pagos..");

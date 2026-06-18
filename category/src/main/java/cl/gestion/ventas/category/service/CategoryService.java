@@ -3,7 +3,7 @@ package cl.gestion.ventas.category.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.category.dto.CategoryRequest;
@@ -11,17 +11,17 @@ import cl.gestion.ventas.category.dto.CategoryResponseDTO;
 import cl.gestion.ventas.category.mapper.CategoryMapper;
 import cl.gestion.ventas.category.model.Category;
 import cl.gestion.ventas.category.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository repo;
+    private final CategoryRepository repo;
 
-    @Autowired
-    private CategoryMapper mapper;
+    private final CategoryMapper mapper;
 
     public List<Category> buscarCategorias() {
         log.info("Consultando categorias..");

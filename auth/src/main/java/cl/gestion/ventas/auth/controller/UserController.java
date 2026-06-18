@@ -2,7 +2,7 @@ package cl.gestion.ventas.auth.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +18,7 @@ import cl.gestion.ventas.auth.dto.UserRequest;
 import cl.gestion.ventas.auth.dto.UserResponse;
 import cl.gestion.ventas.auth.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -30,10 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1/usuarios")
 @Slf4j
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers(){

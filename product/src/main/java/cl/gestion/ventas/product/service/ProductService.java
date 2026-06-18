@@ -3,7 +3,7 @@ package cl.gestion.ventas.product.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.product.client.CategoryClient;
@@ -13,21 +13,20 @@ import cl.gestion.ventas.product.mapper.ProductMapper;
 import cl.gestion.ventas.product.model.Product;
 import cl.gestion.ventas.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductMapper mapper;
+    private final ProductMapper mapper;
 
-    @Autowired
-    private ProductRepository repo;
+    private final ProductRepository repo;
 
-    @Autowired
-    private CategoryClient client;
+    private final CategoryClient client;
 
     public List<Product> buscarProductos() {
         log.info("Buscando productos..");

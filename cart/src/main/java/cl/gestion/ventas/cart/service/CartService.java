@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +20,18 @@ import cl.gestion.ventas.cart.model.Cart;
 import cl.gestion.ventas.cart.model.CartItem;
 import cl.gestion.ventas.cart.repository.CartRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CartService {
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
-    @Autowired
-    private CartMapper cartMapper;
+    private final CartMapper cartMapper;
 
-    @Autowired
-    private ProductClient productClient;
+    private final ProductClient productClient;
 
     private CartResponse obtenerTotal(Cart cart){
         BigDecimal total = BigDecimal.ZERO;

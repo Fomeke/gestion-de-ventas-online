@@ -3,7 +3,7 @@ package cl.gestion.ventas.review.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.review.client.ProductClient;
@@ -12,20 +12,19 @@ import cl.gestion.ventas.review.dto.ReviewResponse;
 import cl.gestion.ventas.review.mapper.ReviewMapper;
 import cl.gestion.ventas.review.model.Review;
 import cl.gestion.ventas.review.repository.ReviewRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ReviewService {
 
-    @Autowired
-    private ReviewRepository repo;
+    private final ReviewRepository repo;
 
-    @Autowired
-    private ReviewMapper mapper;
+    private final ReviewMapper mapper;
 
-    @Autowired
-    private ProductClient client;
+    private final ProductClient client;
 
     public List<Review> listReviews() {
         log.info("Buscando todos los reviews..");

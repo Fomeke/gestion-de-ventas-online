@@ -2,7 +2,7 @@ package cl.gestion.ventas.category.Controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,15 +19,16 @@ import cl.gestion.ventas.category.dto.CategoryResponseDTO;
 import cl.gestion.ventas.category.model.Category;
 import cl.gestion.ventas.category.service.CategoryService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
 @RequestMapping("/v1/category")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
+    private final CategoryService service;
 
     @GetMapping
     public ResponseEntity<List<Category>> getCategoria() {

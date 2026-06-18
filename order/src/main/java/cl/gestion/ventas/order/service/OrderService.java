@@ -3,7 +3,7 @@ package cl.gestion.ventas.order.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.order.client.CartClient;
@@ -20,22 +20,20 @@ import cl.gestion.ventas.order.model.Order;
 import cl.gestion.ventas.order.model.OrderStatus;
 import cl.gestion.ventas.order.repository.OrderRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private OrderMapper orderMapper;
+    private final OrderMapper orderMapper;
 
-    @Autowired
-    private CartClient cartClient;
+    private final CartClient cartClient;
 
-    @Autowired
-    private InventoryClient inventoryClient;
+    private final InventoryClient inventoryClient;
 
     @Transactional
     public List<OrderResponse> obtenerOrdenes() {

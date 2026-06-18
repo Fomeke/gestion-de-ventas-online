@@ -2,7 +2,7 @@ package cl.gestion.ventas.notification.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,15 +19,16 @@ import cl.gestion.ventas.notification.dto.NotificationRequest;
 import cl.gestion.ventas.notification.dto.NotificationResponse;
 import cl.gestion.ventas.notification.service.NotificationService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/v1/notification")
+@RequiredArgsConstructor
 public class NotificationController {
 
-    @Autowired
-    private NotificationService service;
+    private final NotificationService service;
 
     @GetMapping
     public ResponseEntity<List<NotificationResponse>> getNotifications() {

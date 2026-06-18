@@ -3,7 +3,6 @@ package cl.gestion.ventas.auth.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import cl.gestion.ventas.auth.model.User;
 
@@ -16,7 +15,7 @@ import cl.gestion.ventas.auth.model.User;
  * la BD.
  */
 
-@Repository
+
 public interface UserRepository extends JpaRepository<User, Long>{
 
     Optional<User> findByUsername(String username);

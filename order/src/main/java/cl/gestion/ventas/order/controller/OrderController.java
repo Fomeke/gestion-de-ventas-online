@@ -2,7 +2,7 @@ package cl.gestion.ventas.order.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,15 +21,16 @@ import cl.gestion.ventas.order.dto.OrderSmallResponse;
 import cl.gestion.ventas.order.dto.OrderStatusUpdate;
 import cl.gestion.ventas.order.service.OrderService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/v1/orders")
 @Slf4j
+@RequiredArgsConstructor
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping
     public ResponseEntity<List<OrderResponse>> getOrders() {

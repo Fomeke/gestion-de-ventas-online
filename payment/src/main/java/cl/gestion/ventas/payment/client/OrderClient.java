@@ -2,22 +2,23 @@ package cl.gestion.ventas.payment.client;
 
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import cl.gestion.ventas.payment.dto.OrderResponse;
 import cl.gestion.ventas.payment.dto.OrderStatusUpdate;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class OrderClient {
 
 
-    @Autowired
-    private WebClient webClient;
+    private final WebClient webClient;
 
     public OrderResponse obtenerOrden(Long orderId,String token){
         try{

@@ -3,7 +3,7 @@ package cl.gestion.ventas.notification.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.notification.client.OrderClient;
@@ -15,23 +15,21 @@ import cl.gestion.ventas.notification.mapper.NotificationMapper;
 import cl.gestion.ventas.notification.models.Notification;
 import cl.gestion.ventas.notification.models.NotificationType;
 import cl.gestion.ventas.notification.repository.NotificationRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class NotificationService {
 
-    @Autowired
-    private NotificationRepository repo;
+    private final NotificationRepository repo;
 
-    @Autowired
-    private UserClient clientUser;
+    private final UserClient clientUser;
 
-    @Autowired
-    private OrderClient clientOrder;
+    private final OrderClient clientOrder;
 
-    @Autowired
-    private NotificationMapper mapper;
+    private final NotificationMapper mapper;
 
     public List<NotificationResponse> listNotificacion() {
         log.info("Obteniendo lista de notificaciones..");

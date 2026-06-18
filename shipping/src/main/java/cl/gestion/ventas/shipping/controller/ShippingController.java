@@ -2,7 +2,7 @@ package cl.gestion.ventas.shipping.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +18,15 @@ import cl.gestion.ventas.shipping.dto.ShipmentRequest;
 import cl.gestion.ventas.shipping.dto.ShipmentResponse;
 import cl.gestion.ventas.shipping.service.ShipmentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/v1/shipments")
 @Slf4j
+@RequiredArgsConstructor
 public class ShippingController {
-    @Autowired
-    private ShipmentService shipmentService;
+    private final ShipmentService shipmentService;
 
     @GetMapping
     public ResponseEntity<List<ShipmentResponse>> getShipments() {

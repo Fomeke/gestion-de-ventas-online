@@ -2,7 +2,7 @@ package cl.gestion.ventas.review.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,15 +20,16 @@ import cl.gestion.ventas.review.dto.ReviewResponse;
 import cl.gestion.ventas.review.model.Review;
 import cl.gestion.ventas.review.service.ReviewService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
 @RequestMapping("/v1/review")
+@RequiredArgsConstructor
 public class ReviewController {
 
-    @Autowired
-    private ReviewService service;
+    private final ReviewService service;
 
 
 

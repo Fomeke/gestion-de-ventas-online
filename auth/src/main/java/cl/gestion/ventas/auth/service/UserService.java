@@ -3,7 +3,6 @@ package cl.gestion.ventas.auth.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.auth.dto.UserRequest;
@@ -11,6 +10,7 @@ import cl.gestion.ventas.auth.dto.UserResponse;
 import cl.gestion.ventas.auth.mapper.UserMapper;
 import cl.gestion.ventas.auth.model.User;
 import cl.gestion.ventas.auth.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,12 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
 
     public List<UserResponse> obtenerUsuarios() {
         log.info("Obteniendo todos los usuarios");

@@ -3,7 +3,7 @@ package cl.gestion.ventas.inventory.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.inventory.client.ProductClient;
@@ -14,19 +14,18 @@ import cl.gestion.ventas.inventory.mapper.InventoryMapper;
 import cl.gestion.ventas.inventory.model.Inventory;
 import cl.gestion.ventas.inventory.repository.InventoryRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class InventoryService {
-    @Autowired
-    private InventoryRepository inventoryRepository;
+    private final InventoryRepository inventoryRepository;
 
-    @Autowired
-    private InventoryMapper inventoryMapper;
+    private final InventoryMapper inventoryMapper;
 
-    @Autowired
-    private ProductClient productClient;
+    private final ProductClient productClient;
 
 
     public List<InventoryResponse> obtenerInventorios(){

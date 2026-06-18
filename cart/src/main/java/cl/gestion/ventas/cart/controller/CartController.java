@@ -2,7 +2,7 @@ package cl.gestion.ventas.cart.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,14 +19,16 @@ import cl.gestion.ventas.cart.dto.CartRequest;
 import cl.gestion.ventas.cart.dto.CartResponse;
 import cl.gestion.ventas.cart.service.CartService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/v1/carts")
 @Slf4j
+@RequiredArgsConstructor
 public class CartController {
-    @Autowired
-    private CartService cartService;
+
+    private final CartService cartService;
 
     @GetMapping
     public ResponseEntity<List<CartResponse>> getAllCarts(){

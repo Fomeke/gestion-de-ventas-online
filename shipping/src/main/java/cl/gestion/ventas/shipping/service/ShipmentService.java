@@ -3,7 +3,7 @@ package cl.gestion.ventas.shipping.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,19 +15,18 @@ import cl.gestion.ventas.shipping.dto.ShipmentResponse;
 import cl.gestion.ventas.shipping.mapper.ShipmentMapper;
 import cl.gestion.ventas.shipping.model.Shipment;
 import cl.gestion.ventas.shipping.repository.ShipmentRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ShipmentService {
-    @Autowired
-    private ShipmentRepository shipmentRepository;
+    private final ShipmentRepository shipmentRepository;
 
-    @Autowired
-    private ShipmentMapper shipmentMapper;
+    private final ShipmentMapper shipmentMapper;
 
-    @Autowired
-    private OrderClient orderClient;
+    private final OrderClient orderClient;
 
     @Transactional
     public List<ShipmentResponse> obtenerEnvios() {
