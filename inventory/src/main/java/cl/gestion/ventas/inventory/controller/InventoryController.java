@@ -19,11 +19,13 @@ import cl.gestion.ventas.inventory.dto.InventoryRequest;
 import cl.gestion.ventas.inventory.dto.InventoryResponse;
 import cl.gestion.ventas.inventory.service.InventoryService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/v1/inventories")
 @Slf4j
+@RequiredArgsConstructor
 public class InventoryController {
     private final InventoryService inventoryService;
 
