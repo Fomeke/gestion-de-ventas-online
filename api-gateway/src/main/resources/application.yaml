@@ -31,7 +31,7 @@ spring:
             filters:
               - AddRequestHeader=X-Gateway-Source, api-gateway
           - id: ms-cart-docs-route
-            uri: lb://auth
+            uri: lb://cart
             predicates:
               - Path=/cart/api/v3/api-docs/**,/cart/api/swagger-ui/**,/cart/api/swagger-ui.html,/cart/api/actuator/health
             filters:

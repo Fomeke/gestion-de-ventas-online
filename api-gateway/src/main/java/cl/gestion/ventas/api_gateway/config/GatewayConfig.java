@@ -42,7 +42,26 @@ public class GatewayConfig {
     @Bean
     public RouterFunction<ServerResponse> gatewayRoutes(){
 
-        return serviceRoute("ms-auth-route", "auth","/api/v1/auth/**","/api/v1/usuarios")
+        return serviceRoute("ms-auth-route", "auth","/api/v1/auth/**","/api/v1/usuarios/**")
+                .and(docsRoute("auth"))
+                .and(serviceRoute("ms-cart-route", "cart", "/api/v1/carts/**"))
+                .and(docsRoute("cart"))
+                .and(serviceRoute("ms-category-service-route", "category", "/api/v1/category/**"))
+                .and(docsRoute("category"))
+                .and(serviceRoute("ms-inventory-service-route", "inventory", "/api/v1/inventories/**"))
+                .and(docsRoute("inventory"))
+                .and(serviceRoute("ms-notification-service-route", "notification", "/api/v1/notification/**"))
+                .and(docsRoute("notification"))
+                .and(serviceRoute("ms-order-service-route", "order", "/api/v1/orders/**"))
+                .and(docsRoute("order"))
+                .and(serviceRoute("ms-payment-service-route", "payment", "/api/v1/payment/**"))
+                .and(docsRoute("payment"))
+                .and(serviceRoute("ms-product-service-route", "product", "/api/v1/product/**"))
+                .and(docsRoute("product"))
+                .and(serviceRoute("ms-review-service-route", "review", "/api/v1/review/**"))
+                .and(docsRoute("review"))
+                .and(serviceRoute("ms-shipping-service-route", "shipping", "/api/v1/shipments/**"))
+                .and(docsRoute("shipping"));
     }
 
 }
