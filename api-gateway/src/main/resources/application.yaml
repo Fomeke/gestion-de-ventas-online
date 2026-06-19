@@ -1,0 +1,165 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      mvc:
+        discovery:
+          locator:
+            enabled: true
+            lower-case-service-id: true
+        routes:
+          #AUTH
+          - id: ms-auth-service-route
+            uri: lb://auth
+            predicates:
+              - Path=/api/v1/auth/**,/api/v1/usuarios/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-auth-docs-route
+            uri: lb://auth
+            predicates:
+              - Path=/auth/api/v3/api-docs/**,/auth/api/swagger-ui/**,/auth/api/swagger-ui.html,/auth/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #CART
+          - id: ms-cart-service-route
+            uri: lb://cart
+            predicates:
+              - Path=/api/v1/carts/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-cart-docs-route
+            uri: lb://auth
+            predicates:
+              - Path=/cart/api/v3/api-docs/**,/cart/api/swagger-ui/**,/cart/api/swagger-ui.html,/cart/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #CATEGORY
+          - id: ms-category-service-route
+            uri: lb://category
+            predicates:
+              - Path=/api/v1/category/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-category-docs-route
+            uri: lb://category
+            predicates:
+              - Path=/category/api/v3/api-docs/**,/category/api/swagger-ui/**,/category/api/swagger-ui.html,/category/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #INVENTORY
+          - id: ms-inventory-service-route
+            uri: lb://inventory
+            predicates:
+              - Path=/api/v1/inventories/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-inventory-docs-route
+            uri: lb://inventory
+            predicates:
+              - Path=/inventory/api/v3/api-docs/**,/inventory/api/swagger-ui/**,/inventory/api/swagger-ui.html,/inventory/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #NOTIFICATION
+          - id: ms-notification-service-route
+            uri: lb://notification
+            predicates:
+              - Path=/api/v1/notification/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-notification-docs-route
+            uri: lb://notification
+            predicates:
+              - Path=/notification/api/v3/api-docs/**,/notification/api/swagger-ui/**,/notification/api/swagger-ui.html,/notification/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #ORDER
+          - id: ms-order-service-route
+            uri: lb://order
+            predicates:
+              - Path=/api/v1/orders/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-order-docs-route
+            uri: lb://order
+            predicates:
+              - Path=/order/api/v3/api-docs/**,/order/api/swagger-ui/**,/order/api/swagger-ui.html,/order/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #PAYMENT
+          - id: ms-payment-service-route
+            uri: lb://payment
+            predicates:
+              - Path=/api/v1/payment/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-payment-docs-route
+            uri: lb://payment
+            predicates:
+              - Path=/payment/api/v3/api-docs/**,/payment/api/swagger-ui/**,/payment/api/swagger-ui.html,/payment/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #PRODUCT
+          - id: ms-product-service-route
+            uri: lb://product
+            predicates:
+              - Path=/api/v1/product/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-product-docs-route
+            uri: lb://product
+            predicates:
+              - Path=/product/api/v3/api-docs/**,/product/api/swagger-ui/**,/product/api/swagger-ui.html,/product/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #REVIEW
+          - id: ms-review-service-route
+            uri: lb://review
+            predicates:
+              - Path=/api/v1/review/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-review-docs-route
+            uri: lb://review
+            predicates:
+              - Path=/review/api/v3/api-docs/**,/review/api/swagger-ui/**,/review/api/swagger-ui.html,/review/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+          #SHIPPING
+          - id: ms-shipping-service-route
+            uri: lb://shipping
+            predicates:
+              - Path=/api/v1/shipments/**
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+          - id: ms-shipping-docs-route
+            uri: lb://shipping
+            predicates:
+              - Path=/shipping/api/v3/api-docs/**,/shipping/api/swagger-ui/**,/shipping/api/swagger-ui.html,/shipping/api/actuator/health
+            filters:
+              - AddRequestHeader=X-Gateway-Source, api-gateway
+              - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: INFO
+    '[org.springframework.cloud.gateway]': DEBUG
+  file:
+    name: logs/users-service.log
