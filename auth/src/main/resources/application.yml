@@ -34,3 +34,7 @@ logging:
 jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
   expiration: 3600000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

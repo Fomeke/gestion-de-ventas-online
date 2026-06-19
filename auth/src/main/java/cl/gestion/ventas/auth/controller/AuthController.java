@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cl.gestion.ventas.auth.dto.ApiErrorResponse;
 import cl.gestion.ventas.auth.dto.AuthResponse;
 import cl.gestion.ventas.auth.dto.LoginRequest;
 import cl.gestion.ventas.auth.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +34,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/auth")
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name="Control de Autenticación", description="Endpoints para la gestión de sesiones (solo está habilitado el iniciar sesión)")
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping
+    @Operation(summary="Iniciar sesión",description="Retorna nombre de usuario y JWT para acceder al resto de los microservicios, con su respectiva duración")
+    @ApiResponses(value={
+        @ApiResponse(responseCode= "200", description= "Inicio de sesión exitoso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponse.class))),
+        @ApiResponse(responseCode= "404", description= "Credenciales inválidas", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request){
         log.info("Iniciando sesión con usuario: {}",request.getUsername());
         AuthResponse response = authService.login(request);
