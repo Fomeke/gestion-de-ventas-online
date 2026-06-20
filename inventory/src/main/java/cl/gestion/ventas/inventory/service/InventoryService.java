@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import cl.gestion.ventas.inventory.client.ProductClient;
 import cl.gestion.ventas.inventory.dto.InventoryRequest;
 import cl.gestion.ventas.inventory.dto.InventoryResponse;
-import cl.gestion.ventas.inventory.dto.ProductResponse;
+
 import cl.gestion.ventas.inventory.mapper.InventoryMapper;
 import cl.gestion.ventas.inventory.model.Inventory;
 import cl.gestion.ventas.inventory.repository.InventoryRepository;
@@ -46,7 +46,7 @@ public class InventoryService {
         if(inventoryRepository.existsByProductId(request.getProductId())){
             throw new IllegalArgumentException("El producto ya existe");
         }
-        ProductResponse product = productClient.getProductById(request.getProductId());
+        productClient.getProductById(request.getProductId());
         Inventory inv = inventoryRepository.save(inventoryMapper.fromRequest(request));
         return inventoryMapper.toResponse(inv);
     }
