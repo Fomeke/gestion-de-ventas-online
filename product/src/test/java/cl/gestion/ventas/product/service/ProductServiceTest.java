@@ -129,5 +129,41 @@ public class ProductServiceTest {
         verify(repo,never()).save(any());
         
     }
+    @Test
+    void modificarProducto_Exito() {
+        
+        Long id = 1L;
+        String token = "Bearer m1t0k3n";
+        
+        
+        Product productExistente = new Product();
+        productExistente.setId(id);
+        productExistente.setName("Notebook Viejo");
+        
+        
+        ProductRequestDTO request = new ProductRequestDTO();
+        request.setName("Notebook Nuevo");
+        request.setCategoryId(3L);
+        
+        
+        ProductResponseDTO response = new ProductResponseDTO();
+        response.setName("Notebook Nuevo");
+        
+
+        
+        when(repo.findById(id)).thenReturn(Optional.of(productExistente));
+        when(client.obtenerProductoPorCategoriaId(3L, token)).thenReturn(null); // Simulamos el Feign Client
+        when(repo.save(any(Product.class))).thenReturn(productExistente);
+        when(mapper.toResponse(productExistente)).thenReturn(response);
+
+        
+        ProductResponseDTO resultado = servi.modificarProducto(id, request, token);
+
+        
+        assertEquals("Notebook Nuevo", resultado.getName());
+        assertEquals(150000.0, resultado.getPrice()); // Confirmamos que el precio cambió
+        verify(repo, times(1)).save(productExistente);
+        verify(client, times(1)).obtenerProductoPorCategoriaId(3L, token);
+    }
 }
 
