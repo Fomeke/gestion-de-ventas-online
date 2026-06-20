@@ -1,4 +1,4 @@
-package cl.gestion.ventas.cart.config;
+package cl.gestion.ventas.inventory.config;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI(){
         return new OpenAPI().info(new Info()
-                                        .title("API de Carritos de Compra")
+                                        .title("API de Inventario")
                                         .version("1.0")
-                                        .description("API para la gestión de carritos de compra"))
+                                        .description("API para la gestión de inventario"))
                             .servers(List.of(
-                                        new Server().url("http://localhost:8082/api/").description("Servidor local"),
+                                        new Server().url("http://localhost:8083/api/").description("Servidor local"),
                                         new Server().url("http://localhost:8080").description("Vía API Gateway")
                             ));
     }
