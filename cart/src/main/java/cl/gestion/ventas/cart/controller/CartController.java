@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/carts")
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name = "Controlador de Carritos de Compra", description = "Endpoints para la gestión y administración de los carritos de compra")
+@ApiResponse(responseCode = "403", description = "No autorizado - Token JWT ausente, expirado o inválido", content = @Content(mediaType = "application/json"))
 public class CartController {
 
     private final CartService cartService;
@@ -39,8 +42,6 @@ public class CartController {
     @Operation(summary = "Obtener todos los carritos", description = "Retorna una lista con todos los carritos registrados en el sistema.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de carritos recuperada con éxito"),
-        @ApiResponse(responseCode = "403", description = "No autorizado - Token faltante o inválido", 
-                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
     public ResponseEntity<List<CartResponse>> getAllCarts(){
@@ -51,8 +52,6 @@ public class CartController {
     @Operation(summary = "Obtener carrito por ID de usuario", description = "Recupera el carrito de compras activo de un usuario específico.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Carrito encontrado con éxito"),
-        @ApiResponse(responseCode = "403", description = "No autorizado - Token inválido", 
-                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Carrito no encontrado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "500", description = "Error inesperado", 
@@ -67,7 +66,7 @@ public class CartController {
         @ApiResponse(responseCode = "201", description = "Producto agregado y carrito actualizado con éxito"),
         @ApiResponse(responseCode = "400", description = "Solicitud inválida", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
-        @ApiResponse(responseCode = "403", description = "No autorizado", 
+        @ApiResponse(responseCode = "403", description = "JWT ausente/inválido o se intenta modificar carrito ajeno", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "409", description = "Conflicto con la integridad de los datos (ej: solicitud excede stock)", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
@@ -79,7 +78,7 @@ public class CartController {
     @Operation(summary = "Eliminar un producto del carrito", description = "Remueve un producto específico del carrito de un usuario. Requiere validación de permisos de dueño.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Producto eliminado con éxito (Sin contenido)"),
-        @ApiResponse(responseCode = "403", description = "Prohibido (Lanzado si el usuario del token no coincide con el userId)", 
+        @ApiResponse(responseCode = "403", description = "JWT ausente/inválido o se intenta modificar carrito ajeno", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Usuario o producto no encontrado en el carrito.", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
@@ -92,7 +91,7 @@ public class CartController {
     @Operation(summary = "Vaciar o eliminar el carrito", description = "Elimina por completo el carrito de compras del usuario indicado.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Carrito eliminado con éxito"),
-        @ApiResponse(responseCode = "403", description = "Prohibido (Lanzado si el usuario del token no coincide con el userId)", 
+        @ApiResponse(responseCode = "403", description = "JWT ausente/inválido o se intenta eliminar carrito ajeno", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Carrito inexistente", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
@@ -107,7 +106,7 @@ public class CartController {
         @ApiResponse(responseCode = "200", description = "Carrito modificado exitosamente"),
         @ApiResponse(responseCode = "400", description = "Estructura errónea o datos no válidos", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
-        @ApiResponse(responseCode = "403", description = "Prohibido (Lanzado si el usuario del token no coincide con el userId)", 
+        @ApiResponse(responseCode = "403", description = "JWT ausente/inválido o se intenta modificar carrito ajeno", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Carrito no encontrado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
