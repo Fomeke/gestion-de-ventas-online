@@ -44,12 +44,12 @@ El sistema está compuesto por 10 microservicios independientes, comunicados ent
    - `gestion-de-ventas-online\<nombre de servicio>\src\main\java\cl\gestion\ventas\<nombre de servicio>\<NombreDeServicio>Application.java`.
 4. **Arrancar Servicios:**  
 
-   #### Primero: `auth` (Puerto: `8080`)
+   #### Primero: `auth` (Puerto: `8090`)
 
    - Inicie la aplicación y accede al endpoint con POST:
 
      ```http
-     http://localhost:8080/api/v1/auth
+     http://localhost:8090/api/v1/auth
      ```
 
    - Utiliza uno de los usuarios predeterminados mediante el siguiente formato JSON en el Body de la solicitud:
