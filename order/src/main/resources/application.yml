@@ -5,7 +5,7 @@ spring:
   application:
     name: order
   datasource:
-    url: jdbc:mysql://localhost:3306/order_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/order_db?createDatabaseIfNotExist=true
     username: root
     password: ''
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -35,9 +35,9 @@ jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
 services:
   cart:
-    baseUrl: http://localhost:8082/api/v1/carts
+    baseUrl: http://${CART_HOST:localhost}:8082/api/v1/carts
   inventory:
-    baseUrl: http://localhost:8083/api/v1/inventories
+    baseUrl: http://${INVENTORY_HOST:localhost}:8083/api/v1/inventories
 eureka:
   client:
     service-url:

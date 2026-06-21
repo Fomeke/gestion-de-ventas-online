@@ -4,7 +4,7 @@ spring:
         name: payment
 
     datasource:
-        url: jdbc:mysql://localhost:3306/payment_db
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/payment_db?createDatabaseIfNotExist=true
         username: root
         password:
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +27,7 @@ server:
 
 services:
     order:
-        baseUrl: http://localhost:8084
+        baseUrl: http://${ORDER_HOST:localhost}:8084
 
 logging:
   level:

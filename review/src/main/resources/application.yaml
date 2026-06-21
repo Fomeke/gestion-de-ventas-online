@@ -4,7 +4,7 @@ spring:
         name: product
 
     datasource:
-        url: jdbc:mysql://localhost:3306/review_db
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/review_db?createDatabaseIfNotExist=true
         username: root
         password:
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +27,7 @@ server:
 
 services:
     product:
-        baseUrl: http://localhost:8085/api/v1/product
+        baseUrl: http://${PRODUCT_HOST:localhost}:8085/api/v1/product
 
 logging:
   level:

@@ -5,7 +5,7 @@ spring:
   application:
     name: shipping
   datasource:
-    url: jdbc:mysql://localhost:3306/shipping_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/shipping_db?createDatabaseIfNotExist=true
     username: root
     password: ''
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -35,7 +35,7 @@ jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
 services:
   order:
-    baseUrl: http://localhost:8084/api/v1/orders
+    baseUrl: http://${ORDER_HOST:localhost}:8084/api/v1/orders
 eureka:
   client:
     service-url:

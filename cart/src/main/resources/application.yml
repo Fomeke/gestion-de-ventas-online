@@ -5,7 +5,7 @@ spring:
   application:
     name: cart
   datasource:
-    url: jdbc:mysql://localhost:3306/cart_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/cart_db?createDatabaseIfNotExist=true
     username: root
     password: ''
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -35,7 +35,7 @@ jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
 services:
   product:
-    baseUrl: http://localhost:8085/api/v1/product
+    baseUrl: http://${PRODUCT_HOST:localhost}:8085/api/v1/product
 eureka:
   client:
     service-url:

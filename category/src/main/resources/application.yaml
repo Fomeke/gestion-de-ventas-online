@@ -4,7 +4,7 @@ spring:
         name: category
 
     datasource:
-        url: jdbc:mysql://localhost:3306/category_db
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/category_db
         username: root
         password:
         driver-class-name: com.mysql.cj.jdbc.Driver
