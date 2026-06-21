@@ -9,17 +9,20 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import cl.gestion.ventas.notification.dto.OrderResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
+
 public class OrderClient {
 
-    @Qualifier("webClientOrder")
+
     private final WebClient webClient;
 
+    public OrderClient(@Qualifier("webClientOrder") WebClient webClient) {
+        this.webClient = webClient;
+    }
+    
     public OrderResponse obtenerOrden(Long orderId,String token){
         log.info("Validando existencia de la orden ID: {}", orderId);
         try{

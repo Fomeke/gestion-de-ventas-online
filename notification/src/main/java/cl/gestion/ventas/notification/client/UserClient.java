@@ -9,16 +9,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import cl.gestion.ventas.notification.dto.UserResponse;
-import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class UserClient {
-
-    @Qualifier("webClientAuth")
     private final WebClient webClient;
+
+    public UserClient(@Qualifier("webClientAuth") WebClient webClient) {
+        this.webClient = webClient;
+    }
 
     public UserResponse obtenerUsuarioPorId(Long userId, String token){
         try{
