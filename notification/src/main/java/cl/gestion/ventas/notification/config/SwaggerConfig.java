@@ -1,4 +1,4 @@
-package cl.gestion.ventas.order.config;
+package cl.gestion.ventas.notification.config;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI(){
         return new OpenAPI().info(new Info()
-                                        .title("API de Ordenes de compra")
+                                        .title("API de Notificaciones")
                                         .version("1.0")
-                                        .description("API para la gestión de ordenes de compra"))
+                                        .description("API para la gestión de notificaciones"))
                             .servers(List.of(
-                                        new Server().url("http://localhost:8084").description("Servidor local"),
+                                        new Server().url("http://localhost:8088").description("Servidor local"),
                                         new Server().url("http://localhost:8080").description("Vía API Gateway")))
                             .components(new Components()
                                 .addSecuritySchemes(securitySchemeName, new SecurityScheme()
