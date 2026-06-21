@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -133,5 +136,40 @@ class PaymentServiceTest {
 
         assertEquals("No se puede eliminar un pago exitoso debe procesarse un reembolso.", excepcion.getMessage());
         verify(repo, never()).delete(any());
+    }
+    @Test
+    void obtenerPagosExito() {
+        when(repo.findAll()).thenReturn(java.util.List.of(new Payment()));
+        assertNotNull(servi.obtenerPagos());
+        verify(repo, times(1)).findAll();
+    }
+
+    @Test
+    void obtenerPagoPorIdExito() {
+        Long id = 1L;
+        Payment payment = new Payment();
+        PaymentResponse response = new PaymentResponse();
+        
+        when(repo.findById(id)).thenReturn(Optional.of(payment));
+        when(mapper.toResponse(payment)).thenReturn(response);
+        
+        assertNotNull(servi.obtenerPagoPorId(id));
+        verify(repo, times(1)).findById(id);
+    }
+
+    @Test
+    void actualizarPagoExito() {
+        Long id = 1L;
+        String token = "Bearer m1t0k3n";
+        PaymentRequest request = new PaymentRequest();
+        Payment payment = new Payment();
+        PaymentResponse response = new PaymentResponse();
+        
+        when(repo.findById(id)).thenReturn(Optional.of(payment));
+        when(repo.save(any(Payment.class))).thenReturn(payment);
+        when(mapper.toResponse(payment)).thenReturn(response);
+
+        assertNotNull(servi.actualizarPago(id, request, token));
+        verify(repo, times(1)).save(any(Payment.class));
     }
 }

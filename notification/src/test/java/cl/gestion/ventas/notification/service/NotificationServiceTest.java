@@ -18,6 +18,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -144,5 +147,12 @@ class NotificationServiceTest {
 
         
         verify(repo, times(1)).deleteById(id);
+    }
+
+    @Test
+    void listNotificacionExito() {
+        when(repo.findAll()).thenReturn(java.util.List.of(new Notification()));
+        assertNotNull(servi.listNotificacion());
+        verify(repo, times(1)).findAll();
     }
 }

@@ -165,5 +165,12 @@ public class ProductServiceTest {
         verify(repo, times(1)).save(productExistente);
         verify(client, times(1)).obtenerProductoPorCategoriaId(3L, token);
     }
+
+    @Test
+    void buscarProductosExito() {
+        when(repo.findAll()).thenReturn(java.util.List.of(new Product()));
+        assertNotNull(servi.buscarProductos());
+        verify(repo, times(1)).findAll();
+    }
 }
 
