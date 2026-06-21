@@ -160,30 +160,30 @@ eureka:
 logging:
   level:
     root: INFO
-    '[org.springframework.cloud.gateway]': DEBUG
+    "[org.springframework.cloud.gateway]": DEBUG
   file:
     name: logs/users-service.log
 
 springdoc:
   swagger-ui:
     urls:
-    - name: Autenticación y Usuarios
-      url: /auth/api/v3/api-docs
-    - name: Carrito 
-      url: /cart/api/v3/api-docs
-    - name: Inventorio
-      url: /inventory/api/v3/api-docs
-    - name: Orden
-      url: /order/api/v3/api-docs
-    - name: Envío 
-      url: /shipping/api/v3/api-docs
-    - name: Categoria 
-      url: /category/api/v3/api-docs
-    - name: Notificación 
-      url: /notification/api/v3/api-docs
-    - name: Pago
-      url: /payment/api/v3/api-docs
-    - name: Reseña 
-      url: /review/api/v3/api-docs
-    - name: Envío 
-      url: /shipping/api/v3/api-docs
+      - name: Autenticación y Usuarios
+        url: /auth/api/v3/api-docs
+      - name: Carrito
+        url: /cart/api/v3/api-docs
+      - name: Inventorio
+        url: /inventory/api/v3/api-docs
+      - name: Orden
+        url: /order/api/v3/api-docs
+      - name: Producto
+        url: /product/api/v3/api-docs
+      - name: Categoria
+        url: /category/api/v3/api-docs
+      - name: Notificación
+        url: /notification/api/v3/api-docs
+      - name: Pago
+        url: /payment/api/v3/api-docs
+      - name: Reseña
+        url: /review/api/v3/api-docs
+      - name: Envío
+        url: /shipping/api/v3/api-docs
