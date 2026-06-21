@@ -21,6 +21,7 @@ import cl.gestion.ventas.order.dto.OrderSmallResponse;
 import cl.gestion.ventas.order.dto.OrderStatusUpdate;
 import cl.gestion.ventas.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -62,7 +63,7 @@ public class OrderController {
     @Operation(summary = "Obtener orden por ID", description = "Recupera los detalles de una orden de compra mediante su identificador.")
     @ApiResponse(responseCode = "200", description = "Orden encontrada exitosamente", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponse.class)))
-    public ResponseEntity<OrderResponse> getOrderId(@PathVariable Long id) {
+    public ResponseEntity<OrderResponse> getOrderId(@Parameter(description = "Identificador único de la orden", example = "1") @PathVariable Long id) {
         log.info("GET /orders/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenPorId(id));
     }
@@ -71,7 +72,7 @@ public class OrderController {
     @Operation(summary = "Obtener orden resumida (sin ítems)", description = "Recupera una orden por su ID omitiendo el desglose de productos.")
     @ApiResponse(responseCode = "200", description = "Orden resumida encontrada exitosamente", 
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderSmallResponse.class)))
-    public ResponseEntity<OrderSmallResponse> getSmallOrderId(@PathVariable Long id) {
+    public ResponseEntity<OrderSmallResponse> getSmallOrderId(@Parameter(description = "Identificador único de la orden", example = "1") @PathVariable Long id) {
         log.info("GET /orders/noitems/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenResumidaPorId(id));
     }
@@ -80,7 +81,7 @@ public class OrderController {
     @Operation(summary = "Obtener órdenes de un usuario", description = "Retorna las órdenes pertenecientes a un usuario en específico.")
     @ApiResponse(responseCode = "200", description = "Órden(es) recuperadas exitosamente", 
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponse.class)))
-    public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<OrderResponse>> getOrdersByUserId(@Parameter(description = "Identificador único del usuario", example = "1") @PathVariable Long userId) {
         log.info("GET /orders/user/{}", userId);
         return ResponseEntity.ok(orderService.obtenerOrdenesPorUserId(userId));
     }
@@ -89,7 +90,7 @@ public class OrderController {
     @Operation(summary = "Obtener orden optimizada para envíos", description = "Endpoint para la comunicación con el servicio de envíos, retornando la estructura necesaria para procesar el envío.")
     @ApiResponse(responseCode = "200", description = "Estructura de envío recuperada con éxito", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponseForShipping.class)))
-    public ResponseEntity<OrderResponseForShipping> getOrderForShipping(@PathVariable Long id) {
+    public ResponseEntity<OrderResponseForShipping> getOrderForShipping(@Parameter(description = "Identificador único de la orden", example = "1") @PathVariable Long id) {
         log.info("GET /orders/{}", id);
         return ResponseEntity.ok(orderService.obtenerOrdenParaEnvio(id));
     }
@@ -110,7 +111,7 @@ public class OrderController {
     @PutMapping("/{orderId}")
     @ApiResponse(responseCode = "200", description = "Estado de la orden actualizado exitosamente", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponse.class)))
-    public ResponseEntity<OrderResponse> updateState(@PathVariable Long orderId,
+    public ResponseEntity<OrderResponse> updateState(@Parameter(description = "Identificador único de la orden", example = "1") @PathVariable Long orderId,
             @Valid @RequestBody OrderStatusUpdate request) {
         log.info("PUT /orders/{}", orderId);
         return ResponseEntity.ok(orderService.editarEstado(orderId, request));
@@ -119,7 +120,7 @@ public class OrderController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar una orden", description = "Remueve el registro de una orden de compra por su ID.")
     @ApiResponse(responseCode = "204", description = "Orden eliminada exitosamente")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@Parameter(description = "Identificador único de la orden", example = "1") @PathVariable Long id) {
         log.info("DELETE /v1/orders/{}", id);
         orderService.eliminarOrden(id);
         return ResponseEntity.noContent().build();

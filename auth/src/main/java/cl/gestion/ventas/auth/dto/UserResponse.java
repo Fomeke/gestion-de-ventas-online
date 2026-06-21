@@ -1,5 +1,6 @@
 package cl.gestion.ventas.auth.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserResponse {
+    @Schema(description="ID del usuario generada automáticamente", example = "67")
     private Long id;
+    @Schema(description="Nombre de usuario", example = "1337Hax0r")
     private String name;
+    @Schema(description="Nombre completo de usuario", example = "McLOVIN Perez")
     private String fullName;
+
+    @Schema(description="E-mail de usuario", example = "Sebas@duroc.cl")
     private String email;
+
+    @Schema(description="Número telefónico de usuario", example = "+56967676767")
     private String phone;
 }

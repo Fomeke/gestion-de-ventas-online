@@ -1,5 +1,6 @@
 package cl.gestion.ventas.auth.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,11 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
     @NotBlank(message = "El nombre de usuario es obligatorio")
     @Size(min = 3, max = 20, message = "El nombre de usuario debe tener entre 3 y 20 caracteres")
+    @Schema(description="Nombre de usuario", example = "pro")
     private String username;
 
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, max = 50, message = "La contraseña debe tener entre 8 y 50 caracteres")
+    @Schema(description="Contraseña de usuario", example = "contrasenasegura789")
     private String password;
 }

@@ -18,6 +18,7 @@ import cl.gestion.ventas.auth.dto.UserRequest;
 import cl.gestion.ventas.auth.dto.UserResponse;
 import cl.gestion.ventas.auth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -64,7 +65,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUserById(@Parameter(description = "Identificador único de usuario", example = "1")
+                                                    @PathVariable Long id){
         log.info("GET /usuarios/{}",id);
 
         return ResponseEntity.ok(userService.obtenerUsuarioPorId(id));
@@ -77,7 +79,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Nombre de usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    public ResponseEntity<UserResponse> getUserByName(@PathVariable String username){
+    public ResponseEntity<UserResponse> getUserByName(@Parameter(description = "Nombre de usuario", example = "noob")
+                                                      @PathVariable String username){
         log.info("GET /usuarios/{}",username);
         return ResponseEntity.ok(userService.obtenerUsurarioPorNombre(username));
     }
@@ -104,7 +107,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequest request){
+    public ResponseEntity<UserResponse> updateUser(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long id, @Valid @RequestBody UserRequest request){
         log.info("PUT /usuarios/{}",id);
         return ResponseEntity.ok(userService.modificarUsuario(id, request));
     }
@@ -116,7 +119,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUser(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long id){
         log.info("DELETE /usuarios/{}",id);
         userService.eliminar(id);
         return ResponseEntity.noContent().build();

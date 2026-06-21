@@ -18,6 +18,7 @@ import cl.gestion.ventas.shipping.dto.ShipmentRequest;
 import cl.gestion.ventas.shipping.dto.ShipmentResponse;
 import cl.gestion.ventas.shipping.service.ShipmentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,7 +59,7 @@ public class ShippingController {
     @Operation(summary = "Obtener envío por su ID interno", description = "Recupera la información detallada de un envío usando su ID en la base de datos.")
     @ApiResponse(responseCode = "200", description = "Envío encontrado exitosamente", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ShipmentResponse.class)))
-    public ResponseEntity<ShipmentResponse> getShipmentById(@PathVariable Long id) {
+    public ResponseEntity<ShipmentResponse> getShipmentById(@Parameter(description = "Identificador único interno del envío", example = "1") @PathVariable Long id) {
         log.info("GET /shipments/{}", id);
 
         return ResponseEntity.ok(shipmentService.obtenerEnvioPorId(id));
@@ -68,7 +69,7 @@ public class ShippingController {
     @Operation(summary = "Buscar envío por número de seguimiento (Tracking Number)", description = "Recupera el estado completo de un envío a través de su código único de tracking.")
     @ApiResponse(responseCode = "200", description = "Envío encontrado exitosamente", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ShipmentResponse.class)))
-    public ResponseEntity<ShipmentResponse> getShipmentByTrktrackingNum(@PathVariable String trackingNum) {
+    public ResponseEntity<ShipmentResponse> getShipmentByTrktrackingNum(@Parameter(description = "Identificador único de seguimiento", example = "SUS-666") @PathVariable String trackingNum) {
         log.info("GET /shipments/{}", trackingNum);
         return ResponseEntity.ok(shipmentService.obtenerEnvioPorNumero(trackingNum));
     }
@@ -86,7 +87,7 @@ public class ShippingController {
     @DeleteMapping("/{trackingNum}")
     @Operation(summary = "Eliminar un registro de envío", description = "Remueve el envío del sistema a partir de su número de tracking.")
     @ApiResponse(responseCode = "204", description = "Envío removido correctamente")
-    public ResponseEntity<Void> deleteShipment(@PathVariable String trackingNum) {
+    public ResponseEntity<Void> deleteShipment(@Parameter(description = "Identificador único de seguimiento", example = "SUS-666") @PathVariable String trackingNum) {
         log.info("DELETE /shipments/{}", trackingNum);
         shipmentService.eliminar(trackingNum);
         return ResponseEntity.noContent().build();
@@ -97,6 +98,7 @@ public class ShippingController {
     @ApiResponse(responseCode = "200", description = "Registro de envío actualizado de forma exitosa", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ShipmentResponse.class)))
     public ResponseEntity<ShipmentResponse> updateShipment(
+            @Parameter(description = "Identificador único de seguimiento", example = "SUS-666") 
             @PathVariable String trackingNum,
             @Valid @RequestBody ShipmentRequest request) {
         log.info("PUT /shipments/{}", trackingNum);

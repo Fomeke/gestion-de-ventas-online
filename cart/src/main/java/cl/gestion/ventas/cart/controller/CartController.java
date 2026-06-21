@@ -19,6 +19,7 @@ import cl.gestion.ventas.cart.dto.CartRequest;
 import cl.gestion.ventas.cart.dto.CartResponse;
 import cl.gestion.ventas.cart.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -56,7 +57,8 @@ public class CartController {
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "500", description = "Error inesperado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<CartResponse> getCart(@PathVariable Long userId) {
+    public ResponseEntity<CartResponse> getCart(@Parameter(description = "Identificador único de usuario", example = "1")
+                                                @PathVariable Long userId) {
         return ResponseEntity.ok(cartService.obtenerCarritoPorId(userId));
     }
 
@@ -82,7 +84,9 @@ public class CartController {
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Usuario o producto no encontrado en el carrito.", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<Void> removeItem(@PathVariable Long userId, @PathVariable Long productId, Authentication auth){
+    public ResponseEntity<Void> removeItem(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long userId, 
+                                           @Parameter(description = "Identificador único de producto", example = "2")@PathVariable Long productId, 
+                                           Authentication auth){
         cartService.eliminarProductoDeCarrito(userId, productId,Long.valueOf(auth.getName()));
         return ResponseEntity.noContent().build();
     }
@@ -95,7 +99,8 @@ public class CartController {
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Carrito inexistente", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<Void> removeCart(@PathVariable Long userId, Authentication auth){
+    public ResponseEntity<Void> removeCart(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long userId, 
+                                           Authentication auth){
         cartService.eliminarCarrito(userId,Long.valueOf(auth.getName()));
         return ResponseEntity.noContent().build();
     }
@@ -110,7 +115,7 @@ public class CartController {
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Carrito no encontrado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<CartResponse> updateCart(@PathVariable Long userId,
+    public ResponseEntity<CartResponse> updateCart(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long userId,
             @RequestBody CartRequest request, Authentication auth){
                 Long tokenUserId = Long.valueOf(auth.getName());
                 log.info("Actualizando carrito del usuario: {}",userId);

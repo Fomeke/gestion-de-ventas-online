@@ -19,6 +19,7 @@ import cl.gestion.ventas.inventory.dto.InventoryRequest;
 import cl.gestion.ventas.inventory.dto.InventoryResponse;
 import cl.gestion.ventas.inventory.service.InventoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -47,7 +48,7 @@ public class InventoryController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<InventoryResponse> getInventory(@PathVariable Long productId){
+    public ResponseEntity<InventoryResponse> getInventory(@Parameter(description = "Identificador único del producto", example = "1") @PathVariable Long productId){
         log.info("GET /inventories/{}",productId);
         return ResponseEntity.ok(inventoryService.obtenerInventarioPorIdProducto(productId));
     }
@@ -89,7 +90,7 @@ public class InventoryController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    public ResponseEntity<Void> removeInventory(@PathVariable Long productId){
+    public ResponseEntity<Void> removeInventory(@Parameter(description = "Identificador único del producto", example = "1") @PathVariable Long productId){
         log.info("DELETE /inventories/{}",productId);
         inventoryService.eliminar(productId);
         return ResponseEntity.noContent().build();
@@ -106,7 +107,8 @@ public class InventoryController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))),
             @ApiResponse(responseCode = "500", description = "Error interno o de servicio externo (FeignException)", 
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))})
-    public ResponseEntity<InventoryResponse> updateStock(@PathVariable Long productId, @RequestParam Integer quantity){
+    public ResponseEntity<InventoryResponse> updateStock(@Parameter(description = "Identificador único del producto", example = "1") @PathVariable Long productId, 
+                                                         @Parameter(description = "Cantidad a sumar o restar de stock", example = "15") @RequestParam Integer quantity){
         log.info("PUT /inventories/{}?quantity={}",productId,quantity);
         return ResponseEntity.ok(inventoryService.cambiarStock(productId, quantity));
 
