@@ -27,45 +27,4 @@ import lombok.extern.slf4j.Slf4j;
  * siguientes capas (SecurityConfig) tomen las decisiones que correspondan.
  */
 
-@Component
-@Slf4j
-@RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
-    private final JwtService jwtService;
-
-    private final UserRepository repository;
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter)
-            throws ServletException, IOException {
-
-        String authHeader = request.getHeader("Authorization");
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filter.doFilter(request, response);
-            return;
-        }
-
-        String token = authHeader.substring(7);
-
-        if (jwtService.isTokenValid(token)) {
-            Claims claims = jwtService.extractClaims(token);
-
-            String nombre = claims.get("name").toString();
-            if (!repository.existsByUsername(nombre)) {
-                log.warn("Token válido para usuario que no existe: {}", claims.get("name"));
-                filter.doFilter(request, response);
-                return;
-            }
-
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    claims.getSubject(), null, List.of());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("Token válido para usuario: {}", claims.getSubject());
-        } else {
-            log.warn("Token inválido en solicitud a: {}", request.getRequestURI());
-        }
-
-        filter.doFilter(request, response);
-    }
-}
+ 

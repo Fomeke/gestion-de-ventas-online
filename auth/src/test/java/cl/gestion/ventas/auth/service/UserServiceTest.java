@@ -107,6 +107,7 @@ public class UserServiceTest {
     @Test
     public void testEliminar(){
         Long id = 99L;
+        when(userRepository.existsById(id)).thenReturn(true);
         doNothing().when(userRepository).deleteById(id);
 
         userService.eliminar(id);
