@@ -1,4 +1,4 @@
-package cl.gestion.ventas.category.config;
+package cl.gestion.ventas.payment.config;
 
 import java.util.List;
 
@@ -20,17 +20,11 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI(){
         return new OpenAPI().info(new Info()
-<<<<<<< HEAD
-                                        .title("API de Categorias")
+                                        .title("API de Pagos")
                                         .version("1.0")
-                                        .description("API para la gestión de categorias de productos"))
-=======
-                                        .title("API de Categoria")
-                                        .version("1.0")
-                                        .description("API para la gestión de caterogias"))
->>>>>>> 628ed770da95f14a56697383f83425bf1d73285d
+                                        .description("API para la gestión de pagos"))
                             .servers(List.of(
-                                        new Server().url("http://localhost:8086").description("Servidor local"),
+                                        new Server().url("http://localhost:8089").description("Servidor local"),
                                         new Server().url("http://localhost:8080").description("Vía API Gateway")))
                             .components(new Components()
                                 .addSecuritySchemes(securitySchemeName, new SecurityScheme()

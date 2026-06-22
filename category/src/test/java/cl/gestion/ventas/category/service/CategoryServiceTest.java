@@ -131,4 +131,27 @@ public class CategoryServiceTest {
         assertEquals("No se encontro la categoria con esa id.", exception.getMessage());
         verify(repo, never()).deleteById(id);
     }
+    
+    @Test
+    void buscarCategoriasExito() {
+        when(repo.findAll()).thenReturn(java.util.List.of(new Category()));
+        assertNotNull(servi.buscarCategorias());
+        verify(repo, times(1)).findAll();
+    }
+
+    @Test
+    void modificarCategoriaExito() {
+        Long id = 1L;
+        CategoryRequest request = new CategoryRequest();
+        request.setName("Categoria Modificada");
+        Category category = new Category();
+        CategoryResponseDTO dto = new CategoryResponseDTO();
+
+        when(repo.findById(id)).thenReturn(Optional.of(category));
+        when(repo.save(category)).thenReturn(category);
+        when(mapper.toResponse(category)).thenReturn(dto);
+
+        assertNotNull(servi.modificarCategoria(id, request));
+        verify(repo, times(1)).save(category);
+    }
 }

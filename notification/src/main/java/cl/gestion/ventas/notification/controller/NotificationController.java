@@ -16,7 +16,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+@ApiResponses({
+        @ApiResponse(responseCode = "401", description = "No autenticado (Falta token o es invalido)"),
+        @ApiResponse(responseCode = "403", description = "No autorizado (No tienes permisos)"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+})
 @Slf4j
 @RestController
 @RequestMapping("/v1/notification")

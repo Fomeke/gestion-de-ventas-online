@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -131,5 +132,12 @@ class ReviewServiceTest {
 
         assertEquals("No existe esa review con tal id.", excepcion.getMessage());
         verify(repo, never()).deleteById(anyLong()); // Validamos que la BD no se toca si falla
+    }
+
+    @Test
+    void listReviewsExito() {
+        when(repo.findAll()).thenReturn(java.util.List.of(new Review()));
+        assertNotNull(reviewService.listReviews());
+        verify(repo, times(1)).findAll();
     }
 }
