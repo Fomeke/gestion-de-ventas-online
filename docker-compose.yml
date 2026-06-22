@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    networks:
+      - ventas-net
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  eureka-server:
+    build: ./eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - ventas-net
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - ventas-net
+
+  category:
+    build: ./category
+    container_name: category
+    environment:
+      MYSQL_HOST: mysql-db
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - ventas-net
+
+  product:
+    build: ./product
+    container_name: product
+    ports:
+      - "8085:8085"
+    environment:
+      MYSQL_HOST: mysql-db
+      EUREKA_URL: http://eureka-server:8761/eureka/
+
+      SERVICES_CATEGORY_BASEURL: http://category:8086/api/v1/category
+    depends_on:
+      - mysql-db
+      - eureka-server
+      - category
+    networks:
+      - ventas-net
+
+networks:
+  ventas-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
