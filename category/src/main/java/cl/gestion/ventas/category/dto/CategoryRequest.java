@@ -16,10 +16,6 @@ public class CategoryRequest {
 
     @NotBlank(message = "La categoria no debe quedar sin nombre.")
     @Size(min = 2,max = 50, message = "El nombre debe ser en 2 y 50 caracteres.")
-<<<<<<< HEAD
-    @Schema(description="Nombre de la categoria",example="Accesorios")
-=======
     @Schema(description = "Nombre de la categoria", example = "Electronica")
->>>>>>> 628ed770da95f14a56697383f83425bf1d73285d
     private String name;
 }

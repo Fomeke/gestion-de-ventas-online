@@ -29,11 +29,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@ApiResponses({
-        @ApiResponse(responseCode = "401", description = "No autenticado (Falta token o es invalido)"),
-        @ApiResponse(responseCode = "403", description = "No autorizado (No tienes permisos)"),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-})
 @RestController
 @Slf4j
 @RequestMapping("/v1/category")

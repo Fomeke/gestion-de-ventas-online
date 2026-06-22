@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class NotificationRequest {
 
     @NotNull(message = "Se debe ingresar la id del usuario.")
-<<<<<<< HEAD
     @Schema(description="ID del usuario que recibe la notificación",example="1")
     private Long userId;
     @NotBlank(message = "El asunto es obligatorio.")
@@ -30,19 +29,5 @@ public class NotificationRequest {
     private Long orderId;
 
     @Schema(description="Tipo de notificación",example="SMS")
-=======
-    @Schema(description = "ID del usuario", example = "2")
-    private Long userId;
-    @NotBlank(message = "El asunto es obligatorio.")
-    @Schema(description = "Asunto de la notificacion", example = "Pago realizado")
-    private String subject;
-    @NotBlank(message = "El mensaje no debe estar vacio.")
-    @Schema(description = "Mensaje a enviar", example = "Su pago a sido realizado con exito")
-    private String message;
-
-    @Schema(description = "ID de la orden", example = "1")
-    private Long orderId;
-    @Schema(description = "Tipo de notificacion a enviar", example = "Email")
->>>>>>> 628ed770da95f14a56697383f83425bf1d73285d
     private String type;
 }
