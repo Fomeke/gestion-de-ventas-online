@@ -6,11 +6,7 @@ spring:
     active: local
   application:
     name: shipping
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/shipping_db?createDatabaseIfNotExist=true
-    username: root
-    password: ""
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
   flyway:
     enabled: true
     locations: classpath:db/migration

@@ -89,6 +89,8 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+      ms-product:
+        condition: service_started
 
   ms-category:
     build: ./category
@@ -119,6 +121,8 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+      ms-product:
+        condition: service_started
 
   ms-notification:
     build: ./notification
@@ -133,6 +137,10 @@ services:
       mysql:
         condition: service_healthy
       eureka-server:
+        condition: service_started
+      ms-order:
+        condition: service_started
+      ms-auth:
         condition: service_started
 
   ms-order:
@@ -149,6 +157,10 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+      ms-cart:
+        condition: service_started
+      ms-inventory:
+        condition: service_started
 
   ms-payment:
     build: ./payment
@@ -163,6 +175,8 @@ services:
       mysql:
         condition: service_healthy
       eureka-server:
+        condition: service_started
+      ms-order:
         condition: service_started
 
   ms-product:
@@ -179,6 +193,8 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+      ms-category:
+        condition: service_started
 
   ms-review:
     build: ./review
@@ -194,6 +210,8 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+      ms-product:
+        condition: service_started
 
   ms-shipping:
     build: ./shipping
@@ -208,6 +226,8 @@ services:
       mysql:
         condition: service_healthy
       eureka-server:
+        condition: service_started
+      ms-order:
         condition: service_started
 
 volumes:

@@ -3,12 +3,6 @@ spring:
     name: category
   profiles:
     active: local
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/cart_db?createDatabaseIfNotExist=true
-    username: root
-    password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
   flyway:
     enabled: true
     locations: classpath:db/migrations
