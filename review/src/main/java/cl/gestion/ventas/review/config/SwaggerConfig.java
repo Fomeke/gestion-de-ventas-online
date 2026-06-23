@@ -24,7 +24,7 @@ public class SwaggerConfig {
                                         .version("1.0")
                                         .description("API para la gestión de reseñas"))
                             .servers(List.of(
-                                        new Server().url("http://localhost:8087").description("Servidor local"),
+                                        new Server().url("http://localhost:8087/api").description("Servidor local"),
                                         new Server().url("http://localhost:8080").description("Vía API Gateway")))
                             .components(new Components()
                                 .addSecuritySchemes(securitySchemeName, new SecurityScheme()
