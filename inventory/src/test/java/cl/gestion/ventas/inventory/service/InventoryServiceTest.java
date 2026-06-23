@@ -6,12 +6,16 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -129,5 +133,47 @@ public class InventoryServiceTest {
         verify(inventoryMapper, times(1)).toResponse(inv1);
         verify(inventoryMapper, times(1)).toResponse(inv2);
     }
+
+    @Test
+    void testCrear_YaExiste(){
+        InventoryRequest request = InventoryRequest.builder().productId(1L).build();
+
+        when(inventoryRepository.existsByProductId(request.getProductId())).thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                (Executable) () -> inventoryService.crear(request));
+
+        assertEquals("El producto ya existe", exception.getMessage());
+
+        verify(inventoryRepository).existsByProductId(1L);
+        verify(productClient, never()).getProductById(anyLong());
+        verify(inventoryRepository, never()).save(any(Inventory.class));
+    }
     
+
+    @Test
+    void testCambiarStock_StockInsuficiente(){
+        Long productId = 1L;
+
+        Inventory inventory = Inventory.builder().productId(productId).stock(5).build();
+
+        when(inventoryRepository.findByProductId(productId))
+                .thenReturn(Optional.of(inventory));
+
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                (Executable) () -> inventoryService.cambiarStock(productId, -10));
+
+
+        assertEquals(
+            "Stock insuficiente de producto 1: El stock actual es 5 y se intento restar 10",
+            exception.getMessage());
+
+
+        verify(inventoryRepository).findByProductId(productId);
+        verify(inventoryMapper, never()).toResponse(any(Inventory.class));
+    
+    }
 }

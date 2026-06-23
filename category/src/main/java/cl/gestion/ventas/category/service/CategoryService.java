@@ -3,7 +3,6 @@ package cl.gestion.ventas.category.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
 import org.springframework.stereotype.Service;
 
 import cl.gestion.ventas.category.dto.CategoryRequest;
@@ -57,21 +56,21 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO modificarCategoria(Long id, CategoryRequest category){
-    log.info("Modificando categoria con la ID: {}", id);
+        log.info("Modificando categoria con la ID: {}", id);
 
-    if (!repo.existsById(id)) {
-        throw new NoSuchElementException("No se encontro la categoria con esa id.");
+        if (!repo.existsById(id)) {
+            throw new NoSuchElementException("No se encontro la categoria con esa id.");
+        }
+
+        if (repo.findByName(category.getName()).isPresent()) {
+            throw new IllegalArgumentException("Ya existe esa categoria");
+        }
+
+        Category existing = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No se encontro la categoria con esa id."));
+
+        existing.setName(category.getName());
+        Category updated = repo.save(existing);
+        return mapper.toResponse(updated);
     }
-
-    if (repo.findByName(category.getName()).isPresent()) {
-        throw new IllegalArgumentException("Ya existe esa categoria");
-    }
-
-    Category existing = repo.findById(id)
-            .orElseThrow(() -> new NoSuchElementException("No se encontro la categoria con esa id."));
-
-    existing.setName(category.getName());
-    Category updated = repo.save(existing);
-    return mapper.toResponse(updated);
-}
 }

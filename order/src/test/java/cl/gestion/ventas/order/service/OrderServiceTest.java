@@ -1,21 +1,29 @@
 package cl.gestion.ventas.order.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -163,5 +171,62 @@ public class OrderServiceTest {
         assertDoesNotThrow((Executable) () -> orderService.eliminarOrden(id));
         verify(inventoryClient,times(1)).actualizarStock(restoreRequests);
         verify(orderRepository,times(1)).delete(order);
+    }
+
+    @Test
+    void testObtenerOrdenPorId_NoExiste(){
+        Long orderId = 100L;
+        when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
+
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> {
+            orderService.obtenerOrdenPorId(orderId);
+        });
+
+        assertEquals("No se encontro la orden con esa id", exception.getMessage());
+        
+        verify(orderRepository, times(1)).findById(orderId);
+        verifyNoInteractions(orderMapper);
+    }
+
+    @Test
+    void testCrear_CarritoVacio(){
+        Long userId = 1L;
+        OrderRequest request = OrderRequest.builder().userId(userId).build();
+
+        CartResponse mockCartResponse = new CartResponse();
+        mockCartResponse.setItems(Collections.emptyList());
+
+        when(cartClient.getCartByUserId(userId)).thenReturn(mockCartResponse);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            orderService.crear(request);
+        });
+
+        assertEquals("El carrito está vacío", exception.getMessage());
+
+        verify(cartClient, times(1)).getCartByUserId(userId);
+        verifyNoInteractions(inventoryClient);
+        verifyNoInteractions(orderRepository);
+        verify(cartClient, never()).cleanCartByUserId(anyLong());
+    }
+
+    @Test
+    void testEditarEstado_Error_OrdenFinalizada(){
+        Long orderId = 10L;
+        OrderStatusUpdate update = new OrderStatusUpdate(OrderStatus.SHIPPED); // Intento de cambio inválido
+        
+        Order order = Order.builder().id(orderId).status(OrderStatus.DELIVERED).build(); 
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            orderService.editarEstado(orderId, update);
+        });
+
+        assertTrue(exception.getMessage().contains("No se puede modificar la orden"));
+        assertTrue(exception.getMessage().contains("DELIVERED"));
+
+        verify(orderRepository, times(1)).findById(orderId);
+        verify(orderRepository, never()).save(any(Order.class));
     }
 }

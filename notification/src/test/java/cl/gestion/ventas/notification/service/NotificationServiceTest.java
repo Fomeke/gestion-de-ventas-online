@@ -1,5 +1,24 @@
 package cl.gestion.ventas.notification.service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import cl.gestion.ventas.notification.client.OrderClient;
 import cl.gestion.ventas.notification.client.UserClient;
 import cl.gestion.ventas.notification.dto.NotificationRequest;
@@ -8,20 +27,6 @@ import cl.gestion.ventas.notification.dto.UserResponse;
 import cl.gestion.ventas.notification.mapper.NotificationMapper;
 import cl.gestion.ventas.notification.models.Notification;
 import cl.gestion.ventas.notification.repository.NotificationRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationServiceTest {
@@ -154,5 +159,20 @@ class NotificationServiceTest {
         when(repo.findAll()).thenReturn(java.util.List.of(new Notification()));
         assertNotNull(servi.listNotificacion());
         verify(repo, times(1)).findAll();
+    }
+
+    @Test
+    void eliminarNotificacion_Error(){
+        Long notificationId = 15L;
+        when(repo.existsById(notificationId)).thenReturn(false);
+
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> {
+            servi.eliminarNotificacion(notificationId);
+        });
+
+        assertEquals("Notificación no encontrada", exception.getMessage());
+        
+        verify(repo, times(1)).existsById(notificationId);
+        verify(repo, never()).deleteById(anyLong());
     }
 }

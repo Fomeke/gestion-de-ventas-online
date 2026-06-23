@@ -3,6 +3,7 @@ package cl.gestion.ventas.cart.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -83,6 +84,20 @@ public class CartServiceTest {
     }
 
     @Test
+    public void testObtenerCarritoPorId_NoHayCarrito(){
+        Long userId = 1L;
+        
+        when(cartRepository.findByUserId(userId)).thenReturn(Optional.empty());
+
+        NoSuchElementException ex = assertThrows(NoSuchElementException.class, (Executable) () -> 
+            cartService.obtenerCarritoPorId(userId));
+
+        assertEquals("Carrito no encontrado", ex.getMessage());
+        
+        verify(cartRepository, times(1)).findByUserId(userId);
+    }
+
+    @Test
     public void testAgregarProductosACarrito_UsuarioNoAutorizado(){
         Long idUsuarioConToken = 99L;
         Long idDuenoCarro = 1L; // Son diferentes
@@ -94,6 +109,7 @@ public class CartServiceTest {
         assertEquals("No tiene permiso para modificar este carrito", ex.getMessage());
         verify(cartRepository,never()).save(any(Cart.class));
     }
+
 
     @Test
     public void testEliminarProductoDeCarrito(){
@@ -124,6 +140,23 @@ public class CartServiceTest {
 
         cartService.eliminarCarrito(id, tokenUserId);
         verify(cartRepository,times(1)).deleteByUserId(id);
+    }
+
+    @Test
+    public void testEliminarCarrito_NoExiste(){
+        Long id = 5L;
+        Long tokenUserId = 5L;
+
+        when(cartRepository.existsByUserId(id)).thenReturn(false);
+
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> {
+            cartService.eliminarCarrito(id, tokenUserId);
+        });
+
+        assertEquals("Carrito no encontrado", exception.getMessage());
+
+        verify(cartRepository, times(1)).existsByUserId(id);
+        verify(cartRepository, never()).deleteByUserId(id);
     }
 
     @Test

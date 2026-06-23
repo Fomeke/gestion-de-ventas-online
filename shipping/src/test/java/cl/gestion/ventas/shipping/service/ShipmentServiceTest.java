@@ -5,13 +5,19 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -129,5 +135,54 @@ public class ShipmentServiceTest {
         verify(shipmentRepository,times(1)).findByTrackingNumber(trknum);
         verify(orderClient,times(1)).getOrderById(newOrderId);
         verify(shipmentRepository,times(1)).save(envio);
+    }
+
+    @Test
+    void testCrear_Error_OrdenNoPagada(){
+        Long orderId = 123L;
+        ShipmentRequest request = ShipmentRequest.builder().orderId(orderId).trackingNumber("ASS-666").build();
+
+        OrderResponseForShipping order = new OrderResponseForShipping();
+        order.setStatus("PENDING"); 
+
+        when(orderClient.getOrderById(orderId)).thenReturn(order);
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            shipmentService.crear(request);
+        });
+
+        assertEquals("La orden debe estar pagada (PAID) para el envío", exception.getMessage());
+
+        verify(orderClient, times(1)).getOrderById(orderId);
+        verify(shipmentRepository, never()).existsByTrackingNumber(anyString());
+        verify(orderClient, never()).updateState(anyLong(), any());
+        verify(shipmentRepository, never()).save(any(Shipment.class));
+    }
+
+    @Test
+    void testActualizar_TrkNumExiste(){
+        String currentTracking = "TRK-OLD";
+        String requestedNewTracking = "TRK-DUPLICATED";
+        Long orderId = 55L;
+
+        ShipmentRequest request = ShipmentRequest.builder().trackingNumber(requestedNewTracking).orderId(orderId).build();
+
+        Shipment existingShipment = Shipment.builder().trackingNumber(currentTracking).orderId(orderId).build();
+
+        when(shipmentRepository.findByTrackingNumber(currentTracking)).thenReturn(Optional.of(existingShipment));
+
+        when(shipmentRepository.existsByTrackingNumber(requestedNewTracking)).thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            shipmentService.actualizar(currentTracking, request);
+        });
+
+        assertEquals("El número de rastreo ya existe", exception.getMessage());
+
+        verify(shipmentRepository, times(1)).findByTrackingNumber(currentTracking);
+        verify(shipmentRepository, times(1)).existsByTrackingNumber(requestedNewTracking);
+        
+        verifyNoInteractions(orderClient);
+        verify(shipmentRepository, never()).save(any(Shipment.class));
     }
 }

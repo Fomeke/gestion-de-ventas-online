@@ -1,21 +1,23 @@
 package cl.gestion.ventas.category.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import cl.gestion.ventas.category.dto.CategoryRequest;
@@ -153,5 +155,40 @@ public class CategoryServiceTest {
 
         assertNotNull(servi.modificarCategoria(id, request));
         verify(repo, times(1)).save(category);
+    }
+
+    @Test
+    void buscarCategoriaPorIdError(){
+        Long categoryId = 99L;
+        when(repo.findById(categoryId)).thenReturn(Optional.empty());
+
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, (Executable) () ->
+            servi.buscarCategoriaPorId(categoryId));
+
+        assertEquals("No se encontro esa categoria.", exception.getMessage());
+        
+        verify(repo, times(1)).findById(categoryId);
+        verifyNoInteractions(mapper);
+    }
+
+    @Test
+    void modificarCategoriaError(){
+        Long categoryId = 1L;
+        CategoryRequest request = new CategoryRequest("Ropa");
+        Category duplicateCategory = new Category(); 
+
+        when(repo.existsById(categoryId)).thenReturn(true);
+        when(repo.findByName(request.getName())).thenReturn(Optional.of(duplicateCategory));
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            servi.modificarCategoria(categoryId, request);
+        });
+
+        assertEquals("Ya existe esa categoria", exception.getMessage());
+
+        verify(repo, times(1)).existsById(categoryId);
+        verify(repo, times(1)).findByName(request.getName());
+        verify(repo, never()).findById(anyLong());
+        verify(repo, never()).save(any(Category.class));
     }
 }
