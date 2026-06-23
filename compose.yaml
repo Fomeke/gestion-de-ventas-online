@@ -18,7 +18,7 @@ services:
     networks:
       - networksita
 
-  ureka-server:
+  eureka-server:
     build:
       context: ./eureka-server
     container_name: eureka-server
