@@ -1,33 +1,32 @@
 spring:
+  application:
+    name: product
 
-    application:
-        name: product
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/review_db?createDatabaseIfNotExist=true
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    datasource:
-        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/review_db?createDatabaseIfNotExist=true
-        username: root
-        password:
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
 
-    flyway:
-        enabled: true
-        locations: classpath:db/migration
-        baseline-on-migrate: true
-    
-    jpa:
-        hibernate:
-            ddl-auto: validate
-        show-sql: false
-        open-in-view: false
-    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+
 server:
-    port: 8087
-    servlet:
-        context-path: /api
+  port: 8087
+  servlet:
+    context-path: /api
 
 services:
-    product:
-        baseUrl: http://${PRODUCT_HOST:localhost}:8085/api/v1/product
+  product:
+    baseUrl: http://${PRODUCT_HOST:localhost}:8085/api/v1/product
 
 logging:
   level:
@@ -38,4 +37,8 @@ logging:
     name: logs/product-service.log
 
 jwt:
-    secret: 46238dr3r67246y423784rt687342rys832q47rt
+  secret: 46238dr3r67246y423784rt687342rys832q47rt
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

@@ -1,29 +1,28 @@
 spring:
+  application:
+    name: category
 
-    application:
-        name: category
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/category_db
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    datasource:
-        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/category_db
-        username: root
-        password:
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+    baseline-on-migrate: true
 
-    flyway:
-        enabled: true
-        locations: classpath:db/migrations
-        baseline-on-migrate: true
-    
-    jpa:
-        hibernate:
-            ddl-auto: validate
-        show-sql: false
-        open-in-view: false
-    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+
 server:
-    port: 8086
-    servlet:
-        context-path: /api
+  port: 8086
+  servlet:
+    context-path: /api
 
 logging:
   level:
@@ -34,4 +33,8 @@ logging:
     name: logs/category-service.log
 
 jwt:
-    secret: 46238dr3r67246y423784rt687342rys832q47rt
+  secret: 46238dr3r67246y423784rt687342rys832q47rt
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
