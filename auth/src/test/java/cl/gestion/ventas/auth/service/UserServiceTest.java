@@ -1,20 +1,25 @@
 package cl.gestion.ventas.auth.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import cl.gestion.ventas.auth.dto.UserRequest;
 import cl.gestion.ventas.auth.dto.UserResponse;
@@ -133,5 +138,39 @@ public class UserServiceTest {
         verify(userRepository,times(1)).findById(id);
         verify(userRepository,times(1)).save(userPrevio);
         verify(userMapper,times(1)).toResponse(userModificado);
+    }
+
+    @Test
+    public void testCrear_ExcepcionUsuarioYaExiste(){
+        UserRequest request = UserRequest.builder().username("sixseven").fullName("Six Seven").email("sixseven@67.cl").phone("6767676767").password("sixseven!!!!").build();
+
+        when(userRepository.existsByUsername(request.getUsername())).thenReturn(true);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, (Executable) () -> userService.crear(request));
+
+        assertEquals("Usuario ya existe", ex.getMessage());
+
+        verify(userRepository,times(1)).existsByUsername(request.getUsername());
+        verify(userRepository,never()).save(any(User.class));
+    }
+
+    @Test
+    public void testModificar_ExcepcionDatoDuplicado(){
+        Long userId = 1L;
+        UserRequest request = UserRequest.builder().username("larryK").fullName("Larry Kapija").email("larryk@duocuc.cl").phone("1313").password("pass").build();
+
+        User user = User.builder().id(userId).username("larryC").correo("larryp@duocuc.cl").build();
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        when(userRepository.save(any(User.class))).thenThrow(new DataIntegrityViolationException("Data integrity violation"));
+
+        DataIntegrityViolationException ex = assertThrows(DataIntegrityViolationException.class, (Executable) () -> userService.modificarUsuario(userId, request));
+
+        assertTrue(ex.getMessage().contains("Data integrity"));
+
+        verify(userRepository,times(1)).findById(userId);
+        verify(userRepository,times(1)).save(any(User.class));
+        verify(userMapper,never()).toResponse(any(User.class));
     }
 }
