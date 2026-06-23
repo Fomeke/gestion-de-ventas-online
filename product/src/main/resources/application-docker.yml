@@ -9,6 +9,6 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
 
-category:
-  service:
-    url: http://category/api/v1/category
+services:
+  category:
+    baseUrl: http://category/api/v1/category

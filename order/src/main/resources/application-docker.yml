@@ -9,9 +9,8 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
 
-cart:
-  service:
-    url: http://cart/api/v1/cart
-inventory:
-  service:
-    url: http://inventory/api/v1/inventory
+services:
+  cart:
+    baseUrl: http://cart/api/v1/carts
+  inventory:
+    baseUrl: http://inventory/api/v1/inventories

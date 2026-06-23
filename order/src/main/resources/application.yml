@@ -2,6 +2,8 @@
 # Warnings:
 # - The yaml file had comments which are lost in the refactoring!
 spring:
+  profiles:
+    active: local
   application:
     name: order
   datasource:
@@ -31,6 +33,7 @@ logging:
           order: DEBUG
   file:
     name: logs/order-service.log
+
 jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
 services:
@@ -42,6 +45,3 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
-
-profiles:
-  active: local

@@ -1,7 +1,8 @@
 spring:
   application:
     name: product
-
+  profiles:
+    active: local
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/review_db?createDatabaseIfNotExist=true
     username: root
@@ -42,6 +43,3 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
-
-profiles:
-  active: local
