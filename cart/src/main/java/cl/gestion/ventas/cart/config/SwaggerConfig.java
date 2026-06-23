@@ -24,7 +24,7 @@ public class SwaggerConfig {
                                         .version("1.0")
                                         .description("API para la gestión de carritos de compra"))
                             .servers(List.of(
-                                        new Server().url("http://localhost:8082").description("Servidor local"),
+                                        new Server().url("http://localhost:8082/api").description("Servidor local"),
                                         new Server().url("http://localhost:8080").description("Vía API Gateway")))
                             .components(new Components()
                                 .addSecuritySchemes(securitySchemeName, new SecurityScheme()
