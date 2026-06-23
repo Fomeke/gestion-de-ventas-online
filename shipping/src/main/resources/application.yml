@@ -31,6 +31,8 @@ logging:
           shipping: DEBUG
   file:
     name: logs/shipment-service.log
+profiles:
+  active: local
 jwt:
   secret: 46238dr3r67246y423784rt687342rys832q47rt
 services:

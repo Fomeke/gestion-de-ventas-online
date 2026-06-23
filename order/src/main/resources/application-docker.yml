@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/order_db?createDatabaseIfNotExist=true
+    username: root
+    password: ""
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+
+cart:
+  service:
+    url: http://cart/api/v1/cart
+inventory:
+  service:
+    url: http://inventory/api/v1/inventory
