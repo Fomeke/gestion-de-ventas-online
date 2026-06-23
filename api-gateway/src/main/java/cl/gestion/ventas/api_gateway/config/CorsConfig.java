@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CorsConfig implements WebMvcConfigurer {
     
-    private final LoggingFilter loggingFilter;
+    private LoggingFilter loggingFilter;
+
+    
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
