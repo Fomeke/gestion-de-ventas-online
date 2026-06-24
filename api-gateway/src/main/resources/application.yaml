@@ -10,20 +10,19 @@ spring:
           locator:
             enabled: true
             lower-case-service-id: true
-        globalcors:
-          cors-configurations:
-            '[/**]':
-              allowedOrigins: 
-                - "${ALLOWED_ORIGIN:http://localhost:8080}"
-                - "http://127.0.0.1:8080"
-              allowedMethods:
-                - GET
-                - POST
-                - PUT
-                - DELETE
-                - OPTIONS
-              allowedHeaders: "*"
-              allowCredentials: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 
+              - "${ALLOWED_ORIGIN:http://localhost:8080}"
+              - "http://127.0.0.1:8080"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
         routes:
           #AUTH
           - id: ms-auth-service-route
