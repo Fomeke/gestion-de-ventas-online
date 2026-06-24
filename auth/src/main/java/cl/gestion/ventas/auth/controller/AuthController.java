@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name="Control de Autenticación", description="Endpoints para la gestión de sesiones (solo está habilitado el iniciar sesión)")
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://146.181.52.105:8080","http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;
