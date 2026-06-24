@@ -1,14 +1,14 @@
-# Evaluación Parcial 2: Gestión de ventas online
+# Evaluación Parcial 3: Gestión de ventas online
 **Asignatura:** DESARROLLO FULLSTACK I_007D 
 
 ## Descripción del Proyecto
 El caso consiste en una plataforma de gestión de ventas online, que simula el funcionamiento de un sistema de comercio electrónico, que comprende la gestión de usuarios, productos, ordenes, pagos, envíos, entre otros.
-Está compuesto por 10 microservicios integrados mediante comunicación remota (**Feign Client/WebClient**).
+Está compuesto por 10 microservicios integrados mediante comunicación remota (**Feign Client/WebClient**), un API-Gateway y un servicio de descubrimiento.
 Cada microservicio esta estructurado bajo el patrón **CSR (Controller-Service-Repository)**.
 
 ## Integrantes
-* **Sebastian Navarro** - Estudiante
-* **José Calderón** - Estudiante
+* **Sebastian Navarro**
+* **José Calderón**
 
 ---
 
@@ -26,6 +26,11 @@ El sistema está compuesto por 10 microservicios independientes, comunicados ent
 9. **Review:** Calificaciones de productos.
 10. **Notification:** Sistema de alertas.
 
+Además cuenta con:
+
+11. **API-Gateway:** Puerta de enlace centralizada para acceder a todos los servicios.
+12. **Eureka-server:** Servicio de descubrimiento, le entrega la dirección de cada servicio al API-gateway.
+
 ---
 
 ## Tecnologías Utilizadas
@@ -35,22 +40,29 @@ El sistema está compuesto por 10 microservicios independientes, comunicados ent
 * **Seguridad:** Spring Security con JWT (JSON Web Token)
 * **Comunicación Interna:** OpenFeign / WebClient
 * **Validaciones:** Bean Validation y `@ControllerAdvice` para manejo de errores centralizado.
+* **Documentación:** Swagger y API-docs
+* **Pruebas:** Mockito y JUnit
+* **Despliegue:** Docker
+* **Descubrimiento:** Eureka
+* **Salud:** Actuator
 
 ---
 
 ### Ejecución
-1. **Bases de Datos:** Puede utilizar Laragon para crear bases de datos MySQL. Los nombres y credenciales de las bases de datos de cada servicio deben coincidir con lo especificado en cada `application.properties/yml`.
-2. **Importar:** Abre la carpeta raíz en tu IDE para cargar todos los servicios, para iniciar uno debe ejecutar el archivo en:
-   - `gestion-de-ventas-online\<nombre de servicio>\src\main\java\cl\gestion\ventas\<nombre de servicio>\<NombreDeServicio>Application.java`.
-4. **Arrancar Servicios:**  
+1. Una vez clonado el repositorio, debe compilar los servicios, para eso cuenta con el archivo batch compilar-servicios.bat, que corre `./mvnw clean package` en cada package. En este caso, debe contar con una base de datos MySQL local en el puerto 3306 sin contraseña root para que las pruebas unitarias corran con éxito, puede usar Laragon/MySQL para esto. **Si solo quiere compilar sin pruebas, corra el archivo .bat con el argumento -DskipTests** (`compilar-servicios.bat -DskipTests`).
+2. Si quiere correr las pruebas unitarias, puede acceder a la carpeta del servicio (ej: /inventory) y correr `./mvnw test`
+3. Ya compilados los servicios, habilite Docker/DockerDesktop y corra el archivo compose.yaml con `docker compose up -d`
+4. Para acceder a los servicios, puede hacerlo mediante un programa de testeo de APIs como Postman o ThunderClient por el puerto `8080` (Gateway), o mediante la interfaz de Swagger:
 
-   #### Primero: `auth` (Puerto: `8090`)
+   ```http://localhost:8080/swagger-ui.html``` o
+   ```http://localhost:8080/swagger-ui/index.html```
 
-   - Inicie la aplicación y accede al endpoint con POST:
+   - Pero para utilizar los endpoints de cada servicio, debe iniciar sesión y obtener un JWT válido desde el servicio auth, por lo que debe acceder primero al endpoint con POST:
 
      ```http
-     http://localhost:8090/api/v1/auth
+     http://localhost:8080/api/v1/auth
      ```
+   - En la interfaz de swagger, debe cambiar en `Select a definition` a **Autenticación y Usuarios** y dirijase a Control de Autenticación -> Iniciar sesión.
 
    - Utiliza uno de los usuarios predeterminados mediante el siguiente formato JSON en el Body de la solicitud:
 
@@ -78,32 +90,26 @@ El sistema está compuesto por 10 microservicios independientes, comunicados ent
 
      - Header: `Authorization`
      - Auth Type: `Bearer Token`
+   - Ó ingresar el token mediante el botón `Authorize` en la interfaz de Swagger de cada servicio.
 
-   - Todos los endpoints de la plataforma, excepto `/api/v1/auth`, requieren autenticación mediante este token.
+   - Todos los endpoints de la plataforma (que no son swagger), excepto `/api/v1/auth`, requieren autenticación mediante este token.
 
-   #### Segundo:
-
-   - `category` (Puerto: `8086`)
-   - `product` (Puerto: `8085`)
-   - `inventory` (Puerto: `8083`)
-
-   #### Tercero:
-
-   - `cart` (Puerto: `8082`)
-   - `order` (Puerto: `8084`)
-   - `payment` (Puerto: `8089`)
-   - `shipping`(Puerto: `8081`)
-
-   #### Cuarto:
-
-   - `review` (Puerto: `8087`)
-   - `notification` (Puerto: `8088`)
+   - Puede acceder a los servicios tanto en swagger como postman con el API Gateway o directamente a los servicios, para lo último éstos son los puertos de cada servicio:
+      - `category` (Puerto: `8086`)
+      - `product` (Puerto: `8085`)
+      - `inventory` (Puerto: `8083`)
+      - `cart` (Puerto: `8082`)
+      - `order` (Puerto: `8084`)
+      - `payment` (Puerto: `8089`)
+      - `shipping`(Puerto: `8081`)
+      - `review` (Puerto: `8087`)
+      - `notification` (Puerto: `8088`)
 
 ## Endpoints de cada microservicio
 
 ### 1. Auth Service 
 Maneja la seguridad, generación de JWT y la gestión del ciclo de vida de los usuarios.
-**Rutas Base:** `/v1/auth` y `/v1/usuarios`
+**Rutas Base:** `api/v1/auth` y `api/v1/usuarios`
 
 * **Autenticación:**
   * `POST api/v1/auth`: Inicia sesión. Recibe credenciales (`LoginRequest`) y devuelve un token JWT válido si el usuario existe. Es la única ruta pública por defecto.
@@ -171,7 +177,7 @@ Orquesta el proceso de compra, conectando carrito, inventario y posterior pago/e
 
 ### 7. Payment Service (Pagos)
 Procesa y registra las transacciones económicas asociadas a las órdenes.
-**Ruta Base:** `/v1/payment`
+**Ruta Base:** `api/v1/payment`
 
 * `GET /v1/payment`: Obtiene un listado general de todos los pagos registrados.
 * `GET /v1/payment/{id}`: Obtiene el detalle de una transacción de pago específica.
@@ -201,7 +207,7 @@ Permite a los usuarios calificar y dejar comentarios sobre los productos adquiri
 
 ### 10. Shipping Service
 Gestiona la logística, despachos y números de seguimiento de las compras.
-**Ruta Base:** `/v1/shipments`
+**Ruta Base:** `api/v1/shipments`
 
 * `GET api/v1/shipments`: Lista todos los envíos registrados.
 * `GET api/v1/shipments/shipmentById/{id}`: Busca un envío utilizando su ID interno de base de datos.
@@ -210,21 +216,5 @@ Gestiona la logística, despachos y números de seguimiento de las compras.
 * `PUT api/v1/shipments/{trackingNum}`: Actualiza el estado o información de un envío utilizando su número de seguimiento.
 * `DELETE api/v1/shipments/{trackingNum}`: Elimina o cancela un envío utilizando su número de seguimiento.
 
-
-## Configuración de Bases de Datos
-
-Antes de ejecutar los microservicios, debes crear las bases de datos correspondientes en tu servidor SQL. Ejecuta el siguiente script para generar las 10 bases de datos requeridas:
-
-```sql
-
-CREATE DATABASE IF NOT EXISTS auth_db;
-CREATE DATABASE IF NOT EXISTS cart_db;
-CREATE DATABASE IF NOT EXISTS category_db;
-CREATE DATABASE IF NOT EXISTS inventory_db;
-CREATE DATABASE IF NOT EXISTS notification_db;
-CREATE DATABASE IF NOT EXISTS order_db;
-CREATE DATABASE IF NOT EXISTS payment_db;
-CREATE DATABASE IF NOT EXISTS product_db;
-CREATE DATABASE IF NOT EXISTS review_db;
-CREATE DATABASE IF NOT EXISTS shipping_db;
-```
+### 11. Eureka Server
+* Puede acceder a la interfaz de eureka mediante el puerto `8761`, ej: `localhost:8761`
