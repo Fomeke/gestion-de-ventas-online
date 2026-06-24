@@ -9,10 +9,9 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class CorsConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
     
     private final LoggingFilter loggingFilter;
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

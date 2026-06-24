@@ -1,9 +1,13 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM maven:3.9-eclipse-temurin-21-alpine AS build
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
+COPY . .
 
-EXPOSE 8080
+RUN ./mvnw clean package -DskipTests
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM eclipse-temurin:21-jre-alpine
+
+COPY --from=build /app/target/*.jar app.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]
