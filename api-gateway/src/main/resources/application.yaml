@@ -164,7 +164,7 @@ logging:
     root: INFO
     "[org.springframework.cloud.gateway]": DEBUG
   file:
-    name: logs/users-service.log
+    name: logs/api-gateway.log
 
 springdoc:
   swagger-ui:

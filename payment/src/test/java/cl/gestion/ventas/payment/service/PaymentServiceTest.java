@@ -1,5 +1,24 @@
 package cl.gestion.ventas.payment.service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import cl.gestion.ventas.payment.Repository.PaymentRepository;
 import cl.gestion.ventas.payment.client.OrderClient;
 import cl.gestion.ventas.payment.dto.OrderResponse;
@@ -8,20 +27,6 @@ import cl.gestion.ventas.payment.dto.PaymentResponse;
 import cl.gestion.ventas.payment.mapper.PaymentMapper;
 import cl.gestion.ventas.payment.model.Payment;
 import cl.gestion.ventas.payment.model.PaymentStatus;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
@@ -89,7 +94,7 @@ class PaymentServiceTest {
             servi.procesarPago(request, token);
         });
 
-        assertEquals("La orden tiene un estado no valido solo se acepta PENDIENTE (PENDING)", excepcion.getMessage());
+        assertEquals("La Orden tiene un estado no válido, sólo se acepta PENDIENTE (PENDING)", excepcion.getMessage());
         
     
         verify(repo, never()).save(any());
@@ -115,7 +120,7 @@ class PaymentServiceTest {
             servi.procesarPago(request, token);
         });
 
-        assertEquals("El monto a pagar no coincide con el total de la orden.", excepcion.getMessage());
+        assertEquals("El monto a pagar no coincide con el total de la orden", excepcion.getMessage());
         verify(repo, never()).save(any());
     }
 
@@ -134,7 +139,7 @@ class PaymentServiceTest {
             servi.eliminarPago(id, token);
         });
 
-        assertEquals("No se puede eliminar un pago exitoso debe procesarse un reembolso.", excepcion.getMessage());
+        assertEquals("No se puede eliminar un pago exitoso; debe procesarse un reembolso", excepcion.getMessage());
         verify(repo, never()).delete(any());
     }
     @Test
@@ -161,15 +166,23 @@ class PaymentServiceTest {
     void actualizarPagoExito() {
         Long id = 1L;
         String token = "Bearer m1t0k3n";
-        PaymentRequest request = new PaymentRequest();
-        Payment payment = new Payment();
+        PaymentRequest request = PaymentRequest.builder().orderId(2L).amount(new BigDecimal(1500)).paymentMethod("CREDIT_CARD").build();
+        Payment payment = Payment.builder().id(id).status(PaymentStatus.PENDING).build();
         PaymentResponse response = new PaymentResponse();
+        OrderResponse order = OrderResponse.builder().id(2L).total(new BigDecimal(1500)).build();
         
         when(repo.findById(id)).thenReturn(Optional.of(payment));
+        when(client.obtenerOrden(request.getOrderId(), token)).thenReturn(order);
         when(repo.save(any(Payment.class))).thenReturn(payment);
         when(mapper.toResponse(payment)).thenReturn(response);
 
-        assertNotNull(servi.actualizarPago(id, request, token));
+        PaymentResponse resultado = servi.actualizarPago(id, request, token);
+
+        assertNotNull(resultado);
+
+        verify(repo,times(1)).findById(id);
+        verify(client,times(1)).obtenerOrden(2L, token);
+        verify(client,times(1)).actualizarEstado(2L, "PAID", token);
         verify(repo, times(1)).save(any(Payment.class));
     }
 }

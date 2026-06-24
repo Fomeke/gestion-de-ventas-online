@@ -149,6 +149,7 @@ public class CategoryServiceTest {
         Category category = new Category();
         CategoryResponseDTO dto = new CategoryResponseDTO();
 
+        when(repo.existsById(id)).thenReturn(true);
         when(repo.findById(id)).thenReturn(Optional.of(category));
         when(repo.save(category)).thenReturn(category);
         when(mapper.toResponse(category)).thenReturn(dto);

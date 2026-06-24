@@ -1,5 +1,6 @@
 package cl.gestion.ventas.product.service;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -105,7 +106,7 @@ public class ProductServiceTest {
             servi.eliminarProducto(id);
         } );
 
-        assertEquals("No se encontro el producto con esa id.", exception.getMessage());
+        assertEquals("Producto no encontrado.", exception.getMessage());
         verify(repo, never()).deleteById(id);
     }
 
@@ -133,25 +134,29 @@ public class ProductServiceTest {
         
         Long id = 1L;
         String token = "Bearer m1t0k3n";
+        BigDecimal precio = new BigDecimal(150000);
         
         
         Product productExistente = new Product();
         productExistente.setId(id);
         productExistente.setName("Notebook Viejo");
+        productExistente.setPrice(precio);
         
         
         ProductRequestDTO request = new ProductRequestDTO();
         request.setName("Notebook Nuevo");
         request.setCategoryId(3L);
+        request.setPrice(precio);
         
         
         ProductResponseDTO response = new ProductResponseDTO();
         response.setName("Notebook Nuevo");
+        response.setPrice(precio);
         
 
         
         when(repo.findById(id)).thenReturn(Optional.of(productExistente));
-        when(client.obtenerProductoPorCategoriaId(3L, token)).thenReturn(null); // Simulamos el Feign Client
+        when(client.obtenerProductoPorCategoriaId(3L, token)).thenReturn(null);
         when(repo.save(any(Product.class))).thenReturn(productExistente);
         when(mapper.toResponse(productExistente)).thenReturn(response);
 
@@ -160,7 +165,7 @@ public class ProductServiceTest {
 
         
         assertEquals("Notebook Nuevo", resultado.getName());
-        assertEquals(150000.0, resultado.getPrice()); // Confirmamos que el precio cambió
+        assertEquals(precio, resultado.getPrice());
         verify(repo, times(1)).save(productExistente);
         verify(client, times(1)).obtenerProductoPorCategoriaId(3L, token);
     }
