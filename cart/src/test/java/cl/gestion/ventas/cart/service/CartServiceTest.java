@@ -180,7 +180,7 @@ public class CartServiceTest {
         when(cartRepository.save(cart)).thenReturn(cart);
         when(cartMapper.toResponse(cart)).thenReturn(response);
 
-        CartResponse resultado = cartService.actulizarCarrito(userId, request, tokenUserId);
+        CartResponse resultado = cartService.actualizarCarrito(userId, request, tokenUserId);
 
         assertNotNull(resultado);
         assertEquals(1, cart.getItems().size());

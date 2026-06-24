@@ -21,7 +21,7 @@ server:
 
 services:
   category:
-    baseUrl: http://localhost:8086/api/v1/category
+    baseUrl: http://${CATEGORY_HOST:localhost}:8086/api/v1/category
 
 logging:
   level:

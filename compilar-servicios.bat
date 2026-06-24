@@ -1,13 +1,15 @@
 @echo off
+setlocal
 
-SET servicios=eureka-server api-gateway auth category product inventory cart order shipping notification review payment
+set "servicios=eureka-server api-gateway auth category product inventory cart order shipping notification review payment"
+set "args=%*"
 
 for %%s in (%servicios%) do (
-    if exist %%s (
+    if exist "%%s" (
         echo Compilando [%%s]...
 
-        cd %%s
-        call mvnw clean package
+        cd "%%s"
+        call mvnw clean package %args%
         cd ..
     ) else (
         echo Servicio [%%s] no existe, saltando...
@@ -15,3 +17,4 @@ for %%s in (%servicios%) do (
 )
 
 echo Listo.
+endlocal

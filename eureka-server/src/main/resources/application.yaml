@@ -6,9 +6,8 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${EUREKA_HOSTNAME:localhost}:${server.port}/eureka/
+      defaultZone: http://${EUREKA_HOSTNAME:localhost}:${server.port:8761}/eureka/
   instance:
     hostname: ${EUREKA_HOSTNAME:localhost}
-    prefer-ip-address: true
 server:
   port: 8761

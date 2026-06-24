@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Tag(name = "Controlador de Carritos de Compra", description = "Endpoints para la gestión y administración de los carritos de compra")
 @ApiResponse(responseCode = "403", description = "No autorizado - Token JWT ausente, expirado o inválido", content = @Content(mediaType = "application/json"))
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
 public class CartController {
 
     private final CartService cartService;
@@ -116,10 +118,10 @@ public class CartController {
         @ApiResponse(responseCode = "404", description = "Carrito no encontrado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
     public ResponseEntity<CartResponse> updateCart(@Parameter(description = "Identificador único de usuario", example = "1") @PathVariable Long userId,
-            @RequestBody CartRequest request, Authentication auth){
+            @RequestBody @Valid CartRequest request, Authentication auth){
                 Long tokenUserId = Long.valueOf(auth.getName());
                 log.info("Actualizando carrito del usuario: {}",userId);
-                return ResponseEntity.ok(cartService.actulizarCarrito(userId, request, tokenUserId));
+                return ResponseEntity.ok(cartService.actualizarCarrito(userId, request, tokenUserId));
             }
     
 }

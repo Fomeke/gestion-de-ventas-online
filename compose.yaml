@@ -42,7 +42,9 @@ services:
     networks:
       - networksita
     depends_on:
-      - eureka-server
+      eureka-server:
+        condition: service_started
+
   ms-auth:
     build:
       context: ./auth
@@ -53,18 +55,11 @@ services:
       - "8090:8090"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_URL=http://eureka-server:8761/eureka/
     networks:
       - networksita
     healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--quiet",
-          "--tries=1",
-          "--spider",
-          "http://localhost:8090/api/actuator/health",
-        ]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/api/actuator/health"]
       interval: 15s
       timeout: 10s
       retries: 5
@@ -80,8 +75,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - PRODUCT_HOST=ms-product
     networks:
       - networksita
+    ports:
+      - "8082:8082"
     depends_on:
       mysql:
         condition: service_healthy
@@ -99,6 +97,8 @@ services:
       - EUREKA_URL=http://eureka-server:8761/eureka/
     networks:
       - networksita
+    ports:
+      - "8086:8086"
     depends_on:
       mysql:
         condition: service_healthy
@@ -112,8 +112,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - PRODUCT_HOST=ms-product
     networks:
       - networksita
+    ports:
+      - "8083:8083"
     depends_on:
       mysql:
         condition: service_healthy
@@ -129,8 +132,12 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - ORDER_HOST=ms-order
+      - AUTH_HOST=ms-auth
     networks:
       - networksita
+    ports:
+      - "8088:8088"
     depends_on:
       mysql:
         condition: service_healthy
@@ -148,8 +155,12 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - CART_HOST=ms-cart
+      - INVENTORY_HOST=ms-inventory
     networks:
       - networksita
+    ports:
+      - "8084:8084"
     depends_on:
       mysql:
         condition: service_healthy
@@ -167,8 +178,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - ORDER_HOST=ms-order
     networks:
       - networksita
+    ports:
+      - "8089:8089"
     depends_on:
       mysql:
         condition: service_healthy
@@ -184,8 +198,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - CATEGORY_HOST=ms-category
     networks:
       - networksita
+    ports:
+      - "8085:8085"
     depends_on:
       mysql:
         condition: service_healthy
@@ -201,8 +218,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - PRODUCT_HOST=ms-product
     networks:
       - networksita
+    ports:
+      - "8087:8087"
     depends_on:
       mysql:
         condition: service_healthy
@@ -218,8 +238,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
+      - ORDER_HOST=ms-order
     networks:
       - networksita
+    ports:
+      - "8081:8081"
     depends_on:
       mysql:
         condition: service_healthy

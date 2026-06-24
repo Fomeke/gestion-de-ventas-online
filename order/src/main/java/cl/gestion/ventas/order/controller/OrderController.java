@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import cl.gestion.ventas.order.dto.ApiErrorResponse;
 import cl.gestion.ventas.order.dto.OrderRequest;
 import cl.gestion.ventas.order.dto.OrderResponse;
@@ -46,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
     @ApiResponse(responseCode = "404", description = "Orden no encontrada", 
              content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
 })
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
 public class OrderController {
 
     private final OrderService orderService;

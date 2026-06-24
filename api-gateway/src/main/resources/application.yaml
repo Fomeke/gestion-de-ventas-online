@@ -10,6 +10,20 @@ spring:
           locator:
             enabled: true
             lower-case-service-id: true
+        globalcors:
+          cors-configurations:
+            '[/**]':
+              allowedOrigins: 
+                - "${ALLOWED_ORIGIN:http://localhost:8080}"
+                - "http://127.0.0.1:8080"
+              allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+                - OPTIONS
+              allowedHeaders: "*"
+              allowCredentials: true
         routes:
           #AUTH
           - id: ms-auth-service-route
@@ -157,7 +171,7 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: ${EUREKA_PREFER_IP:true}
 
 logging:
   level:

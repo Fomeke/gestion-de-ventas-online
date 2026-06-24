@@ -139,7 +139,7 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse actulizarCarrito(Long userId,CartRequest request,Long tokenUserId){
+    public CartResponse actualizarCarrito(Long userId,CartRequest request,Long tokenUserId){
         if(!userId.equals(tokenUserId)){
             log.warn("Acceso no autorizado: Usuario {} intento actualizar carrito de {}", tokenUserId, userId);
             throw new AccessDeniedException("No tiene permiso para modificar este carrito.");
@@ -158,7 +158,7 @@ public class CartService {
                     .build();
             cart.getItems().add(newItem);
         }
-        Cart actulizado = cartRepository.save(cart);
-        return obtenerTotal(actulizado);
+        Cart actualizado = cartRepository.save(cart);
+        return obtenerTotal(actualizado);
     }
 }

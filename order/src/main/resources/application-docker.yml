@@ -8,9 +8,5 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
-
-services:
-  cart:
-    baseUrl: http://cart/api/v1/carts
-  inventory:
-    baseUrl: http://inventory/api/v1/inventories
+  instance:
+    prefer-ip-address: ${EUREKA_PREFER_IP:true}
