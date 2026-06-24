@@ -49,10 +49,9 @@ Además cuenta con:
 ---
 
 ### Ejecución
-1. Una vez clonado el repositorio, debe compilar los servicios, para eso cuenta con el archivo batch compilar-servicios.bat, que corre `./mvnw clean package` en cada package. En este caso, debe contar con una base de datos MySQL local en el puerto 3306 sin contraseña root para que las pruebas unitarias corran con éxito, puede usar Laragon/MySQL para esto. **Si solo quiere compilar sin pruebas, corra el archivo .bat con el argumento -DskipTests** (`compilar-servicios.bat -DskipTests`).
-2. Si quiere correr las pruebas unitarias, puede acceder a la carpeta del servicio (ej: /inventory) y correr `./mvnw test`
-3. Ya compilados los servicios, habilite Docker/DockerDesktop y corra el archivo compose.yaml con `docker compose up -d`
-4. Para acceder a los servicios, puede hacerlo mediante un programa de testeo de APIs como Postman o ThunderClient por el puerto `8080` (Gateway), o mediante la interfaz de Swagger:
+1. Una vez clonado el repositorio, habilite Docker/DockerDesktop y corra el archivo compose.yaml con `docker compose up -d` dentro del directorio raíz.
+2. Si quiere correr las pruebas unitarias, puede acceder a la carpeta del servicio (ej: /inventory) y correr `./mvnw test`. Tambien puede usar el archivo batch compilar-servicios.bat para compilar con pruebas. En ambos casos, debe contar con una base de datos MySQL local en el puerto 3306 sin contraseña root para que las pruebas unitarias corran con éxito, puede usar Laragon/MySQL para esto.
+3. Para acceder a los servicios, puede hacerlo mediante un programa de testeo de APIs como Postman o ThunderClient por el puerto `8080` (Gateway), o mediante la interfaz de Swagger:
 
    ```http://localhost:8080/swagger-ui.html``` o
    ```http://localhost:8080/swagger-ui/index.html```
