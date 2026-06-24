@@ -72,7 +72,7 @@ public class GatewayConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin(System.getenv()
+        config.addAllowedOriginPattern(System.getenv()
                 .getOrDefault("ALLOWED_ORIGIN", "http://localhost:8080"));
 
         config.addAllowedOrigin("http://127.0.0.1:8080");
