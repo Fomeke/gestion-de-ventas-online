@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Tag(name = "Controlador de Carritos de Compra", description = "Endpoints para la gestión y administración de los carritos de compra")
 @ApiResponse(responseCode = "403", description = "No autorizado - Token JWT ausente, expirado o inválido", content = @Content(mediaType = "application/json"))
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://127.0.0.1:8080","${allowed.origin}"}, allowCredentials = "true")
 public class CartController {
 
     private final CartService cartService;
@@ -71,6 +71,8 @@ public class CartController {
         @ApiResponse(responseCode = "400", description = "Solicitud inválida", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "403", description = "JWT ausente/inválido o se intenta modificar carrito ajeno", 
+                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Producto no encontrado", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "409", description = "Conflicto con la integridad de los datos (ej: solicitud excede stock)", 
                      content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))})
