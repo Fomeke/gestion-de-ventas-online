@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/product")
 @RequiredArgsConstructor
 @Tag(name = "Product API", description = "Endpoints para la gestion del catalogo de productos")
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080", "http://127.0.0.1:8082"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080", "${allowed.origin}"}, allowCredentials = "true")
 public class ProductController {
 
     private final ProductService service;

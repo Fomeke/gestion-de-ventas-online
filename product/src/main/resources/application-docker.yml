@@ -14,3 +14,6 @@ eureka:
 services:
   category:
     baseUrl: http://category/api/v1/category
+
+allowed:
+  origin: ${ALLOWED_ORIGIN:http://localhost:8080}

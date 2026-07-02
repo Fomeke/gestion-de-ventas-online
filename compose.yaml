@@ -78,6 +78,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
       - PRODUCT_HOST=ms-product
+      - ALLOWED_ORIGIN=http://146.181.52.105:8080
     networks:
       - networksita
     ports:
@@ -201,6 +202,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_URL=http://eureka-server:8761/eureka/
       - CATEGORY_HOST=ms-category
+      - ALLOWED_ORIGIN=http://146.181.52.105:8080
     networks:
       - networksita
     ports:
