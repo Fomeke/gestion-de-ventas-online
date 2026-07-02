@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Tag(name = "Inventario", description = "Endpoints para el control de stock de productos")
 @ApiResponse(responseCode = "403", description = "No autorizado - Token JWT ausente, expirado o inválido", content = @Content(mediaType = "application/json"))
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080", "${allowed.origin}"}, allowCredentials = "true")
 public class InventoryController {
     private final InventoryService inventoryService;
 

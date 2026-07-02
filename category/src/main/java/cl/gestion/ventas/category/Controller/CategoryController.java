@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
     @ApiResponse(responseCode = "500", description = "Error interno - Error inesperado en el servidor", 
                  content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorApiResponse.class))),
 })
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080", "${allowed.origin}"}, allowCredentials = "true")
 public class CategoryController {
 
     private final CategoryService service;

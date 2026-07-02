@@ -1,3 +1,6 @@
+x-origin-env: &origin-env
+  ALLOWED_ORIGIN: http://146.181.52.105:8080
+
 services:
   mysql:
     image: mysql:8.0
@@ -37,9 +40,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - ALLOWED_ORIGIN=http://146.181.52.105:8080
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
     networks:
       - networksita
     depends_on:
@@ -55,9 +58,9 @@ services:
     ports:
       - "8090:8090"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - ALLOWED_ORIGIN=http://146.181.52.105:8080
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
     networks:
       - networksita
     healthcheck:
@@ -75,10 +78,10 @@ services:
     container_name: cart
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - PRODUCT_HOST=ms-product
-      - ALLOWED_ORIGIN=http://146.181.52.105:8080
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      PRODUCT_HOST: ms-product
     networks:
       - networksita
     ports:
@@ -96,8 +99,9 @@ services:
     container_name: category
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
     networks:
       - networksita
     ports:
@@ -113,9 +117,10 @@ services:
     container_name: inventory
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - PRODUCT_HOST=ms-product
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      PRODUCT_HOST: ms-product
     networks:
       - networksita
     ports:
@@ -133,10 +138,11 @@ services:
     container_name: notification
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - ORDER_HOST=ms-order
-      - AUTH_HOST=ms-auth
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      ORDER_HOST: ms-order
+      AUTH_HOST: ms-auth
     networks:
       - networksita
     ports:
@@ -156,10 +162,11 @@ services:
     container_name: order
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - CART_HOST=ms-cart
-      - INVENTORY_HOST=ms-inventory
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      CART_HOST: ms-cart
+      INVENTORY_HOST: ms-inventory
     networks:
       - networksita
     ports:
@@ -179,9 +186,10 @@ services:
     container_name: payment
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - ORDER_HOST=ms-order
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      ORDER_HOST: ms-order
     networks:
       - networksita
     ports:
@@ -199,10 +207,11 @@ services:
     container_name: product
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - CATEGORY_HOST=ms-category
-      - ALLOWED_ORIGIN=http://146.181.52.105:8080
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      CATEGORY_HOST: ms-category
+      ALLOWED_ORIGIN: http://146.181.52.105:8080
     networks:
       - networksita
     ports:
@@ -220,9 +229,10 @@ services:
     container_name: review
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - PRODUCT_HOST=ms-product
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      PRODUCT_HOST: ms-product
     networks:
       - networksita
     ports:
@@ -240,9 +250,10 @@ services:
     container_name: shipping
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_URL=http://eureka-server:8761/eureka/
-      - ORDER_HOST=ms-order
+      <<: *origin-env
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      ORDER_HOST: ms-order
     networks:
       - networksita
     ports:
