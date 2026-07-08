@@ -1,5 +1,5 @@
 x-origin-env: &origin-env
-  ALLOWED_ORIGIN: http://146.181.52.105:8080
+  ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-http://localhost:8080}
 
 services:
   mysql:
