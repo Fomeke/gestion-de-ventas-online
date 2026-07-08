@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -30,7 +30,6 @@ services:
       - "8761:8761"
     networks:
       - networksita
-
 
   api-gateway:
     build:
@@ -64,7 +63,15 @@ services:
     networks:
       - networksita
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/api/actuator/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8090/api/actuator/health",
+        ]
       interval: 15s
       timeout: 10s
       retries: 5
