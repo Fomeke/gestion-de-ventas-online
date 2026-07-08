@@ -49,7 +49,8 @@ Además cuenta con:
 ---
 
 ### Ejecución
-1. Una vez clonado el repositorio, habilite Docker/DockerDesktop y corra el archivo compose.yaml con `docker compose up -d` dentro del directorio raíz.
+1. Una vez clonado el repositorio, habilite Docker/DockerDesktop y corra el archivo compose.yaml con `docker compose up -d` dentro del directorio raíz. Si quiere realizar un despliegue remoto, para evitar problemas con CORS en Swagger, cambie la variable de entorno `ALLOWED_ORIGIN` dentro de **.env.example** por su dominio o IP pública y renombre el archivo a **.env**
+   
 2. Si quiere correr las pruebas unitarias, puede acceder a la carpeta del servicio (ej: /inventory) y correr `./mvnw test`. Tambien puede usar el archivo batch compilar-servicios.bat para compilar con pruebas. En ambos casos, debe contar con una base de datos MySQL local en el puerto 3306 sin contraseña root para que las pruebas unitarias corran con éxito, puede usar Laragon/MySQL para esto.
 3. Para acceder a los servicios, puede hacerlo mediante un programa de testeo de APIs como Postman o ThunderClient por el puerto `8080` (Gateway), o mediante la interfaz de Swagger:
 
