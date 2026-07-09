@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/payment")
 @RequiredArgsConstructor
 @Tag(name = "Payment API", description = "Endpoints para la gestion y procesamiento de pagos")
-@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:8080", "http://127.0.0.1:8080", "${allowed.origin}"}, allowCredentials = "true")
 public class PaymentController {
 
     private final PaymentService service;

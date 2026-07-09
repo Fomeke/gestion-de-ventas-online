@@ -26,3 +26,5 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+allowed:
+  origin: ${ALLOWED_ORIGIN:http://localhost:8080}
